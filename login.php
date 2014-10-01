@@ -9,15 +9,15 @@
 		<div class="container">
 			<form class="form-signin" role="form">
 				<h2 class="form-signin-heading">
-					Please sign in
+					Por favor inicie sesión
 				</h2>
-				<input class="form-control" type="email" autofocus="" required="" placeholder="Email address"></input>
+				<input class="form-control" type="email" autofocus="" required="" placeholder="Correo electrónico"></input>
 				<input class="form-control" type="password" required="" placeholder="Password"></input>
 				<label class="checkbox">
 					<input type="checkbox" value="Remember-me"></input>
-					Remember me
+					Recuerdame
 				</label>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
 			</form>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

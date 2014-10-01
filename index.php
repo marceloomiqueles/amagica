@@ -1,3 +1,6 @@
+<?php
+include("include/header-cache.php");
+?>
 <!DOCTYPE html>
 <html>
 	<head>
