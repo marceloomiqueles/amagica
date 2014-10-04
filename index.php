@@ -1,104 +1,28 @@
 <?php
-include("include/header-cache.php");
+include_once("include/header-cache.php");
+require("include/cliente.class.php");
+if(empty($_SESSION["id"]) || $_SESSION["id"] == "") {
+	header ("Location: include/login_session.php");
+}
+$cliente = new Cliente;
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
+    	<meta charset="utf-8">
 		<title>A-Magica</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 	</head>
 	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top navbar">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button class="navbar-toggle collapsed" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-						<span class="sr-only">
-							Toggle navigation
-						</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">
-						Admin AMagica
-					</a>
-				</div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="#">
-								Dashboard
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								Settings
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								Profile
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								Help
-							</a>
-						</li>
-					</ul>
-					<form class="navbar-form navbar-right">
-						<input class="form-control" type="text" placeholder="Serach..."></input>
-					</form>
-				</div>
-			</div>
-		</div>
+		<?php
+		 include_once("/layout/top-menu.php");
+		?>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-3 col-md-2 sidebar">
-					<ul class="nav nav-sidebar">
-						<li class="active">
-							<a href="#">Overview</a>
-						</li>
-						<li>
-							<a href="#">Reports</a>
-						</li>
-						<li>
-							<a href="#">Analytics</a>
-						</li>
-						<li>
-							<a href="#">Export</a>
-						</li>
-					</ul>
-					<ul class="nav nav-sidebar">
-						<li>
-							<a href="#">Nav item</a>
-						</li>
-						<li>
-							<a href="#">Nav item again</a>
-						</li>
-						<li>
-							<a href="#">One more nav</a>
-						</li>
-						<li>
-							<a href="#">Another nav item</a>
-						</li>
-						<li>
-							<a href="#">More navigation</a>
-						</li>
-					</ul>
-					<ul class="nav nav-sidebar">
-						<li>
-							<a href="#">Nav item again</a>
-						</li>
-						<li>
-							<a href="#">One more nav</a>
-						</li>
-						<li>
-							<a href="#">Another nav item</a>
-						</li>
-					</ul>
-				</div>
+				<?php
+				include("/layout/menu.php");
+				?>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<h1 class="page-header">
 						Dashboard
@@ -275,6 +199,6 @@ include("include/header-cache.php");
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="<?php echo $dir_base ?>js/bootstrap.js"></script>
 	</body>
 </html>

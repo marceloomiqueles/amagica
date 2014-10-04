@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
+    	<meta charset="utf-8">
 		<title>AMagica</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/signin.css">
 	</head>
 	<body>
 		<div class="container">
-			<form class="form-signin" role="form">
+			<form class="form-signin" role="form" action="include/login_session.php" method="post">
 				<h2 class="form-signin-heading">
 					Por favor inicie sesión
 				</h2>
-				<input class="form-control" type="email" autofocus="" required="" placeholder="Correo electrónico"></input>
-				<input class="form-control" type="password" required="" placeholder="Password"></input>
-				<label class="checkbox">
+				<input name="mail" class="form-control" type="email" autofocus="" required="" placeholder="Correo electrónico"></input>
+				<input name="pass" class="form-control" type="password" required="" placeholder="Password"></input>
+				<!-- <label class="checkbox">
 					<input type="checkbox" value="Remember-me"></input>
 					Recuerdame
-				</label>
+				</label> -->
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
 			</form>
 		</div>
