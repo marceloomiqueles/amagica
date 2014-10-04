@@ -16,10 +16,7 @@ if (isset($_POST["pass"]) && isset($_POST["pass2"])) {
 <!DOCTYPE html>
 <html>
 	<head>
-    	<meta charset="utf-8">
-		<title>AMagica</title>
-		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../css/signin.css">
+    	<?php include_once("../layout/head.php"); ?>
 	</head>
 	<body>
 		<div class="container">
@@ -32,7 +29,5 @@ if (isset($_POST["pass"]) && isset($_POST["pass2"])) {
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
 			</form>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="../js/bootstrap.js"></script>
 	</body>
 </html>

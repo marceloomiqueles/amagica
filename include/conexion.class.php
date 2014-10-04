@@ -20,6 +20,9 @@ class DBManager {
 		if (mysqli_connect_errno()) {
 			die('Error al conectar con mysql');
 		}
+		if (!mysqli_set_charset($this->conn, "utf8")) {
+			die("Error cargando el conjunto de caracteres utf8");
+		}
 		return true;
 	}
 
@@ -29,14 +32,7 @@ class DBManager {
 		$result = mysqli_query($this->conn,$query);
 		if (!$result) {
 			die('Error query BD:' . mysqli_error());
-		} //else {
-			// $num_rows= mysqli_num_rows($result);
-			// for($i=0;$i<$num_rows;$i++){
-			// 	$row = mysqli_fetch_assoc($result);
-			// 	array_push($valores, $row);
-			// }
-		// }
-		// return $valores;
+		}
 		return $result;
 	}
 

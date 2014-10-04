@@ -1,9 +1,8 @@
 <?php
 include_once("../../include/header-cache.php");
 require("../../include/cliente.class.php");
-if(empty($_SESSION["id"]) || $_SESSION["id"] == "") {
-	header ("Location: ../../include/login_session.php");
-}
+if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: ../../include/login_session.php");
+
 $cliente = new Cliente;
 
 $nombre = "";
@@ -31,25 +30,15 @@ if (isset($_GET["usr"]))
 if (isset($_POST["id-box"]))
 	$id_box = $_POST["id-box"];
 
-// echo $id_box;die();
-
 if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"])) {
-	$cambios = array(
-		trim($_POST["nombre-box"]), 
-		trim($_POST["apellido-box"]), 
-		trim($_POST["mail-box"]), 
-		trim($_POST["sexo-box"]), 
-		trim($_POST["tipo-box"]), 
-		str_replace(" ", "", trim($_POST["fono-box"]))
-		);
-	if ($cliente->actualiza_usuario_id($cambios, $id_box)) {
+	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), trim($_POST["tipo-box"]), str_replace(" ", "", trim($_POST["fono-box"])));
+	if ($cliente->actualiza_usuario_id($cambios, $id_box))
 		header("Location: ver_usuario.php");
-	}
 	else
 		header("Location: mod_usuario.php?usr=" . $id_box);
 }
 
-if ($consulta = $cliente->consulta_usuario_id($id_box)) {
+if ($consulta = $cliente->consulta_usuario_id($id_box))
 	if ($consulta->num_rows > 0) {
 		$row = $consulta->fetch_array(MYSQLI_ASSOC);
 		$nombre = $row["nombre"];
@@ -62,25 +51,17 @@ if ($consulta = $cliente->consulta_usuario_id($id_box)) {
 			$sexo = "Mujer";
 		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
 	}
-}
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-    	<meta charset="utf-8">
-		<title>A-Magica</title>
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../../css/dashboard.css">
+	<head>    	
+    	<?php include_once("../head.php"); ?>
 	</head>
 	<body>
-		<?php
-		 include_once("../top-menu.php");
-		?>
+		<?php include_once("../top-menu.php"); ?>
 		<div class="container-fluid">
 			<div class="row">
-				<?php
-				include("../menu.php");
-				?>
+				<?php include("../menu.php"); ?>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<h2 class="sub-header">
 						Perfil
@@ -144,7 +125,5 @@ if ($consulta = $cliente->consulta_usuario_id($id_box)) {
 				</div>
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="../../js/bootstrap.js"></script>
 	</body>
 </html>
