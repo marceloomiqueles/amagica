@@ -153,13 +153,14 @@ if ($consulta = $cliente->consulta_colegio_id($id_box)) {
 							</div>
 						</div>
 						<div class='form-group'>
-							<label for='nivel-box' class='col-sm-2 control-label'>Cursos x nivel</label>
+							<label for='nivel-box' class='col-sm-2 control-label'>Cursos</label>
 							<div class='col-sm-10'>
 								<select name='nivel-box' id='nivel-box' class='form-control'>
 									<?php
-									for($i = 1; $i <= 10; $i++) {
+									$letra = "A";
+									for($i = 0; $i <= 10; $i++) {
 									?>
-								  	<option value='<?php echo $i ?>' <?php if ($nivel == $i) echo "selected";?>><?php echo $i; ?></option>
+								  	<option value='<?php echo $i + 1 ?>' <?php if ($nivel == $i + 1) echo "selected";?>><?php if ($i == 0) echo $letra++; else echo "A - " . $letra++; ?></option>
 									<?php
 									}
 									?>

@@ -16,7 +16,15 @@ if (isset($_GET["clg"])) {
 			$calle = $row["calle"];
 			$numero = $row["numero"];
 			$fono = substr($row["fono"], 0, 3) . " " . substr($row["fono"], 3, 1) . " " . substr($row["fono"], 4, 4) . " " . substr($row["fono"], 8, 4);
-			$cursos = $row["n_cursos"];
+			$cursos = "A";
+			$letra = $cursos;
+			for($i = 0; $i < ($row["n_cursos"] - 1); $i++) {
+				$letra++;
+			}
+			echo $letra;
+			if ($row["n_cursos"] > 1) {
+				$cursos = $cursos . " - " . $letra;
+			}
 		}
 	}
 }
@@ -82,7 +90,7 @@ else {
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Cursos x nivel</label>
+							<label class="col-sm-2 control-label">Cursos</label>
 							<div class="col-sm-10">
 								<p class="form-control-static"><?php echo $cursos; ?></p>
 							</div>
