@@ -30,7 +30,7 @@ if (isset($_GET["usr"]))
 if (isset($_POST["id-box"]))
 	$id_box = $_POST["id-box"];
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"])) {
+if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"])) {
 	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), trim($_POST["tipo-box"]), str_replace(" ", "", trim($_POST["fono-box"])));
 	if ($cliente->actualiza_usuario_id($cambios, $id_box))
 		header("Location: ver_usuario.php");

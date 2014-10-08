@@ -6,40 +6,36 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../inc
 $cliente = new Cliente;
 
 $nombre = "";
-$apellido = "";
-$correo = "";
-$sexo = 0;
-$tipo = 0;
+$comuna = 0;
+$calle = "";
+$numero = 0;
 $fono = "";
+$nivel = 0;
 
 if (isset($_POST["nombre-box"]))
 	$nombre = $_POST["nombre-box"];
-if (isset($_POST["apellido-box"]))
-	$apellido = $_POST["apellido-box"];
-if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
-if (isset($_POST["sexo-box"]))
-	$sexo = $_POST["sexo-box"];
-if (isset($_POST["tipo-box"]))
-	$tipo = $_POST["tipo-box"];
+if (isset($_POST["comuna-box"]))
+	$comuna = $_POST["comuna-box"];
+if (isset($_POST["calle-box"]))
+	$calle = $_POST["calle-box"];
+if (isset($_POST["numero-box"]))
+	$numero = $_POST["numero-box"];
 if (isset($_POST["fono-box"]))
 	$fono = $_POST["fono-box"];
+if (isset($_POST["nivel-box"]))
+	$nivel = $_POST["nivel-box"];
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["tipo-box"]) && isset($_POST["fono-box"])) {
+if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["calle-box"]) && isset($_POST["numero-box"]) && isset($_POST["fono-box"]) && isset($_POST["nivel-box"])) {
 	$datos = array(
 		trim($_POST["nombre-box"]),
-		trim($_POST["apellido-box"]),
-		trim($_POST["mail-box"]),
-		md5("1234"),
-		trim($_POST["sexo-box"]),
+		trim($_POST["comuna-box"]),
+		trim($_POST["calle-box"]),
+		trim($_POST["numero-box"]),
 		str_replace(" ", "", trim($_POST["fono-box"])),
-		trim($_POST["tipo-box"])
+		trim($_POST["nivel-box"])
 		);
-	if ($cliente->crear_usuario($datos))
-		if ($id_user_created = $cliente->id_crear_usuario())
-			header("Location: ver_usuario.php?usr=" . $id_user_created);
-	else
-		header("Location: mod_perfil.php");
+	if ($cliente->crear_colegio($datos))
+			header("Location: listar_colegios.php");
 }
 ?>
 <!DOCTYPE html>
@@ -56,7 +52,7 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 					<h2 class='sub-header'>
 						Colegio Nuevo
 					</h2>
-					<form class='form-horizontal' role='form' action='crear_usuario.php' method='post'>
+					<form class='form-horizontal' role='form' action='crear_colegio.php' method='post'>
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
 							<div class='col-sm-10'>
@@ -66,12 +62,12 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='region-box' class='col-sm-2 control-label'>Región</label>
 							<div class='col-sm-10'>
-								<select id="region-box" name='region-box' class='form-control'>
+								<select id='region-box' onchange='cargaProvincia()' name='region-box' class='form-control'>
 									<?php
 									$res = $cliente->listar_regiones();
 									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
 									?>
-								  	<option value='<?php echo $row["id"] ?>' <?php if ($tipo == $row["id"]) echo "selected"; ?>><?php echo $row["nombre"]; ?></option>
+								  	<option value='<?php echo $row["id"] ?>' ><?php echo $row["nombre"]; ?></option>
 									<?php
 									}
 									?>
@@ -81,43 +77,59 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='provincia-box' class='col-sm-2 control-label'>Provincia</label>
 							<div class='col-sm-10'>
-								<select id="provincia-box" name='provincia-box' class='form-control'>
+								<select id='provincia-box' onchange='cargaComuna();' name='provincia-box' class='form-control'>
+									<?php
+									$res = $cliente->listar_provincias_por_region(1);
+									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+									?>
+								  	<option value='<?php echo $row["id"] ?>'><?php echo $row["nombre"]; ?></option>
+									<?php
+									}
+									?>
 								</select>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='comuna-box' class='col-sm-2 control-label'>Comuna</label>
 							<div class='col-sm-10'>
-								<select id="comuna-box" name='comuna-box' class='form-control'>
+								<select id='comuna-box' name='comuna-box' class='form-control'>
+									<?php
+									$res = $cliente->listar_comunas_por_provincia(3);
+									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+									?>
+								  	<option value='<?php echo $row["id"] ?>'><?php echo $row["nombre"]; ?></option>
+									<?php
+									}
+									?>
 								</select>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='calle-box' class='col-sm-2 control-label'>Calle</label>
 							<div class='col-sm-10'>
-								<input type='text' name='calle-box' class='form-control' id='calle-box' placeholder='Calle'>
+								<input type='text' name='calle-box' class='form-control' id='calle-box' placeholder='Calle' value='<?php echo $calle; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='numero-box' class='col-sm-2 control-label'>Número</label>
 							<div class='col-sm-10'>
-								<input type='text' name='numero-box' class='form-control' id='numero-box' placeholder='Número'>
+								<input type='text' name='numero-box' class='form-control' id='numero-box' placeholder='Número' value='<?php echo $numero; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono'>
+								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='nivel-box' class='col-sm-2 control-label'>Cursos x nivel</label>
 							<div class='col-sm-10'>
-								<select id="nivel-box" name='nivel-box' class='form-control'>
+								<select id='nivel-box' name='nivel-box' class='form-control'>
 									<?php
 									for ($i = 1; $i <= 10; $i++) {
 									?>
-								  	<option value='<?php echo $i; ?>' <?php if ($sexo == $i) echo "selected"; ?>><?php echo $i; ?></option>
+								  	<option value='<?php echo $i; ?>' <?php if ($nivel == $i) echo "selected"; ?>><?php echo $i; ?></option>
 								  	<?php
 								  	}
 								  	?>
@@ -133,8 +145,5 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 				</div>
 			</div>
 		</div>
-    	<script type="text/javascript">
-	 		cargaProvincia($("#region-box").val());
-    	</script>
 	</body>
 </html>

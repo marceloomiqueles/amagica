@@ -35,7 +35,19 @@
 			</ul>
 		</li>
 		<li>
-			<a href="#">Export</a>
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Producto</a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="">
+						Crear
+					</a>
+				</li>
+				<li>
+					<a href="">
+						Listar
+					</a>
+				</li>
+			</ul>
 		</li>
 	</ul>
 	<ul class="nav nav-sidebar">

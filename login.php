@@ -1,9 +1,10 @@
+<?php
+include_once("include/header-cache.php");
+?>
 <!DOCTYPE html>
 <html>
 	<head>
-    	<meta charset="utf-8">
-		<title>AMagica</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    	<?php include_once("layout/head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="css/signin.css">
 	</head>
 	<body>
@@ -14,14 +15,8 @@
 				</h2>
 				<input name="mail" class="form-control" type="email" autofocus="" required="" placeholder="Correo electrónico"></input>
 				<input name="pass" class="form-control" type="password" required="" placeholder="Password"></input>
-				<!-- <label class="checkbox">
-					<input type="checkbox" value="Remember-me"></input>
-					Recuerdame
-				</label> -->
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
 			</form>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
 	</body>
 </html>

@@ -25,50 +25,45 @@ $cliente = new Cliente;
 									<th>#</th>
 									<th>Nombre</th>
 									<th>Comuna</th>
-									<th>Niveles</th>
-									<th>Cursos</th>
+									<th>Niveles x curso</th>
 									<th class="text-center">Acción</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_usuarios();
+								$res = $cliente->listar_colegios_comuna();
 								$i=1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
 									<td><?php echo $row["nombre"]; ?></td>
-									<td><?php echo $row["descripcion"]; ?></td>
-									<td><?php echo $row["nombre"]; ?></td>
-									<td><?php echo $row["descripcion"]; ?></td>
+									<td><?php echo $row["comuna"]; ?></td>
+									<td><?php echo $row["n_cursos"]; ?></td>
 									<td class="text-center">
 										<div class="btn-group btn-group-xs">
-											<a class="btn btn-success" title="Detalle" href="ver_usuario.php?usr=<?php echo $row["id"]; ?>">
+											<a class="btn btn-success" title="Detalle" href="ver_colegio.php?clg=<?php echo $row["id"]; ?>">
 												<i class="glyphicon glyphicon-eye-open"></i>
 											</a>
-											<a class="btn btn-mini btn-info" title="Editar" href="mod_usuario.php?usr=<?php echo $row["id"]; ?>">
+											<a class="btn btn-mini btn-info" title="Editar" href="mod_colegio.php?clg=<?php echo $row["id"]; ?>">
 												<i class="glyphicon glyphicon-edit"></i>
 											</a>
 											<?php
-											if ($row["estado"] == 2) {
+											if ($row["estado"] == 0) {
 											?>
-											<a class="btn btn-mini btn-success" title="Activar" href="deact_usuario.php?usr=<?php echo $row["id"]; ?>">
+											<a class="btn btn-mini btn-success" title="Activar" href="deact_colegio.php?clg=<?php echo $row["id"]; ?>">
 												<i class="glyphicon glyphicon-play"></i>
 											</a>
 											<?php
 											} elseif ($row["estado"] == 1) {
 											?>
-											<a class="btn btn-mini btn-danger" title="Desactivar" href="deact_usuario.php?usr=<?php echo $row["id"] ?>">
+											<a class="btn btn-mini btn-danger" title="Desactivar" href="deact_colegio.php?clg=<?php echo $row["id"] ?>">
 												<i class="glyphicon glyphicon-stop"></i>
 											</a>
 											<?php
 											}
 											?>
-											<a class="btn btn-mini btn-warning" title="Reiniciar Clave" href="reset_usuario.php?usr=<?php echo $row["id"] ?>">
-												<i class="glyphicon glyphicon-refresh"></i>
-											</a>
-											<a class="btn btn-mini btn-danger" title="Eliminar" data-confirm="Seguro que quieres eliminar este Usuario?" href="elimina_usuario.php?usr=<?php echo $row["id"] ?>">
+											<a class="btn btn-mini btn-danger" title="Eliminar" data-confirm="Seguro que quieres eliminar este Usuario?" href="elimina_colegio.php?clg=<?php echo $row["id"] ?>">
 												<i class="glyphicon glyphicon-trash	"></i>
 											</a>
 									</div>

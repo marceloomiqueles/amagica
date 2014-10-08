@@ -1,28 +1,20 @@
 <?php
 include_once("include/header-cache.php");
 require("include/cliente.class.php");
-if(empty($_SESSION["id"]) || $_SESSION["id"] == "") {
-	header ("Location: include/login_session.php");
-}
+if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: include/login_session.php");
+
 $cliente = new Cliente;
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-    	<meta charset="utf-8">
-		<title>A-Magica</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    	<?php include_once("layout/head.php"); ?>
 	</head>
 	<body>
-		<?php
-		 include_once("/layout/top-menu.php");
-		?>
+		<?php include_once("layout/top-menu.php"); ?>
 		<div class="container-fluid">
 			<div class="row">
-				<?php
-				include("/layout/menu.php");
-				?>
+				<?php include("layout/menu.php"); ?>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<h1 class="page-header">
 						Dashboard
@@ -198,7 +190,5 @@ $cliente = new Cliente;
 				</div>
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="<?php echo $dir_base ?>js/bootstrap.js"></script>
 	</body>
 </html>
