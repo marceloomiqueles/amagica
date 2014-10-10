@@ -1,7 +1,6 @@
 <?php
 include_once("../../include/header-cache.php");
 require("../../include/cliente.class.php");
-
 if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
 
 $cliente = new Cliente;
@@ -18,68 +17,64 @@ $cliente = new Cliente;
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Lista Colegios <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) echo "(Colegio eliminado exitosamente!)"; ?>
+						Lista productos <?php if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Producto eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Producto creado correctamente!)";} ?>
 					</h2>
 					<div class='table-responsive'>
 						<table class='table table-striped'>
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Nombre</th>
-									<th>Comuna</th>
-									<th class='text-center'>Niveles x curso</th>
+									<th>Codigo</th>
+									<th>Descripción</th>
+									<th>Categoría</th>
+									<th>Idioma</th>
 									<th class='text-center'>Acción</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-								if ($_SESSION["tipo"] == 1)
-									$res = $cliente->listar_colegios();
-								else
-									$res = $cliente->listar_colegios_id($_SESSION["id"]);
-								$i=1;
+								$res = $cliente->listar_productos();
+								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row["nombre"]; ?></td>
-									<td><?php echo $row["comuna"]; ?></td>
-									<td class="text-center"><?php echo $row["n_cursos"]; ?></td>
+									<td><?php echo $row["codigo"]; ?></td>
+									<td><?php echo $row["descr"]; ?></td>
+									<td><?php echo $row["categoria"]; ?></td>
+									<td><?php echo $row["idioma"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Detalle' href='ver_colegio.php?clg=<?php echo $row["id"]; ?>'>
+											<a class='btn btn-success' title='Detalle' href='ver_producto.php?prd=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-eye-open'></i>
 											</a>
-											<?php if ($_SESSION["tipo"] == 1) { ?>
-											<a class='btn btn-mini btn-info' title='Editar' href='mod_colegio.php?clg=<?php echo $row["id"]; ?>'>
+											<a class='btn btn-mini btn-info' title='Editar' href='mod_producto.php?prd=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-edit'></i>
 											</a>
 											<?php
-												if ($row["estado"] == 2) {
+											if ($row["estado"] == 2) {
 											?>
-											<a class='btn btn-mini btn-success' title='Activar' href='deact_colegio.php?clg=<?php echo $row["id"]; ?>'>
+											<a class='btn btn-mini btn-success' title='Activar' href='deact_producto.php?prd=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-play'></i>
 											</a>
 											<?php
-												} elseif ($row["estado"] == 1) {
+											} elseif ($row["estado"] == 1) {
 											?>
-											<a class='btn btn-mini btn-warning' title='Desactivar' href='deact_colegio.php?clg=<?php echo $row["id"] ?>'>
+											<a class='btn btn-mini btn-danger' title='Desactivar' href='deact_producto.php?prd=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-stop'></i>
 											</a>
 											<?php
-												}
+											}
 											?>
-											<a class='btn btn-mini btn-danger' title='Eliminar' data-confirm='Seguro que quieres eliminar este Usuario?' href='elimina_colegio.php?clg=<?php echo $row["id"] ?>'>
+											<a class='btn btn-mini btn-warning' title='Eliminar' data-confirm='Seguro que quieres eliminar este producto?' href='elimina_producto.php?prd=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-trash	'></i>
 											</a>
-											<?php } ?>
-										</div>
+									</div>
 									</td>
 								</tr>
 								<?php
 									$i++;
 								}
-								$cliente->cerrar_conn();
 								?>
 							</tbody>
 						</table>

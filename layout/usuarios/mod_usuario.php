@@ -33,7 +33,7 @@ if (isset($_POST["id-box"]))
 if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"])) {
 	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), trim($_POST["tipo-box"]), str_replace(" ", "", trim($_POST["fono-box"])));
 	if ($cliente->actualiza_usuario_id($cambios, $id_box))
-		header("Location: ver_usuario.php");
+		header("Location: ver_usuario.php?usr=" . $id_box);
 	else
 		header("Location: mod_usuario.php?usr=" . $id_box);
 }
@@ -59,46 +59,46 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 	</head>
 	<body>
 		<?php include_once("../top-menu.php"); ?>
-		<div class="container-fluid">
-			<div class="row">
+		<div class='container-fluid'>
+			<div class='row'>
 				<?php include("../menu.php"); ?>
-				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-					<h2 class="sub-header">
+				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
+					<h2 class='sub-header'>
 						Perfil
 					</h2>
-					<form class="form-horizontal" role="form" action="mod_usuario.php" method="post">
-						<div class="form-group">
-							<label for="nombre-box" class="col-sm-2 control-label">Nombre</label>
-							<div class="col-sm-10">
-								<input type="text" name="nombre-box" class="form-control" id="nombre-box" placeholder="Nombre" value="<?php echo $nombre; ?>">
-								<input type="hidden" name="id-box" value="<?php echo $id_box; ?>">
+					<form class='form-horizontal' role='form' action='mod_usuario.php' method='post'>
+						<div class='form-group'>
+							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
+							<div class='col-sm-10'>
+								<input type='text' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
+								<input type='hidden' name='id-box' value='<?php echo $id_box; ?>'>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="apellido-box" class="col-sm-2 control-label">Apellido</label>
-							<div class="col-sm-10">
-								<input type="text" name="apellido-box" class="form-control" id="apellido-box" placeholder="Apellido" value="<?php echo $apellido; ?>">
+						<div class='form-group'>
+							<label for='apellido-box' class='col-sm-2 control-label'>Apellido</label>
+							<div class='col-sm-10'>
+								<input type='text' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido; ?>'>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="mail-box" class="col-sm-2 control-label">Correo</label>
-							<div class="col-sm-10">	
-								<input type="mail" name="mail-box" class="form-control" id="mail-box" placeholder="Correo" value="<?php echo $mail; ?>">
+						<div class='form-group'>
+							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
+							<div class='col-sm-10'>	
+								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="sexo-box" class="col-sm-2 control-label">Sexo</label>
-							<div class="col-sm-10">
-								<select name="sexo-box" class="form-control">
-								  	<option value="1" <?php if ($tipo== 1) echo "selected" ?>>Hombre</option>
-								  	<option value="2" <?php if ($_SESSION["sexo"] == 2) echo "selected" ?>>Mujer</option>
+						<div class='form-group'>
+							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
+							<div class='col-sm-10'>
+								<select name='sexo-box' class='form-control'>
+								  	<option value='1' <?php if ($tipo== 1) echo "selected" ?>>Hombre</option>
+								  	<option value='2' <?php if ($_SESSION["sexo"] == 2) echo "selected" ?>>Mujer</option>
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="tipo-box" class="col-sm-2 control-label">Sexo</label>
-							<div class="col-sm-10">
-								<select name="tipo-box" class="form-control">
+						<div class='form-group'>
+							<label for='tipo-box' class='col-sm-2 control-label'>Tipo</label>
+							<div class='col-sm-10'>
+								<select name='tipo-box' class='form-control'>
 									<?php
 									$res = $cliente->listar_tipo_usuario();
 									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
@@ -110,15 +110,16 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="fono-box" class="col-sm-2 control-label">Teléfono</label>
-							<div class="col-sm-10">
-								<input type="text" name="fono-box" class="form-control" id="fono-box" placeholder="Teléfono" value="<?php echo $fono; ?>">
+						<div class='form-group'>
+							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
+							<div class='col-sm-10'>
+								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Guardar</button>
+						<div class='form-group'>
+							<div class='col-sm-offset-2 col-sm-10'>
+								<button type='submit' class='btn btn-default'>Guardar</button>
+								<a class="btn btn-info" href="ver_usuario.php?usr=<?php echo $id_box ?>">Atrás</a>
 							</div>
 						</div>
 					</form>

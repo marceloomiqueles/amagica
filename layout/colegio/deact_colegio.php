@@ -6,13 +6,14 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: ../../inc
 
 $cliente = new Cliente;
 
-if (isset($_GET["usr"])) {
-	$res = $cliente->consulta_estado_usuario($_GET["usr"]);
+if (isset($_GET["clg"])) {
+	$res = $cliente->consulta_estado_colegio($_GET["clg"]);
 	$row = $res->fetch_array(MYSQLI_ASSOC);
 	if ($row["estado"] == 1)
-		$cliente->cambia_estado_usuario(2, $_GET["usr"]);
+		$cliente->cambia_estado_colegio(2, $_GET["clg"]);
 	if ($row["estado"] == 2)
-		$cliente->cambia_estado_usuario(1, $_GET["usr"]);
+		$cliente->cambia_estado_colegio(1, $_GET["clg"]);
+
 }
-header("Location: listar_usuarios.php?exito=2");
+header("Location: listar_colegios.php?exito=2");
 ?>

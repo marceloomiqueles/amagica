@@ -20,13 +20,19 @@ if (isset($_POST["mail-box"]))
 	$correo = $_POST["mail-box"];
 if (isset($_POST["sexo-box"]))
 	$sexo = $_POST["sexo-box"];
-if (isset($_POST["tipo-box"]))
+if (isset($_POST["tipo-box"]) && $_SESSION["tipo"] == 1)
 	$tipo = $_POST["tipo-box"];
+if ($_SESSION["tipo"] != 1)
+	$tipo = $_SESSION["tipo"] + 1;
 if (isset($_POST["fono-box"]))
 	$fono = $_POST["fono-box"];
 
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["tipo-box"]) && isset($_POST["fono-box"])) {
+if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && (isset($_POST["tipo-box"]) || $_SESSION["tipo"] != 1) && isset($_POST["fono-box"])) {
+	$estado = 1;
+	if ($_SESSION["tipo"] ==1) {
+		$estado = 2;
+	}
 	$datos = array(
 		trim($_POST["nombre-box"]),
 		trim($_POST["apellido-box"]),
@@ -34,34 +40,24 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 		md5("1234"),
 		trim($_POST["sexo-box"]),
 		str_replace(" ", "", trim($_POST["fono-box"])),
-		trim($_POST["tipo-box"])
+		trim($tipo),
+		trim($estado),
+		trim($_SESSION["id"])
 		);
-	if ($cliente->crear_usuario($datos)) {
-		if ($id_user_created = $cliente->id_insert()) {
-			header("Location: ver_usuario.php?usr=" . $id_user_created);
-		}
-	}
-	else
-		header("Location: mod_perfil.php");
+	if ($id_insert = $cliente->crear_usuario($datos))
+		header("Location: ver_usuario.php?usr=" . $id_insert);
 }
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-    	<meta charset='utf-8'>
-		<title>A-Magica</title>
-		<link rel='stylesheet' type='text/css' href='../../css/bootstrap.min.css'>
-		<link rel='stylesheet' type='text/css' href='../../css/dashboard.css'>
+    	<?php include_once("../head.php"); ?>
 	</head>
 	<body>
-		<?php
-		 include_once("../top-menu.php");
-		?>
+		<?php include_once("../top-menu.php"); ?>
 		<div class='container-fluid'>
 			<div class='row'>
-				<?php
-				include("../menu.php");
-				?>
+				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
 						Perfil
@@ -94,6 +90,9 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 								</select>
 							</div>
 						</div>
+						<?php
+						if ($_SESSION["tipo"] == 1) {
+						?>
 						<div class='form-group'>
 							<label for='tipo-box' class='col-sm-2 control-label'>Tipo Usuario</label>
 							<div class='col-sm-10'>
@@ -109,22 +108,24 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 								</select>
 							</div>
 						</div>
+						<?php
+						}
+						?>
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono'>
+								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
 								<button type='submit' class='btn btn-default'>Crear</button>
+								<a class="btn btn-info" href="listar_usuarios.php">Atrás</a>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-		<script type='text/javascript' src='../../js/bootstrap.js'></script>
 	</body>
 </html>

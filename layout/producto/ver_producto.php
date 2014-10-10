@@ -2,19 +2,24 @@
 include_once("../../include/header-cache.php");
 require("../../include/cliente.class.php");
 if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
+
 $cliente = new Cliente;
-if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"]))
-	if ($consulta->num_rows > 0) {
-		$row = $consulta->fetch_array(MYSQLI_ASSOC);
-		$nombre = $row["nombre"];
-		$apellido = $row["apellido"];		
-		$mail = $row["mail"];
-		if($row["sexo"] == 1)
-			$sexo = "Hombre";
-		else
-			$sexo = "Mujer";
-		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
+
+if (isset($_GET["prd"])) {
+	if ($consulta = $cliente->consulta_producto($_GET["prd"])) {
+		if ($consulta->num_rows > 0) {
+			$row = $consulta->fetch_array(MYSQLI_ASSOC);
+			$codigo = $row["codigo"];
+			$desc = $row["descr"];
+			$cat = $row["categoria"];
+			$curso = $row["curso"];
+			$idioma = $row["idioma"];
+		}
 	}
+}
+else {
+	header("Location: listar_productos.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,39 +37,38 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"]))
 					</h2>
 					<form class='form-horizontal' role='form'>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Nombre</label>
+							<label class='col-sm-2 control-label'>Código</label>
 							<div class='col-sm-10'>
-								<p class='form-control-static'><?php echo $nombre; ?></p>
+								<p class='form-control-static'><?php echo $codigo; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Apellido</label>
+							<label class='col-sm-2 control-label'>Descripción</label>
 							<div class='col-sm-10'>
-								<p class='form-control-static'><?php echo $apellido; ?></p>
+								<p class='form-control-static'><?php echo $desc; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Correo</label>
+							<label class='col-sm-2 control-label'>Categoría</label>
 							<div class='col-sm-10'>	
-								<p class='form-control-static'><?php echo $mail; ?></p>
+								<p class='form-control-static'><?php echo $cat; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Sexo
-							</label>
+							<label class='col-sm-2 control-label'>Curso</label>
 							<div class='col-sm-10'>
-								<p class='form-control-static'><?php echo $sexo; ?></p>
+								<p class='form-control-static'><?php echo $curso; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Teléfono</label>
+							<label class='col-sm-2 control-label'>Idioma</label>
 							<div class='col-sm-10'>
-								<p class='form-control-static'><?php echo $fono; ?></p>
+								<p class='form-control-static'><?php echo $idioma; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
-								<a class='btn btn-default' href='mod_perfil.php'>Modificar</a>
+								<a class='btn btn-default' href='mod_producto.php?prd=<?php echo $_GET["prd"] ?>'>Modificar</a>
 							</div>
 						</div>
 					</form>

@@ -6,8 +6,8 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: ../../inc
 
 $cliente = new Cliente;
 
-if (isset($_GET["usr"])) 
-	$cliente->cambia_estado_usuario(0, $_GET["usr"]);
+if (isset($_GET["clg"])) 
+	$cliente->cambia_estado_colegio(0, $_GET["clg"]);
 
-header("Location: listar_usuarios.php?exito=3");
+header("Location: listar_colegios.php?exito=1");
 ?>

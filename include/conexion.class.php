@@ -16,11 +16,11 @@ class DBManager {
 
 	//El método abrir establece una conexión con la base de datos 
 	public function conectar() {
-		$this->conn = mysqli_connect($this->dbhost, $this->dbuser, $this->dbpass,$this->dbname);
-		if (mysqli_connect_errno()) {
+		$this->conn = new mysqli($this->dbhost, $this->dbuser, $this->dbpass,$this->dbname);
+		if ($this->conn->connect_errno) {
 			die('Error al conectar con mysql');
 		}
-		if (!mysqli_set_charset($this->conn, "utf8")) {
+		if (!$this->conn->set_charset("utf8")) {
 			die("Error cargando el conjunto de caracteres utf8");
 		}
 		return true;
@@ -29,32 +29,32 @@ class DBManager {
 	//El método "consulta" ejecuta la sentencia select que recibe por parámetro "$query" a la base de datos y devuelve un array asociativo con los datos que obtuvo de la base de datos para facilitar su posteiror manejo.
 	public function consulta($query) {
 		$valores = array();
-		$result = mysqli_query($this->conn,$query);
+		$result = $this->conn->query($query);
 		if (!$result) {
-			die('Error query BD:' . mysqli_error());
+			die('Error query BD:' . $this->conn->error);
 		}
 		return $result;
 	}
 
 	//La función sql nos permite ejecutar una senetencia sql en la base de datos, se suele utilizar para senetencias insert y update.
 	public function sql($sql) {
-		$resultado=mysqli_query($this->conn,$sql);
+		$resultado = $this->conn->query($sql);
 		return $resultado;
 	}
 
 	//La función id nos devuelve el identificador del último registro insertado en la base de datos
 	public function id() {
-		return mysqli_insert_id($this->conn);
+		return $this->conn->insert_id;
 	}
 
 	//La función "cerrar" finaliza la conexión con la base de datos.
 	public function cerrar() {
-		mysqli_close($this->conn);
+		$this->conn->close();
 	}
 
 	//La función 'escape' escapa los caracteres especiales de una cadena para usarla en una sentencia SQL
 	public function escape($value) {
-		return mysqli_real_escape_string($this->conn,$value);
+		return $this->conn->real_escape_string($value);
 	}
 }
 ?>

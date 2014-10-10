@@ -6,13 +6,13 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: ../../inc
 
 $cliente = new Cliente;
 
-if (isset($_GET["usr"])) {
-	$res = $cliente->consulta_estado_usuario($_GET["usr"]);
+if (isset($_GET["prd"])) {
+	$res = $cliente->consulta_estado_producto($_GET["prd"]);
 	$row = $res->fetch_array(MYSQLI_ASSOC);
 	if ($row["estado"] == 1)
-		$cliente->cambia_estado_usuario(2, $_GET["usr"]);
+		$cliente->cambia_estado_producto(2, $_GET["prd"]);
 	if ($row["estado"] == 2)
-		$cliente->cambia_estado_usuario(1, $_GET["usr"]);
+		$cliente->cambia_estado_producto(1, $_GET["prd"]);
 }
-header("Location: listar_usuarios.php?exito=2");
+header("Location: listar_productos.php?exito=2");
 ?>

@@ -31,58 +31,63 @@ else {
     	<?php include_once("../head.php"); ?>
 	</head>
 	<body>
-		<?php
-		 include_once("../top-menu.php");
-		?>
-		<div class="container-fluid">
-			<div class="row">
-				<?php
-				include("../menu.php");
-				?>
-				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-					<h2 class="sub-header">
+		<?php include_once("../top-menu.php"); ?>
+		<div class='container-fluid'>
+			<div class='row'>
+				<?php include("../menu.php"); ?>
+				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
+					<h2 class='sub-header'>
 						Perfil
 					</h2>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Nombre</label>
-							<div class="col-sm-10">
-								<p class="form-control-static"><?php echo $nombre; ?></p>
+					<form class='form-horizontal' role='form'>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Nombre</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $nombre; ?></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Apellido</label>
-							<div class="col-sm-10">
-								<p class="form-control-static"><?php echo $apellido; ?></p>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Apellido</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $apellido; ?></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Correo</label>
-							<div class="col-sm-10">	
-								<p class="form-control-static"><?php echo $mail; ?></p>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Correo</label>
+							<div class='col-sm-10'>	
+								<p class='form-control-static'><?php echo $mail; ?></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Sexo</label>
-							<div class="col-sm-10">
-								<p class="form-control-static"><?php echo $sexo; ?></p>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Sexo</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $sexo; ?></p>
+							</div>
+						</div>						
+						<?php
+						if ($_SESSION["tipo"] == 1) {
+						?>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Tipo</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $tipo; ?></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Tipo</label>
-							<div class="col-sm-10">
-								<p class="form-control-static"><?php echo $tipo; ?></p>
+						<?php
+						}
+						?>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Teléfono</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $fono; ?></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Teléfono</label>
-							<div class="col-sm-10">
-								<p class="form-control-static"><?php echo $fono; ?></p>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<a class="btn btn-default" href="mod_usuario.php?usr=<?php echo $_GET["usr"] ?>">Modificar</a>
+						<div class='form-group'>
+							<div class='col-sm-offset-2 col-sm-10'>
+								<?php if ($_SESSION["tipo"] == 1) { ?>
+								<a class='btn btn-default' href='mod_usuario.php?usr=<?php echo $_GET["usr"] ?>'>Modificar</a>
+								<?php } ?>
+								<a class="btn btn-info" href="listar_usuarios.php">Atrás</a>
 							</div>
 						</div>
 					</form>
