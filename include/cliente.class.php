@@ -15,7 +15,7 @@ class cliente {
 
 	function crear_usuario($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO usuario(nombre, apellido, mail, pass, sexo, telefono, tipo, estado, creado_por) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', '" . $campos[5] . "', '" . $campos[6] . "', '" . $campos[7] . "', '" . $campos[8] . "');");
+			$this->con->sql("INSERT INTO usuario(nombre, apellido, mail, pass, sexo, telefono, tipo, estado, creado_por, colegio_id) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', '" . $campos[5] . "', '" . $campos[6] . "', '" . $campos[7] . "', '" . $campos[8] . "', '" . $campos[9] . "');");
 			return $this->con->id();
 	}
 
@@ -31,17 +31,23 @@ class cliente {
 			return $this->con->id();
 	}
 
-	function crear_credito($campos) {
+	function crear_credito($id) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO credito(usuario_id, cantidad, fecha, sentido, creado_por) VALUES('" . $campos[0] . "', '" . $campos[1] . "', NOW(), '" . $campos[2] . "', '" . $campos[3] . "');");
+			$this->con->sql("INSERT INTO credito(usuario_id, cantidad, fecha) VALUES('" . $id . "', 0, NOW());");
 			return $this->con->id();
 	}
 
-	// function crear_credito($campos) {
-	// 	if($this->con->conectar() == true)
-	// 		$this->con->sql("INSERT INTO producto(usuario_id, cantidad, fecha, sentido, creado_por) VALUES('" . $campos[0] . "', '" . $campos[1] . "', NOW(), '" . $campos[2] . "', '" . $campos[3] . "');");
-	// 		return $this->con->id();
-	// }
+	function crear_curso($campos) {
+		if($this->con->conectar() == true)
+			$this->con->sql("INSERT INTO curso(colegio_id, nivel) VALUES('" . $campos[0] . "', '" . $campos[1] . "');");
+			return $this->con->id();
+	}
+
+	function crear_venta_credito($campos) {
+		if($this->con->conectar() == true)
+			$this->con->sql("INSERT INTO venta_credito(usuario_id, credito_id, fecha_venta, sentido, cantidad) VALUES('" . $campos[0] . "', '" . $campos[1] . "', NOW(), '" . $campos[2] . "', '" . $campos[3] . "');");
+			return $this->con->id();
+	}
 
 	// Fin INSERT
 	// Inicio UPDATE
@@ -91,12 +97,22 @@ class cliente {
 			return $this->con->sql("UPDATE producto SET estado = '{$estado}' WHERE id = '{$id}';");
 	}
 
+	function actualiza_credito_usuario($cantidad, $id) {
+		if($this->con->conectar() == true)
+			return $this->con->sql("UPDATE credito SET cantidad = '" . $cantidad . "', fecha = NOW() WHERE id = '{$id}';");
+	}
+
+	function actualiza_colegio_usuario($colegio, $usuario) {
+		if($this->con->conectar() == true)
+			return $this->con->sql("UPDATE usuario SET colegio_id = '{$colegio}' WHERE id = '{$usuario}';");
+	}
+
 	// Fin UPDATE
 	// Inicio SELECT
 
 	function consulta_usuario_login($mail, $pass) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT * FROM usuario WHERE mail = '" . $mail . "' AND pass = '" . $pass . "';");
+			return $this->con->consulta("SELECT * FROM usuario WHERE estado = 1 AND mail = '" . $mail . "' AND pass = '" . $pass . "';");
 	}
 
 	function consulta_usuario_pass_correcta($pass, $id) {
@@ -134,7 +150,12 @@ class cliente {
 			return $this->con->consulta("SELECT u.id, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.estado != 0;");
 	}
 
-	function listar_usuarios_id($id) {
+	function listar_usuarios_eliminados() {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.id, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.estado = 0;");
+	}
+
+	function listar_usuarios_creado_por($id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT u.id, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.estado != 0 AND u.creado_por = {$id};");
 	}
@@ -146,17 +167,22 @@ class cliente {
 
 	function listar_colegios() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.prov_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 GROUP BY cl.id;");
+			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 GROUP BY cl.id;");
+	}
+
+	function lista_simple_colegios() {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id, nombre FROM colegio WHERE estado != 0;");
 	}
 
 	function listar_colegios_id($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.prov_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 AND cl.creado_por = '{$id}' GROUP BY cl.id;");
+			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 AND cl.creado_por = '{$id}' GROUP BY cl.id;");
 	}
 
 	function consulta_colegio_id($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT cl.id, cl.nombre, cl.calle, cl.numero, cl.fono, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.prov_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.id = '{$id}' and cl.estado != 0 GROUP BY cl.id;");
+			return $this->con->consulta("SELECT cl.id, cl.nombre, cl.calle, cl.numero, cl.fono, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.id = '{$id}' and cl.estado != 0 GROUP BY cl.id;");
 	}
 
 	function listar_regiones() {
@@ -181,7 +207,7 @@ class cliente {
 
 	function listar_comunas_por_provincia($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT * FROM comuna WHERE prov_id = '" . $id . "';");
+			return $this->con->consulta("SELECT * FROM comuna WHERE provincia_id = '{$id}';");
 	}
 
 	function listar_categorias() {
@@ -197,6 +223,16 @@ class cliente {
 	function listar_idiomas() {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT * FROM idioma WHERE estado = 1;");
+	}
+
+	function listar_usuarios_credito() {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT c.id AS id, c.usuario_id, CONCAT(u.nombre, ' ', u.apellido) AS nombre, t.descripcion, c.cantidad FROM usuario u INNER JOIN tipo_usuario t ON u.tipo = t.id LEFT JOIN credito c ON c.usuario_id = u.id WHERE u.tipo = 2 AND u.estado = 1;");
+	}
+
+	function consulta_cantidad_credito_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT cantidad FROM credito WHERE id = {$id};");
 	}
 
 	// Fin SELECT

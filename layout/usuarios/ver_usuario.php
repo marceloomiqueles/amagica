@@ -18,6 +18,7 @@ if (isset($_GET["usr"])) {
 			else
 				$sexo = "Mujer";
 			$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
+			$cliente->cerrar_conn();
 		}
 	}
 }

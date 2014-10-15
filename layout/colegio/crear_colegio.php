@@ -38,6 +38,11 @@ if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["
 		);
 	if ($id_insert = $cliente->crear_colegio($datos)) {
 		$cliente->cerrar_conn();
+		for ($i = 1; $i <= 4; $i++) {
+			$datos = array($id_insert, $i);
+			$cliente->crear_curso($datos);
+			$cliente->cerrar_conn();
+		}
 		header("Location: ver_colegio.php?clg=" . $id_insert);
 	}
 }

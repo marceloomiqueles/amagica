@@ -34,7 +34,7 @@ $cliente = new Cliente;
 								if ($_SESSION["tipo"] == 1)
 									$res = $cliente->listar_usuarios();
 								else
-									$res = $cliente->listar_usuarios_id($_SESSION["id"]);
+									$res = $cliente->listar_usuarios_creado_por($_SESSION["id"]);
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
@@ -44,6 +44,9 @@ $cliente = new Cliente;
 									<td><?php echo $row["descripcion"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
+											<a class='btn btn-info' title='Asociar a Colegio' href='asociar_usuario_colegio.php?usr=<?php echo $row["id"] ?>'>
+												<i class='glyphicon glyphicon-plus'></i>
+											</a>
 											<a class='btn btn-success' title='Detalle' href='ver_usuario.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-eye-open'></i>
 											</a>

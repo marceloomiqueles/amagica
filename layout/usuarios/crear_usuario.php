@@ -30,8 +30,12 @@ if (isset($_POST["fono-box"]))
 
 if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && (isset($_POST["tipo-box"]) || $_SESSION["tipo"] != 1) && isset($_POST["fono-box"])) {
 	$estado = 1;
-	if ($_SESSION["tipo"] ==1) {
+	$colegio = 0;
+	if ($_SESSION["tipo"] == 1) {
 		$estado = 2;
+	}
+	if ($_SESSION["tipo"] == 3) {
+		$colegio = $_SESSION["colegio"];
 	}
 	$datos = array(
 		trim($_POST["nombre-box"]),
@@ -41,11 +45,18 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 		trim($_POST["sexo-box"]),
 		str_replace(" ", "", trim($_POST["fono-box"])),
 		trim($tipo),
-		trim($estado),
-		trim($_SESSION["id"])
+		$estado,
+		trim($_SESSION["id"]),
+		$colegio
 		);
-	if ($id_insert = $cliente->crear_usuario($datos))
+	if ($id_insert = $cliente->crear_usuario($datos)) {
+		$cliente->cerrar_conn();
+		if($tipo == 2) {
+			$cliente->crear_credito($id_insert);
+			$cliente->cerrar_conn();
+		}
 		header("Location: ver_usuario.php?usr=" . $id_insert);
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -104,6 +115,7 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 								  	<option value='<?php echo $row["id"] ?>' <?php if ($tipo == $row["id"]) echo "selected"; echo ">" . $row["descripcion"]; ?></option>
 									<?php
 									}
+									$cliente->cerrar_conn();
 									?>
 								</select>
 							</div>

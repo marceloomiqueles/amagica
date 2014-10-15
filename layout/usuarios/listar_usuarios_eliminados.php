@@ -26,13 +26,12 @@ $cliente = new Cliente;
 									<th>#</th>
 									<th>Nombre</th>
 									<th>Rol</th>
-									<th class='text-center'>Cantidad</th>
 									<th class='text-center'>Acción</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_usuarios_credito(2);
+								$res = $cliente->listar_usuarios_eliminados();
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
@@ -40,14 +39,10 @@ $cliente = new Cliente;
 									<td><?php echo $i; ?></td>
 									<td><?php echo $row["nombre"]; ?></td>
 									<td><?php echo $row["descripcion"]; ?></td>
-									<td class='text-center'><?php echo $row["cantidad"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Agregar' href='sumar_credito.php?crd=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-plus'></i>
-											</a>
-											<a class='btn btn-mini btn-danger' title='Descontar' href='restar_credito.php?crd=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-minus'></i>
+											<a class='btn btn-mini btn-success' title='Eliminar' data-confirm='Seguro que quieres activar este Usuario?' href='activar_usuario.php?usr=<?php echo $row["id"] ?>'>
+												<i class='glyphicon glyphicon-play	'></i>
 											</a>
 										</div>
 									</td>
