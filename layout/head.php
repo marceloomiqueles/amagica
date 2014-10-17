@@ -1,4 +1,5 @@
-<meta charset='utf-8'>
+<meta charset='UTF-8'>
+<meta charset='ISO-8859-1'>
 <title>A-Magica</title>
 <link rel='stylesheet' type='text/css' href='<?php echo $dir_base ?>css/bootstrap.min.css'>
 <link rel='stylesheet' type='text/css' href='<?php echo $dir_base ?>css/dashboard.css'>

@@ -10,6 +10,7 @@ $desc = "";
 $cat = 0;
 $curso = 0;
 $idioma = 0;
+$cantidad = 0;
 
 if (isset($_POST["codigo-box"]))
 	$codigo = $_POST["codigo-box"];
@@ -21,17 +22,26 @@ if (isset($_POST["curso-box"]))
 	$curso = $_POST["curso-box"];
 if (isset($_POST["idioma-box"]))
 	$idioma = $_POST["idioma-box"];
+if (isset($_POST["cantidad-box"]))
+	$cantidad = $_POST["cantidad-box"];
 
 if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["cat-box"]) && isset($_POST["curso-box"]) && isset($_POST["idioma-box"])) {
-	$datos = array(
-		trim($_POST["cat-box"]),
-		trim($_POST["codigo-box"]),
-		trim($_POST["desc-box"]),
-		trim($_POST["curso-box"]),
-		trim($_POST["idioma-box"])
-		);
-	if ($id_insert = $cliente->crear_producto($datos))
-		header("Location: ver_producto.php?prd=" . $id_insert);
+	$uploadfile = '../../Descargas/' . basename($_FILES['file-box']['name']);
+	$target_dir = $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
+
+	if (move_uploaded_file($_FILES['file-box']['tmp_name'], $uploadfile)) {
+	    $datos = array(
+			trim($_POST["cat-box"]),
+			trim($_POST["codigo-box"]),
+			trim($_POST["desc-box"]),
+			trim($_POST["curso-box"]),
+			trim($_POST["idioma-box"]),
+			$target_dir,
+			trim($_POST["cantidad-box"])
+			);
+		if ($id_insert = $cliente->crear_producto($datos))
+			header("Location: ver_producto.php?prd=" . $id_insert);
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -46,9 +56,9 @@ if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["ca
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Crear Producto
+						Producto Nuevo
 					</h2>
-					<form class='form-horizontal' role='form' action='crear_producto.php' method='post'>
+					<form class='form-horizontal' role='form' action='crear_producto.php' method='post' enctype='multipart/form-data'>
 						<div class='form-group'>
 							<label for='codigo-box' class='col-sm-2 control-label'>Código</label>
 							<div class='col-sm-10'>
@@ -103,9 +113,30 @@ if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["ca
 							</div>
 						</div>
 						<div class='form-group'>
+							<label for='cantidad-box' class='col-sm-2 control-label'>Cant. Licencias</label>
+							<div class='col-sm-10'>
+								<select name='cantidad-box' id='cantidad-box' class='form-control'>
+									<?php
+									for ($i = 1; $i <= 4; $i++) {
+									?>
+								  	<option value='<?php echo $i ?>' <?php if ($cantidad == $i) echo "selected"; echo ">" . $i; ?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						<div class='form-group'>
+						    <label for='file-box' class='col-sm-2 control-label'>Archivo Descarga</label>
+						    <div class='col-sm-10'>
+							    <input type='file' name='file-box' id='file-box'>
+							    <p class='help-block'>Example block-level help text here.</p>
+						    </div>
+						</div>
+						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
 								<button type='submit' class='btn btn-default'>Crear</button>
-								<a class="btn btn-info" href="listar_productos.php">Atrás</a>
+								<a class='btn btn-info' href='listar_productos.php'>Atrás</a>
 							</div>
 						</div>
 					</form>

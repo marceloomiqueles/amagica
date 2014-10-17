@@ -21,8 +21,6 @@ if (isset($_POST["mail-box"]))
 	$correo = $_POST["mail-box"];
 if (isset($_POST["sexo-box"]))
 	$sexo = $_POST["sexo-box"];
-if (isset($_POST["tipo-box"]))
-	$tipo = $_POST["tipo-box"];
 if (isset($_POST["fono-box"]))
 	$fono = $_POST["fono-box"];
 if (isset($_GET["usr"]))
@@ -31,7 +29,7 @@ if (isset($_POST["id-box"]))
 	$id_box = $_POST["id-box"];
 
 if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"])) {
-	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), trim($_POST["tipo-box"]), str_replace(" ", "", trim($_POST["fono-box"])));
+	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), 1, str_replace(" ", "", trim($_POST["fono-box"])), 1, 0, 0);
 	if ($cliente->actualiza_usuario_id($cambios, $id_box))
 		header("Location: ver_usuario.php?usr=" . $id_box);
 	else
@@ -44,11 +42,8 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 		$nombre = $row["nombre"];
 		$apellido = $row["apellido"];
 		$mail = $row["mail"];
-		$tipo = $row["tipo_id"];
-		if($row["sexo"] == 1)
-			$sexo = "Hombre";
-		else
-			$sexo = "Mujer";
+		$tipo = $row["descripcion"];
+		$sexo = $row["sexo"];
 		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
 	}
 ?>
@@ -64,7 +59,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Perfil
+						Modificar Administrador
 					</h2>
 					<form class='form-horizontal' role='form' action='mod_usuario.php' method='post'>
 						<div class='form-group'>
@@ -90,24 +85,15 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($tipo== 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($_SESSION["sexo"] == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Hombre</option>
+								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Mujer</option>
 								</select>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='tipo-box' class='col-sm-2 control-label'>Tipo</label>
 							<div class='col-sm-10'>
-								<select name='tipo-box' class='form-control'>
-									<?php
-									$res = $cliente->listar_tipo_usuario();
-									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
-									?>
-								  	<option value='<?php echo $row["id"] ?>' <?php if ($tipo == $row["id"]) echo "selected"; echo ">" . $row["descripcion"]; ?></option>
-									<?php
-									}
-									?>
-								</select>
+								<p class='form-control-static'><?php echo $tipo; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

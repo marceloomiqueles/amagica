@@ -11,6 +11,8 @@ $cat = "";
 $curso = 0;
 $idioma = 0;
 $id_box = "";
+$n_lic = 0;
+$file = "";
 
 if (isset($_POST["codigo-box"]))
 	$codigo = $_POST["codigo-box"];
@@ -22,20 +24,23 @@ if (isset($_POST["curso-box"]))
 	$curso = $_POST["curso-box"];
 if (isset($_POST["idioma-box"]))
 	$idioma = $_POST["idioma-box"];
+if (isset($_POST["cantidad-box"]))
+	$n_lic = $_POST["cantidad-box"];
 if (isset($_GET["prd"]))
 	$id_box = $_GET["prd"];
 if (isset($_POST["id-box"]))
 	$id_box = $_POST["id-box"];
 
-if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["cat-box"]) && isset($_POST["curso-box"]) && isset($_POST["idioma-box"]) && isset($_POST["id-box"])) {
-	$cambios = array(
+if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["cat-box"]) && isset($_POST["curso-box"]) && isset($_POST["idioma-box"]) && isset($_POST["cantidad-box"]) && isset($_POST["id-box"])) {
+	$datos = array(
 		trim($_POST["cat-box"]), 
 		trim($_POST["codigo-box"]), 
 		trim($_POST["desc-box"]), 
 		trim($_POST["curso-box"]), 
-		trim($_POST["idioma-box"])
+		trim($_POST["idioma-box"]),
+		trim($_POST["cantidad-box"])
 	);
-	if ($cliente->actualiza_producto_id($cambios, $id_box))
+	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box);
 }
 
@@ -47,6 +52,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$cat = $row["categoria_id"];
 		$curso = $row["curso"];
 		$idioma = $row["idioma_id"];
+		$n_lic = $row["n_licencia"];
 	}
 ?>
 <!DOCTYPE html>
@@ -61,9 +67,9 @@ if ($consulta = $cliente->consulta_producto($id_box))
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Perfil
+						Editar Producto
 					</h2>
-					<form class='form-horizontal' role='form' action='mod_producto.php' method='post'>
+					<form class='form-horizontal' role='form' action='mod_producto.php' method='post' enctype='multipart/form-data'>
 						<div class='form-group'>
 							<label for='codigo-box' class='col-sm-2 control-label'>Código</label>
 							<div class='col-sm-10'>
@@ -119,8 +125,30 @@ if ($consulta = $cliente->consulta_producto($id_box))
 							</div>
 						</div>
 						<div class='form-group'>
+							<label for='cantidad-box' class='col-sm-2 control-label'>Cant. Licencias</label>
+							<div class='col-sm-10'>
+								<select name='cantidad-box' id='cantidad-box' class='form-control'>
+									<?php
+									for ($i = 1; $i <= 4; $i++) {
+									?>
+								  	<option value='<?php echo $i ?>' <?php if ($n_lic == $i) echo "selected"; echo ">" . $i; ?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						<div class='form-group'>
+						    <label for='file-box' class='col-sm-2 control-label'>Archivo Descarga</label>
+						    <div class='col-sm-10'>
+							    <input type='file' name='file-box' id='file-box'>
+							    <p class='help-block'>Example block-level help text here.</p>
+						    </div>
+						</div>
+						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
 								<button type='submit' class='btn btn-default'>Guardar</button>
+								<a class="btn btn-info" href="ver_producto.php?prd=<?php echo $id_box; ?>">Atrás</a>
 							</div>
 						</div>
 					</form>

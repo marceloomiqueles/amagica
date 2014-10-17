@@ -15,7 +15,7 @@ class cliente {
 
 	function crear_usuario($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO usuario(nombre, apellido, mail, pass, sexo, telefono, tipo, estado, creado_por, colegio_id) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', '" . $campos[5] . "', '" . $campos[6] . "', '" . $campos[7] . "', '" . $campos[8] . "', '" . $campos[9] . "');");
+			$this->con->sql("INSERT INTO usuario(nombre, apellido, mail, pass, sexo, telefono, tipo, estado, creado_por, colegio_id, nivel, curso) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', '" . $campos[5] . "', '" . $campos[6] . "', '" . $campos[7] . "', '" . $campos[8] . "', '" . $campos[9] . "', '" . $campos[10] . "', '" . $campos[11] . "');");
 			return $this->con->id();
 	}
 
@@ -27,7 +27,7 @@ class cliente {
 
 	function crear_producto($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO producto(categoria_id, codigo, descr, curso, idioma_id, estado, ruta) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', 2, '');");
+			$this->con->sql("INSERT INTO producto(categoria_id, codigo, descr, curso, idioma_id, estado, ruta, n_licencia) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', 2, '" . $campos[5] . "', '" . $campos[6] . "');");
 			return $this->con->id();
 	}
 
@@ -49,12 +49,18 @@ class cliente {
 			return $this->con->id();
 	}
 
+	function crear_venta($campos) {
+		if($this->con->conectar() == true)
+			$this->con->sql("INSERT INTO venta(producto_id, colegio_id, credito_id, fecha_venta, estado) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', NOW(), 1);");
+			return $this->con->id();
+	}
+
 	// Fin INSERT
 	// Inicio UPDATE
 
 	function actualiza_usuario_id($campos, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE usuario SET nombre = '" . $campos[0] . "', apellido = '" . $campos[1] . "', mail = '" . $campos[2] . "', sexo = '" . $campos[3] . "', tipo = '" . $campos[4] . "', telefono = '" . $campos[5] . "' WHERE id = '" . $id . "';");
+			return $this->con->sql("UPDATE usuario SET nombre = '" . $campos[0] . "', apellido = '" . $campos[1] . "', mail = '" . $campos[2] . "', sexo = '" . $campos[3] . "', tipo = '" . $campos[4] . "', telefono = '" . $campos[5] . "', colegio_id = '" . $campos[6] . "', nivel = '" . $campos[7] . "', curso = '" . $campos[8] . "' WHERE id = '" . $id . "';");
 	}
 
 	function actualiza_colegio_id($campos, $id) {
@@ -74,7 +80,7 @@ class cliente {
 
 	function actualiza_producto_id($campos, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "' WHERE id = '" . $id . "';");
+			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "', n_licencia = '" . $campos[5] . "' WHERE id = '" . $id . "';");
 	}
 
 	function reinicia_pass_usuario($campos, $id) {
@@ -99,7 +105,7 @@ class cliente {
 
 	function actualiza_credito_usuario($cantidad, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE credito SET cantidad = '" . $cantidad . "', fecha = NOW() WHERE id = '{$id}';");
+			return $this->con->sql("UPDATE credito SET cantidad = '{$cantidad}', fecha = NOW() WHERE id = '{$id}';");
 	}
 
 	function actualiza_colegio_usuario($colegio, $usuario) {
@@ -112,47 +118,72 @@ class cliente {
 
 	function consulta_usuario_login($mail, $pass) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT * FROM usuario WHERE estado = 1 AND mail = '" . $mail . "' AND pass = '" . $pass . "';");
+			return $this->con->consulta("SELECT * FROM usuario WHERE estado = 1 AND mail = '{$mail}' AND pass = '{$pass}';");
 	}
 
 	function consulta_usuario_pass_correcta($pass, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT pass FROM usuario WHERE pass = '" . $pass . "' AND id = '" . $id . "';");
+			return $this->con->consulta("SELECT pass FROM usuario WHERE pass = '{$pass}' AND id = '{$id}';");
 	}
 
 	function consulta_estado_usuario($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT estado FROM usuario WHERE id = '" . $id . "';");
+			return $this->con->consulta("SELECT estado FROM usuario WHERE id = '{$id}';");
 	}
 
 	function consulta_estado_producto($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT estado FROM producto WHERE id = '" . $id . "';");
+			return $this->con->consulta("SELECT estado FROM producto WHERE id = '{$id}';");
 	}
 
 	function consulta_estado_colegio($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT estado FROM colegio WHERE id = '" . $id . "';");
+			return $this->con->consulta("SELECT estado FROM colegio WHERE id = '{$id}';");
 	}
 
 	function consulta_usuario_id($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.*, tu.descripcion, tu.id AS tipo_id FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.id = '" . $id . "' AND u.estado != 0;");
+			return $this->con->consulta("SELECT u.*, c.nombre AS nombre_colegio, tu.descripcion, tu.id AS tipo_id, cr.id AS credito_id, cr.cantidad FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN colegio c ON u.colegio_id = c.id LEFT JOIN credito cr ON cr.usuario_id = u.id WHERE u.id = '" . $id . "' AND u.estado != 0;");
+	}
+
+	function consulta_venta_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.*, c.nombre AS nombre_colegio, tu.descripcion, tu.id AS tipo_id, cr.id AS credito_id, cr.cantidad FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN colegio c ON u.colegio_id = c.id LEFT JOIN credito cr ON cr.usuario_id = u.id WHERE u.id = '" . $id . "' AND u.estado != 0;");
+	}
+
+	function consulta_producto_venta_id($id) {
+		if ($this->con->conectar() == true)
+			return $this->con->consulta("SELECT v.id, CONCAT(u.nombre, ' ', u.apellido) AS vendedor, p.descr AS producto, c.nombre AS colegio FROM venta v INNER JOIN credito cr ON cr.id = v.credito_id INNER JOIN producto p ON p.id = v.producto_id INNER JOIN usuario u ON u.id = cr.usuario_id INNER JOIN colegio c ON c.id = v.colegio_id WHERE v.id = {$id};");
+	}
+
+	function listar_ventas() {
+		if ($this->con->conectar() == true)
+			return $this->con->consulta("SELECT v.id, v.fecha_venta, CONCAT(u.nombre, ' ', u.apellido) AS vendedor, p.descr AS producto, c.nombre AS colegio, v.estado FROM venta v INNER JOIN credito cr ON cr.id = v.credito_id INNER JOIN producto p ON p.id = v.producto_id INNER JOIN usuario u ON u.id = cr.usuario_id INNER JOIN colegio c ON c.id = v.colegio_id;");
 	}
 
 	function consulta_producto($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, p.categoria_id, c.nombre AS categoria, p.idioma_id, i.descr AS idioma, p.estado, p.curso FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.id = '{$id}' AND p.estado != 0;");
+			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, p.categoria_id, c.nombre AS categoria, p.ruta, p.n_licencia, p.idioma_id, i.descr AS idioma, p.estado, p.curso FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.id = '{$id}' AND p.estado != 0;");
 	}
 
 	function listar_usuarios() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.id, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.estado != 0;");
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0;");
+	}
+
+	function listar_usuarios_por_tipo($tipo) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo};");
 	}
 
 	function listar_usuarios_eliminados() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.id, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo WHERE u.estado = 0;");
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado = 0;");
+	}
+
+	function listar_usuarios_eliminados_por_tipo($tipo) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado = 0 AND u.tipo = {$tipo};");
 	}
 
 	function listar_usuarios_creado_por($id) {
@@ -167,7 +198,7 @@ class cliente {
 
 	function listar_colegios() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 GROUP BY cl.id;");
+			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0;");
 	}
 
 	function lista_simple_colegios() {
@@ -217,7 +248,7 @@ class cliente {
 
 	function listar_productos() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, c.nombre AS categoria, i.descr AS idioma, p.estado FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.estado != 0;");
+			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, c.nombre AS categoria, i.descr AS idioma, p.estado, p.curso, p.n_licencia FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.estado != 0;");
 	}
 
 	function listar_idiomas() {

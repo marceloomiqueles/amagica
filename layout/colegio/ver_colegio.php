@@ -21,7 +21,6 @@ if (isset($_GET["clg"])) {
 			for($i = 0; $i < ($row["n_cursos"] - 1); $i++) {
 				$letra++;
 			}
-			echo $letra;
 			if ($row["n_cursos"] > 1) {
 				$cursos = $cursos . " - " . $letra;
 			}

@@ -27,7 +27,9 @@ $cliente = new Cliente;
 									<th>Codigo</th>
 									<th>Descripción</th>
 									<th>Categoría</th>
+									<th class='text-center'>Cant x Lic.</th>
 									<th>Idioma</th>
+									<th class='text-center'>Curso</th>
 									<th class='text-center'>Acción</th>
 								</tr>
 							</thead>
@@ -42,7 +44,9 @@ $cliente = new Cliente;
 									<td><?php echo $row["codigo"]; ?></td>
 									<td><?php echo $row["descr"]; ?></td>
 									<td><?php echo $row["categoria"]; ?></td>
+									<td class='text-center'><?php echo $row["n_licencia"]; ?></td>
 									<td><?php echo $row["idioma"]; ?></td>
+									<td class='text-center'><?php echo $row["curso"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
 											<a class='btn btn-success' title='Detalle' href='ver_producto.php?prd=<?php echo $row["id"] ?>'>

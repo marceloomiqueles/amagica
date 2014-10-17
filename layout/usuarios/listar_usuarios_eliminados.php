@@ -17,7 +17,7 @@ $cliente = new Cliente;
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Lista Usuarios <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) {echo "(Clave cambiada exitosamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Usuario eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Usuario creado correctamente!)";} ?>
+						Lista Usuarios Eliminados <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) {echo "(Clave cambiada exitosamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Usuario eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Usuario creado correctamente!)";} ?>
 					</h2>
 					<div class='table-responsive'>
 						<table class='table table-striped'>
@@ -31,7 +31,7 @@ $cliente = new Cliente;
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_usuarios_eliminados();
+								$res = $cliente->listar_usuarios_eliminados_por_tipo(1);
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>

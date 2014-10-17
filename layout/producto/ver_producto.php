@@ -14,6 +14,8 @@ if (isset($_GET["prd"])) {
 			$cat = $row["categoria"];
 			$curso = $row["curso"];
 			$idioma = $row["idioma"];
+			$cant_lic = $row["n_licencia"];
+			$down_file = $row["ruta"];
 		}
 	}
 }
@@ -33,7 +35,7 @@ else {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Perfil
+						Detalle Producto
 					</h2>
 					<form class='form-horizontal' role='form'>
 						<div class='form-group'>
@@ -67,8 +69,21 @@ else {
 							</div>
 						</div>
 						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Cant. Licencias</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $cant_lic; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Archivo Descarga</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $down_file; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
 								<a class='btn btn-default' href='mod_producto.php?prd=<?php echo $_GET["prd"] ?>'>Modificar</a>
+								<a class="btn btn-info" href="listar_productos.php">Atrás</a>
 							</div>
 						</div>
 					</form>

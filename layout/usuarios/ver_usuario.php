@@ -38,7 +38,7 @@ else {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Perfil
+						Detalle Administrador
 					</h2>
 					<form class='form-horizontal' role='form'>
 						<div class='form-group'>
