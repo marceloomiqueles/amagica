@@ -43,7 +43,7 @@ $cliente = new Cliente;
 									<td class='text-center'><?php echo $row["cantidad"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Detalle' href='ver_usuario.php?usr=<?php echo $row["id"] ?>'>
+											<a class='btn btn-success' title='Detalle' href='ver_vendedor.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-eye-open'></i>
 											</a>
 											<?php if ($_SESSION["tipo"] == 1) { ?>

@@ -70,6 +70,7 @@
 				<?php } ?>
 			</ul>
 		</li>
+		<?php if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Profesor
@@ -94,7 +95,7 @@
 				<?php } ?>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] == 1) { ?>
+		<?php } if ($_SESSION["tipo"] == 1) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Capacitador
