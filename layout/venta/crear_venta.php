@@ -20,16 +20,25 @@ if (isset($_POST["cantidad-box"]))
 	$cantidad = $_POST["cantidad-box"];
 
 if (isset($_POST["producto-box"]) && isset($_POST["colegio-box"]) && isset($_POST["id_cred"]) && isset($_POST["cantidad-box"])) {
-	$datos = array(
-		trim($_POST["producto-box"]),
-		trim($_POST["colegio-box"]),
-		trim($_POST["id_cred"])
-		);
-	if ($id_insert = $cliente->crear_venta($datos)) {
-		$cliente->cerrar_conn();
-		$cliente->actualiza_credito_usuario($cantidad - 1, $id_cred);
-		$cliente->cerrar_conn();
-		header("Location: ver_venta.php?vnt=" . $id_insert);
+	if ($consulta = $cliente->consulta_credito_usuario($_SESSION["id"])) {
+		$row = $consulta->fetch_array(MYSQLI_ASSOC);
+		if ($row["cantidad"] > 0) {
+			if ($consulta = $cliente->consulta_colegio_producto_tipo($colegio, $producto, 1)) {
+				if ($consulta->num_rows < 1) {
+					$datos = array(
+						trim($_POST["producto-box"]),
+						trim($_POST["colegio-box"]),
+						trim($_POST["id_cred"])
+						);
+					if ($id_insert = $cliente->crear_venta($datos)) {
+						$cliente->cerrar_conn();
+						$cliente->actualiza_credito_usuario($cantidad - 1, $id_cred);
+						$cliente->cerrar_conn();
+						header("Location: ver_venta.php?vnt=" . $id_insert);
+					}
+				}
+			}
+		}
 	}
 }
 if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {

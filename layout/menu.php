@@ -1,4 +1,5 @@
 <div class='col-sm-3 col-md-2 sidebar'>
+	<?php if ($_SESSION["tipo"] < 4) { ?>
 	<ul class='nav nav-sidebar'>
 		<?php if ($_SESSION["tipo"] == 1) {?>
 		<li class='dropdown'>
@@ -45,7 +46,7 @@
 				</li>
 			</ul>
 		</li>
-		<?php } ?>
+		<?php } if ($_SESSION["tipo"] < 3) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Admin. Colegio
@@ -70,7 +71,7 @@
 				<?php } ?>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
+		<?php } if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Profesor
@@ -133,11 +134,18 @@
 						Listar
 					</a>
 				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/producto/listar_productos_eliminados.php'>
+						Eliminado
+					</a>
+				</li>
 			</ul>
 		</li>
 		<?php } ?>
 	</ul>
+	<?php } ?>
 	<ul class='nav nav-sidebar'>
+		<?php if ($_SESSION["tipo"] < 3) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Venta
@@ -155,7 +163,7 @@
 				</li>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] < 3) {?>
+		<?php } if ($_SESSION["tipo"] < 3) {?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Colegio
@@ -253,36 +261,34 @@
 			<ul class='dropdown-menu' role='menu'>
 				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/documento/'>
-						Subir
+					<a href='<?php echo $dir_base ?>/layout/documento/crear_documento.php'>
+						Crear
 					</a>
 				</li>
 				<?php } ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/documento/'>
+					<a href='<?php echo $dir_base ?>/layout/documento/listar_documentos.php'>
 						Listar
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>/layout/documento/listar_documentos_eliminados.php'>
+						Eliminados
 					</a>
 				</li>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] <> 2) { ?>
+		<?php if ($_SESSION["tipo"] <> 2 && $_SESSION["tipo"] <> 5) { ?>
 		<li>
 			<a clas='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Software
 			</a>
 			<ul class='dropdown-menu' role='menu'>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/juego/'>
+					<a href='<?php echo $dir_base ?>/layout/descarga/listar_descargas.php'>
 						Listar
 					</a>
 				</li>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
-				<li>
-					<a href='<?php echo $dir_base ?>/layout/juego/'>
-						Subir
-					</a>
-				</li>
-				<?php } ?>
 			</ul>
 		</li>
 		<?php } ?>

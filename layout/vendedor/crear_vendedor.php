@@ -83,8 +83,8 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Masculino</option>
+								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Femenino</option>
 								</select>
 							</div>
 						</div>

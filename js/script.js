@@ -13,11 +13,11 @@ $(document).ready(function(){
 function cargaComuna() {
 	var comuna = $("#provincia-box").val();
     $.ajax({
-    type: "POST",
-    url: "../extra/carga_comuna_por_provincia.php",
-    data: { id: comuna}
-    }).done(function(datos){
-        $("#comuna-box").html(datos);
+	    type: "POST",
+	    url: "../extra/carga_comuna_por_provincia.php",
+	    data: { id: comuna}
+	    }).done(function(datos){
+	        $("#comuna-box").html(datos);
     });
 }
 
@@ -30,5 +30,17 @@ function cargaProvincia() {
 	}).done(function(datos) {
 		$("#provincia-box").html(datos);
 		cargaComuna($("#provincia-box").val());
+	});
+}
+
+function cargaCursosPorColegio() {
+	var provincia = $("#colegio-box").val();
+	$.ajax({
+  	type: "POST",
+	url: "../extra/carga_cursos_por_colegio.php",
+	data: { id: provincia}
+	}).done(function(datos) {
+		$("#provincia-box").html(datos);
+		cargaComuna($("#curso-box").val());
 	});
 }

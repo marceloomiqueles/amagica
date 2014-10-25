@@ -1,7 +1,6 @@
 <?php
 include_once("../../include/header-cache.php");
 require("../../include/cliente.class.php");
-
 if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
 
 $cliente = new Cliente;
@@ -18,54 +17,45 @@ $cliente = new Cliente;
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Lista Ventas <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) echo "(Colegio eliminado exitosamente!)"; ?>
+						Lista productos <?php if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Producto eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Producto creado correctamente!)";} ?>
 					</h2>
 					<div class='table-responsive'>
 						<table class='table table-striped'>
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Vendedor</th>
+									<th>Descripción</th>
 									<th>Producto</th>
-									<th>Colegio</th>
-									<th>Fecha</th>
+									<th>Categoría</th>
+									<th>Idioma</th>
+									<th class='text-center'>Curso</th>
 									<th class='text-center'>Acción</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-								if ($_SESSION["tipo"] == 1)
-									$res = $cliente->listar_ventas();
-								else
-									$res = $cliente->listar_ventas_por_vendedor($_SESSION["id"]);
-								$i=1;
+								$res = $cliente->listar_documentos_eliminados();
+								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row["vendedor"]; ?></td>
+									<td><?php echo $row["descr"]; ?></td>
 									<td><?php echo $row["producto"]; ?></td>
-									<td><?php echo $row["colegio"]; ?></td>
-									<td><?php echo $row["fecha_venta"]; ?></td>
+									<td><?php echo $row["categoria"]; ?></td>
+									<td><?php echo $row["idioma"]; ?></td>
+									<td class='text-center'><?php echo $row["curso"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Detalle' href='ver_venta.php?vnt=<?php echo $row["id"]; ?>'>
-												<i class='glyphicon glyphicon-eye-open'></i>
+											<a class='btn btn-mini btn-success' title='Activar' data-confirm='Seguro que quieres activar este Usuario?' href='activar_documento.php?dct=<?php echo $row["id"] ?>'>
+												<i class='glyphicon glyphicon-play	'></i>
 											</a>
-											<?php
-												if ($_SESSION["tipo"] == 1) {
-											?>
-											<a class='btn btn-mini btn-danger' title='Eliminar' data-confirm='Seguro que quieres eliminar este Usuario?' href='eliminar_venta.php?vnt=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-trash	'></i>
-											</a>
-											<?php } ?>
 										</div>
 									</td>
 								</tr>
 								<?php
 									$i++;
 								}
-								$cliente->cerrar_conn();
 								?>
 							</tbody>
 						</table>

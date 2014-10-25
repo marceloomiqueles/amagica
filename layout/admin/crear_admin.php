@@ -83,15 +83,24 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Masculino</option>
+								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Femenino</option>
 								</select>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
+								<div class="input-group">
+	      							<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='1'>9</option>
+										  	<option value='2'>2</option>
+										</select>
+									</span>
+									<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>

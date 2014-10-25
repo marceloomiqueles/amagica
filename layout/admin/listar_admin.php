@@ -32,7 +32,11 @@ $cliente = new Cliente;
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_usuarios_por_tipo(3);
+								if ($_SESSION["tipo"] == 1) {
+									$res = $cliente->listar_usuarios_por_tipo(3);
+								} else {
+									$res = $cliente->listar_usuarios_por_tipo_creado_por(3, $_SESSION["id"]);
+								}
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>

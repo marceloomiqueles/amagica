@@ -10,9 +10,9 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"]))
 		$apellido = $row["apellido"];		
 		$mail = $row["mail"];
 		if($row["sexo"] == 1)
-			$sexo = "Hombre";
+			$sexo = "Masculino";
 		else
-			$sexo = "Mujer";
+			$sexo = "Femenino";
 		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
 	}
 ?>

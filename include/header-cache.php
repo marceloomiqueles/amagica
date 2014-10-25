@@ -5,6 +5,8 @@ session_start();
 $dir_base = "/CLIENTES/"; //Produccion
 // $dir_base = "/amagica/"; //Desarrollo
 
+// error_reporting(E_ALL);
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Max-Age: 1000');

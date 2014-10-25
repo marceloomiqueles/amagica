@@ -89,8 +89,8 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Masculino</option>
+								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Femenino</option>
 								</select>
 							</div>
 						</div>
@@ -103,7 +103,7 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='colegio-box' class='col-sm-2 control-label'>Colegio</label>
 							<div class='col-sm-10'>
-								<select name='colegio-box' id='colegio-box' class='form-control'>
+								<select name='colegio-box' onchange='cargaCurosPorColegio()' id='colegio-box' class='form-control'>
 									<?php
 									$res = $cliente->lista_simple_colegios();
 									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {

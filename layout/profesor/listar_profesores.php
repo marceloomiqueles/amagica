@@ -34,7 +34,11 @@ $cliente = new Cliente;
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_usuarios_por_tipo(4);
+								if ($_SESSION["tipo"] == 1) {
+									$res = $cliente->listar_usuarios_por_tipo(4);
+								} else {
+									$res = $cliente->listar_usuarios_por_tipo_creado_por(4, $_SESSION["id"]);
+								}
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 									$curso = "A";
@@ -43,7 +47,7 @@ $cliente = new Cliente;
 									}
 								?>
 								<tr>
-									<td><?php echo $i; ?></td>
+									<td><?php echo ++$i; ?></td>
 									<td><?php echo $row["nombre"]; ?></td>
 									<td><?php echo $row["descripcion"]; ?></td>
 									<td><?php echo $row["nombre_colegio"]; ?></td>
@@ -84,7 +88,6 @@ $cliente = new Cliente;
 									</td>
 								</tr>
 								<?php
-									$i++;
 								}
 								$cliente->cerrar_conn();
 								?>

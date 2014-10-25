@@ -15,9 +15,9 @@ if (isset($_GET["usr"])) {
 			$tipo = $row["descripcion"];
 			$colegio = $row["nombre_colegio"];
 			if($row["sexo"] == 1)
-				$sexo = "Hombre";
+				$sexo = "Masculino";
 			else
-				$sexo = "Mujer";
+				$sexo = "Femenino";
 			$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
 			$cliente->cerrar_conn();
 		}

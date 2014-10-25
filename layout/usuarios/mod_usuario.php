@@ -44,7 +44,8 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 		$mail = $row["mail"];
 		$tipo = $row["descripcion"];
 		$sexo = $row["sexo"];
-		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
+		$digito = substr($row["telefono"], 3, 1);
+		$fono = substr($row["telefono"], 4, 8);
 	}
 ?>
 <!DOCTYPE html>
@@ -65,28 +66,28 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
 							<div class='col-sm-10'>
-								<input type='text' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
+								<input type='text' maxlength='45' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
 								<input type='hidden' name='id-box' value='<?php echo $id_box; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='apellido-box' class='col-sm-2 control-label'>Apellido</label>
 							<div class='col-sm-10'>
-								<input type='text' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido; ?>'>
+								<input type='text' maxlength='45' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
 							<div class='col-sm-10'>	
-								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
+								<input type='mail' maxlength='45' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Masculino</option>
+								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Femenino</option>
 								</select>
 							</div>
 						</div>
@@ -99,7 +100,16 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								<div class='input-group'>
+									<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='1'>9</option>
+										  	<option value='2'>2</option>
+										</select>
+									</span>
+									<input type='text' maxlength='8' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>

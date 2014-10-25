@@ -28,9 +28,9 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 		$apellido = $row["apellido"];
 		$mail = $row["mail"];
 		if($row["sexo"] == 1)
-			$sexo = "Hombre";
+			$sexo = "Masculino";
 		else
-			$sexo = "Mujer";
+			$sexo = "Femenino";
 		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
 	}
 }
@@ -72,8 +72,8 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
 								<select name='sexo-box' class='form-control'>
-								  	<option value='1' <?php if ($_SESSION["sexo"] == 1) echo "selected" ?>>Hombre</option>
-								  	<option value='2' <?php if ($_SESSION["sexo"] == 2) echo "selected" ?>>Mujer</option>
+								  	<option value='1' <?php if ($_SESSION["sexo"] == 1) echo "selected" ?>>Masculino</option>
+								  	<option value='2' <?php if ($_SESSION["sexo"] == 2) echo "selected" ?>>Femenino</option>
 								</select>
 							</div>
 						</div>

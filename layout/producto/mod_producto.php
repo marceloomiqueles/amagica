@@ -15,30 +15,42 @@ $n_lic = 0;
 $file = "";
 
 if (isset($_POST["codigo-box"]))
-	$codigo = $_POST["codigo-box"];
+	$codigo = trim($_POST["codigo-box"]);
 if (isset($_POST["desc-box"]))
-	$desc = $_POST["desc-box"];
+	$desc = trim($_POST["desc-box"]);
 if (isset($_POST["cat-box"]))
-	$cat = $_POST["cat-box"];
+	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
-	$curso = $_POST["curso-box"];
+	$curso = trim($_POST["curso-box"]);
 if (isset($_POST["idioma-box"]))
-	$idioma = $_POST["idioma-box"];
+	$idioma = trim($_POST["idioma-box"]);
 if (isset($_POST["cantidad-box"]))
-	$n_lic = $_POST["cantidad-box"];
+	$n_lic = trim($_POST["cantidad-box"]);
 if (isset($_GET["prd"]))
-	$id_box = $_GET["prd"];
+	$id_box = trim($_GET["prd"]);
 if (isset($_POST["id-box"]))
-	$id_box = $_POST["id-box"];
+	$id_box = trim($_POST["id-box"]);
+if (isset($_POST["old-file-box"]))
+	$ruta = trim($_POST["old-file-box"]);
 
-if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["cat-box"]) && isset($_POST["curso-box"]) && isset($_POST["idioma-box"]) && isset($_POST["cantidad-box"]) && isset($_POST["id-box"])) {
+if ($_FILES["file-box"]["name"] != "") {
+	$uploadfile = '../../Descargas/' . basename($_FILES['file-box']['name']);
+	$target_dir = $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
+
+	if (move_uploaded_file($_FILES['file-box']['tmp_name'], $uploadfile)) {
+		$ruta = $target_dir;
+	}
+}
+
+if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0) {
 	$datos = array(
-		trim($_POST["cat-box"]), 
-		trim($_POST["codigo-box"]), 
-		trim($_POST["desc-box"]), 
-		trim($_POST["curso-box"]), 
-		trim($_POST["idioma-box"]),
-		trim($_POST["cantidad-box"])
+		$cat, 
+		$codigo, 
+		$desc, 
+		$curso, 
+		$idioma,
+		$n_lic,
+		$ruta
 	);
 	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box);
@@ -53,6 +65,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$curso = $row["curso"];
 		$idioma = $row["idioma_id"];
 		$n_lic = $row["n_licencia"];
+		$ruta = $row["ruta"];
 	}
 ?>
 <!DOCTYPE html>
@@ -142,6 +155,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 						    <label for='file-box' class='col-sm-2 control-label'>Archivo Descarga</label>
 						    <div class='col-sm-10'>
 							    <input type='file' name='file-box' id='file-box'>
+							    <input type='hidden' name='old-file-box' value='<? echo $ruta; ?>'>
 							    <p class='help-block'>Example block-level help text here.</p>
 						    </div>
 						</div>
