@@ -12,7 +12,7 @@ $curso = 0;
 $idioma = 0;
 $id_box = "";
 $n_lic = 0;
-$file = "";
+$valor = "";
 
 if (isset($_POST["codigo-box"]))
 	$codigo = trim($_POST["codigo-box"]);
@@ -26,32 +26,15 @@ if (isset($_POST["idioma-box"]))
 	$idioma = trim($_POST["idioma-box"]);
 if (isset($_POST["cantidad-box"]))
 	$n_lic = trim($_POST["cantidad-box"]);
+if (isset($_POST["valor-box"]))
+	$valor = trim($_POST["valor-box"]);
 if (isset($_GET["prd"]))
 	$id_box = trim($_GET["prd"]);
 if (isset($_POST["id-box"]))
 	$id_box = trim($_POST["id-box"]);
-if (isset($_POST["old-file-box"]))
-	$ruta = trim($_POST["old-file-box"]);
 
-if ($_FILES["file-box"]["name"] != "") {
-	$uploadfile = '../../Descargas/' . basename($_FILES['file-box']['name']);
-	$target_dir = $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
-
-	if (move_uploaded_file($_FILES['file-box']['tmp_name'], $uploadfile)) {
-		$ruta = $target_dir;
-	}
-}
-
-if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0) {
-	$datos = array(
-		$cat, 
-		$codigo, 
-		$desc, 
-		$curso, 
-		$idioma,
-		$n_lic,
-		$ruta
-	);
+if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0 && $valor > 0) {
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor);
 	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box);
 }
@@ -65,7 +48,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$curso = $row["curso"];
 		$idioma = $row["idioma_id"];
 		$n_lic = $row["n_licencia"];
-		$ruta = $row["ruta"];
+		$valor = $row["valor"];
 	}
 ?>
 <!DOCTYPE html>
@@ -152,12 +135,18 @@ if ($consulta = $cliente->consulta_producto($id_box))
 							</div>
 						</div>
 						<div class='form-group'>
-						    <label for='file-box' class='col-sm-2 control-label'>Archivo Descarga</label>
-						    <div class='col-sm-10'>
-							    <input type='file' name='file-box' id='file-box'>
-							    <input type='hidden' name='old-file-box' value='<? echo $ruta; ?>'>
-							    <p class='help-block'>Example block-level help text here.</p>
-						    </div>
+							<label for='valor-box' class='col-sm-2 control-label'>Valor Producto</label>
+							<div class='col-sm-10'>
+								<select name='valor-box' id='valor-box' class='form-control'>
+									<?php
+									for ($i = 1; $i <= 4; $i++) {
+									?>
+								  	<option value='<?php echo $i ?>' <?php if ($valor == $i) echo "selected"; echo ">" . $i; ?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>

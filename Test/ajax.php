@@ -1,54 +1,85 @@
 <?php
-require('cdb.php');
+require("../include/cliente.class.php");
+$cliente = new Cliente;
 
-// Encrypt Function
-function mc_encrypt($encrypt, $key) {
-    $encrypt = serialize($encrypt);
-    $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_DEV_URANDOM);
-    $key = pack('H*', $key);
-    $mac = hash_hmac('sha256', $encrypt, substr(bin2hex($key), -32));
-    $passcrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $encrypt.$mac, MCRYPT_MODE_CBC, $iv);
-    $encoded = base64_encode($passcrypt).'|'.base64_encode($iv);
-    return $encoded;
-}
-
-// Decrypt Function
-function mc_decrypt($decrypt, $key) {
-    $decrypt = explode('|', $decrypt);
-    $decoded = base64_decode($decrypt[0]);
-    $iv = base64_decode($decrypt[1]);
-    if(strlen($iv)!==mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)){ return false; }
-    $key = pack('H*', $key);
-    $decrypted = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $decoded, MCRYPT_MODE_CBC, $iv));
-    $mac = substr($decrypted, -64);
-    $decrypted = substr($decrypted, 0, -64);
-    $calcmac = hash_hmac('sha256', $decrypted, substr(bin2hex($key), -32));
-    if($calcmac!==$mac){ return false; }
-    $decrypted = unserialize($decrypted);
-    return $decrypted;
+function pasa_hexa($random) {
+    $hexakey = "";
+    for ($i = 0; $i < strlen($random); $i++) {
+        $hexakey = $hexakey . dechex(ord($random[$i]));
+    }
+    return $hexakey;
 }
 
 if (isset($_POST["random"]) && isset($_POST["solicitud"])) {
-	$qry = $mysqli->query("SELECT n_solicitud, DATE_FORMAT(fecha_creacion,'%Y%m%d') AS fecha_creacion FROM licencia WHERE n_solicitud = '" . $_POST["solicitud"] . "' AND token IS NULL AND random IS NULL LIMIT 1");
-	while ($res = $qry->fetch_assoc()) {
-		$hexakey = "";
-		$random = $_POST["random"];
-		for ($i = 0; $i < strlen($random); $i++) {
-			$hexakey = $hexakey . dechex(ord($random[$i]));
-		}
+	if ($consulta = $cliente->consulta_solicitud_token($_POST["solicitud"])) {
+        if ($consulta->num_rows > 0) {
+            $row = $consulta->fetch_array(MYSQLI_ASSOC);
+            $n_solicitud = $row["n_solicitud"];
+            $fecha_creacion = $row["fecha_creacion"];
+            $fecha_fin = $row["fecha_fin"];
+            if ($row["idioma"] == 1)
+                $lang = "ES";
+            elseif ($row["idioma"] == 2)
+                $lang = "EN";
+            $curso = $row["nivel"];
+            $hexakey = "";
+            $hexakey = pasa_hexa($_POST["random"]);
+            if (strlen($hexakey) == 64) {
+                // echo $hexakey;
+                $cliente->actualiza_random_licencia($_POST["random"], $_POST["solicitud"]);
+                $cliente->actualiza_token_licencia(md5($n_solicitud . md5($hexakey)), $_POST["solicitud"]);
+                echo $n_solicitud . "#" . md5($n_solicitud . md5($hexakey)) . "#" . $fecha_creacion . "#" . $fecha_fin . "#" . $lang . "#" . $curso;
+                ?>
+                <script type="text/javascript">
+                    loadDESCARGA('http://www.descargamagica.cl/acciones/modtoken.php', '<?php echo $curso; ?>', '<?php echo $n_solicitud; ?>', '<?php echo md5($n_solicitud . md5($hexakey)); ?>', '<?php echo $fecha_creacion; ?>', '<?php echo $fecha_fin; ?>', '<?php echo $lang; ?>');
+                    
+                    function loadDESCARGA(php_file, tipolicencia, licencia, token, fechainicio, fechatermino, idioma) {
+                        alert("Estamos generando su descarga. Por favor espere y no cierre la ventana hasta que se le indique que el proceso ha finalizado. Gracias"); //O colcale un gif animado de preload
+                        var datastring= "tipolicencia="+tipolicencia+"&licencia="+licencia+"&token="+token+"&fechainicio="+fechainicio"&fechatermino="+fechatermino"&idioma="+idioma;
+                        var urlfile = php_file + "?x=" + parseInt(Math.random() * 1000000);
+                        var request =  get_XmlHttpx();
+                        request.open("POST", urlfile , true);
+                        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        request.setRequestHeader("Content-length", datastring.length);
+                        request.send(datastring);
+                        request.onreadystatechange = function() {
+                            //alert(request.readyState);
+                            if (request.readyState == 4) { //respuesta ok
+                                //alert(request.responseText);
+                            }
+                        }
+                    }
 
-		if (strlen($hexakey) == 64) {
-			// echo $hexakey;
-			$mysqli->query("update licencia set random = '" . $_POST["random"] . "' where n_solicitud = '" . $_POST["solicitud"] . "'");
-			$cadena = $res["n_solicitud"] . $res["fecha_creacion"] . md5($hexakey);
-			define('ENCRYPTION_KEY', $hexakey);
-			echo $encrypted_data = mc_encrypt($cadena, ENCRYPTION_KEY);
-			$mysqli->query("update licencia set token = '" . $encrypted_data . "' where n_solicitud = '" . $_POST["solicitud"] . "'");
-		}
-		// echo 'Decrypted Data: ' . mc_decrypt($encrypted_data, ENCRYPTION_KEY) . '</br>';
-	}
+                    //Request multiplataforma
+                    function get_XmlHttpx() {
+                        var xmlHttp = null;
+                        try{
+                            // Opera 8.0+, Firefox, Safari
+                            xmlHttp = new XMLHttpRequest();
+                        } catch (e) {
+                            // Internet Explorer Browsers
+                            try{
+                                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+                            } catch (e) {
+                                try{
+                                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                } catch (e) {
+                                    // Something went wrong
+                                    alert("AJAX no soportado");
+                                    return false;
+                                }
+                            }
+                        }
+                        return xmlHttp;
+                    }
+                </script>
+                <?php
+            }
+        }
+
+    }
 }
 else {
-	echo "ya existe, llame a su administrador";
+	echo "Random o Solicitud vacios";
 }
 ?>

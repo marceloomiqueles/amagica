@@ -11,37 +11,27 @@ $cat = 0;
 $curso = 0;
 $idioma = 0;
 $cantidad = 0;
+$valor = 0;
 
 if (isset($_POST["codigo-box"]))
-	$codigo = $_POST["codigo-box"];
+	$codigo = trim($_POST["codigo-box"]);
 if (isset($_POST["desc-box"]))
-	$desc = $_POST["desc-box"];
+	$desc = trim($_POST["desc-box"]);
 if (isset($_POST["cat-box"]))
-	$cat = $_POST["cat-box"];
+	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
-	$curso = $_POST["curso-box"];
+	$curso = trim($_POST["curso-box"]);
 if (isset($_POST["idioma-box"]))
-	$idioma = $_POST["idioma-box"];
+	$idioma = trim($_POST["idioma-box"]);
 if (isset($_POST["cantidad-box"]))
-	$cantidad = $_POST["cantidad-box"];
+	$cantidad = trim($_POST["cantidad-box"]);
+if (isset($_POST["valor-box"]))
+	$valor = trim($_POST["valor-box"]);
 
-if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["cat-box"]) && isset($_POST["curso-box"]) && isset($_POST["idioma-box"])) {
-	$uploadfile = '../../Descargas/' . basename($_FILES['file-box']['name']);
-	$target_dir = $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
-
-	if (move_uploaded_file($_FILES['file-box']['tmp_name'], $uploadfile)) {
-	    $datos = array(
-			trim($_POST["cat-box"]),
-			trim($_POST["codigo-box"]),
-			trim($_POST["desc-box"]),
-			trim($_POST["curso-box"]),
-			trim($_POST["idioma-box"]),
-			$target_dir,
-			trim($_POST["cantidad-box"])
-			);
-		if ($id_insert = $cliente->crear_producto($datos))
-			header("Location: ver_producto.php?prd=" . $id_insert);
-	}
+if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $cantidad > 0 && $valor > 0) {
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad);
+	if ($id_insert = $cliente->crear_producto($datos))
+		header("Location: ver_producto.php?prd=" . $id_insert);
 }
 ?>
 <!DOCTYPE html>
@@ -62,13 +52,13 @@ if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["ca
 						<div class='form-group'>
 							<label for='codigo-box' class='col-sm-2 control-label'>Código</label>
 							<div class='col-sm-10'>
-								<input type='text' name='codigo-box' class='form-control' id='codigo-box' placeholder='Código' value='<?php echo $codigo; ?>'>
+								<input type='text' name='codigo-box' maxlength='45' class='form-control' id='codigo-box' placeholder='Código' value='<?php echo $codigo; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='desc-box' class='col-sm-2 control-label'>Descripción</label>
 							<div class='col-sm-10'>
-								<input type='text' name='desc-box' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
+								<input type='text' name='desc-box' maxlength='45' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -127,11 +117,18 @@ if (isset($_POST["codigo-box"]) && isset($_POST["desc-box"]) && isset($_POST["ca
 							</div>
 						</div>
 						<div class='form-group'>
-						    <label for='file-box' class='col-sm-2 control-label'>Archivo Descarga</label>
-						    <div class='col-sm-10'>
-							    <input type='file' name='file-box' id='file-box'>
-							    <p class='help-block'>Example block-level help text here.</p>
-						    </div>
+							<label for='valor-box' class='col-sm-2 control-label'>Valor Producto</label>
+							<div class='col-sm-10'>
+								<select name='valor-box' id='valor-box' class='form-control'>
+									<?php
+									for ($i = 1; $i <= 4; $i++) {
+									?>
+								  	<option value='<?php echo $i ?>' <?php if ($valor == $i) echo "selected"; echo ">" . $i; ?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>

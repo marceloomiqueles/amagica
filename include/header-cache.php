@@ -2,8 +2,8 @@
 session_start();
 
 
-$dir_base = "/CLIENTES/"; //Produccion
-// $dir_base = "/amagica/"; //Desarrollo
+// $dir_base = "/CLIENTES/"; //Produccion
+$dir_base = "/amagica/"; //Desarrollo
 
 // error_reporting(E_ALL);
 

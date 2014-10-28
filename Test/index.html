@@ -10,7 +10,7 @@
 		<p id="results"></p>
 		<script>
 			function dot() {
-				valor = primera_llamada("c4ca4238a0b923820dcc509a6f75849b");
+				valor = primera_llamada("c9f0f895fb98ab9159f51fd0297e236d");
 				console.log(valor);
 		    }
 
@@ -39,16 +39,7 @@
 
 			function primera_llamada(solicitud) {
 				var res = encrypt();
-				// alert(res);
-				// c4ca4238a0b923820dcc509a6f75849b solicitud que puedes usar
-				$.ajax({
-				  	type: "POST",
-					url: "ajax.php",
-					data: { random: res, solicitud: solicitud },
-					success: function(data) {
-						return data;
-					}
-				});
+				$("#results").html(res + ' # ' + solicitud);
 			}
 		</script>
 	</body>

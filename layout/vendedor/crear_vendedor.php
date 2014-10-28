@@ -8,41 +8,31 @@ $cliente = new Cliente;
 $nombre = "";
 $apellido = "";
 $correo = "";
-$sexo = 0;
+$sexo = 1;
 $fono = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = trim($_POST["nombre-box"]);
 if (isset($_POST["apellido-box"]))
-	$apellido = $_POST["apellido-box"];
+	$apellido = trim($_POST["apellido-box"]);
 if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
+	$correo = trim($_POST["mail-box"]);
 if (isset($_POST["sexo-box"]))
-	$sexo = $_POST["sexo-box"];
+	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = $_POST["fono-box"];
+	$fono = trim($_POST["fono-box"]);
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"])) {
-	$datos = array(
-		trim($_POST["nombre-box"]),
-		trim($_POST["apellido-box"]),
-		trim($_POST["mail-box"]),
-		md5("1234"),
-		trim($_POST["sexo-box"]),
-		str_replace(" ", "", trim($_POST["fono-box"])),
-		2,
-		2,
-		trim($_SESSION["id"]),
-		1,
-		0,
-		0,
-		0
-		);
-	if ($id_insert = $cliente->crear_usuario($datos)) {
-			$cliente->cerrar_conn();
-			$cliente->crear_credito($id_insert);
-			$cliente->cerrar_conn();
-		header("Location: ver_vendedor.php?usr=" . $id_insert);
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && strlen($fono) == 8) {
+	$datos = array($nombre, $apellido, $correo, md5("1234"), $sexo,  "+56" . $_POST["ni-box"] . $fono, 2, 2, $_SESSION["id"], 1, 0, 0, 0);
+	if ($consulta = $cliente->consulta_correo_unico($correo)) {
+		if ($consulta->num_rows < 1) {
+			if ($id_insert = $cliente->crear_usuario($datos)) {
+				$cliente->cerrar_conn();
+				$cliente->crear_credito($id_insert);
+				$cliente->cerrar_conn();
+				header("Location: ver_vendedor.php?usr=" . $id_insert);
+			}
+		}
 	}
 }
 ?>
@@ -64,19 +54,19 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
 							<div class='col-sm-10'>
-								<input type='text' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
+								<input type='text' name='nombre-box' maxlength='45' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='apellido-box' class='col-sm-2 control-label'>Apellido</label>
 							<div class='col-sm-10'>
-								<input type='text' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido ?>'>
+								<input type='text' name='apellido-box' maxlength='45' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
 							<div class='col-sm-10'>	
-								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $correo ?>'>
+								<input type='mail' name='mail-box' maxlength='45' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $correo ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -91,7 +81,16 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
+								<div class='input-group'>
+									<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='9'>9</option>
+										  	<option value='2'>2</option>
+										</select>
+									</span>
+									<input type='text' name='fono-box' maxlength='8' onkeypress='return justNumbers(event);' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>

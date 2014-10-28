@@ -44,3 +44,19 @@ function cargaCursosPorColegio() {
 		cargaComuna($("#curso-box").val());
 	});
 }
+
+function justNumbers(e) {
+    var keynum = window.event ? window.event.keyCode : e.which;
+    if ((keynum == 8) || (keynum == 46))
+    	return true;
+    return /\d/.test(String.fromCharCode(keynum));
+}
+
+function validateEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+function strToUpper(key) { 
+    return key.toUpperCase();
+}

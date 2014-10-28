@@ -15,7 +15,7 @@ if (isset($_GET["prd"])) {
 			$curso = $row["curso"];
 			$idioma = $row["idioma"];
 			$cant_lic = $row["n_licencia"];
-			$down_file = $row["ruta"];
+			$valor = $row["valor"];
 		}
 	}
 }
@@ -75,9 +75,9 @@ else {
 							</div>
 						</div>
 						<div class='form-group'>
-							<label class='col-sm-2 control-label'>Archivo Descarga</label>
+							<label class='col-sm-2 control-label'>Valor Producto</label>
 							<div class='col-sm-10'>
-								<p class='form-control-static'><?php echo $down_file; ?></p>
+								<p class='form-control-static'><?php echo $valor; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

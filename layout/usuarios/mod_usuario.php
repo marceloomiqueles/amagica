@@ -14,26 +14,28 @@ $fono = "";
 $id_box = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = trim($_POST["nombre-box"]);
 if (isset($_POST["apellido-box"]))
-	$apellido = $_POST["apellido-box"];
-if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
+	$apellido = trim($_POST["apellido-box"]);
 if (isset($_POST["sexo-box"]))
-	$sexo = $_POST["sexo-box"];
+	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = $_POST["fono-box"];
+	$fono = trim("+56 " . $_POST["ni-box"] . " " . $_POST["fono-box"]);
 if (isset($_GET["usr"]))
-	$id_box = $_GET["usr"];
+	$id_box = trim($_GET["usr"]);
 if (isset($_POST["id-box"]))
-	$id_box = $_POST["id-box"];
+	$id_box = trim($_POST["id-box"]);
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"])) {
-	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), 1, str_replace(" ", "", trim($_POST["fono-box"])), 1, 0, 0);
-	if ($cliente->actualiza_usuario_id($cambios, $id_box))
-		header("Location: ver_usuario.php?usr=" . $id_box);
-	else
-		header("Location: mod_usuario.php?usr=" . $id_box);
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && $sexo > 0 && $fono > 0 && $id_box > 0) {
+	if ($consulta = $cliente->consulta_correo_unico($correo)) {
+		if ($consulta->num_rows < 1) {
+			$cambios = array($nombre, $apellido, $sexo, 1, str_replace(" ", "", $fono), 1, 0, 0);
+			if ($cliente->actualiza_usuario_id($cambios, $id_box))
+				header("Location: ver_usuario.php?usr=" . $id_box);
+			else
+				header("Location: mod_usuario.php?usr=" . $id_box);
+		}
+	}
 }
 
 if ($consulta = $cliente->consulta_usuario_id($id_box))
@@ -41,7 +43,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 		$row = $consulta->fetch_array(MYSQLI_ASSOC);
 		$nombre = $row["nombre"];
 		$apellido = $row["apellido"];
-		$mail = $row["mail"];
+		$correo = $row["mail"];
 		$tipo = $row["descripcion"];
 		$sexo = $row["sexo"];
 		$digito = substr($row["telefono"], 3, 1);
@@ -78,8 +80,8 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 						</div>
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
-							<div class='col-sm-10'>	
-								<input type='mail' maxlength='45' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $correo; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -104,8 +106,8 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 									<div class="input-group-addon">+56</div>
 	      							<span class='input-group-addon'>
 										<select name='ni-box'>
-										  	<option value='1'>9</option>
-										  	<option value='2'>2</option>
+										  	<option value='9' <?php if ($digito == 9) echo "selected" ?>>9</option>
+										  	<option value='2' <?php if ($digito == 2) echo "selected" ?>>2</option>
 										</select>
 									</span>
 									<input type='text' maxlength='8' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>

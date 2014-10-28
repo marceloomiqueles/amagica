@@ -39,8 +39,6 @@ else {
 							<label class="col-sm-2 control-label">Vendedor</label>
 							<div class="col-sm-10">
 								<p class="form-control-static"><?php echo $nombre; ?></p>
-								<input type='hidden' name='id_cred' value='<?php echo $id_cred; ?>'>
-								<input type='hidden' name='cantidad-box' value='<?php echo $cantidad; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>

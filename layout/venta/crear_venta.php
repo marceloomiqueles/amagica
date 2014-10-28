@@ -11,30 +11,99 @@ $id_cred = "";
 $cantidad = 0;
 
 if (isset($_POST["producto-box"]))
-	$producto = $_POST["producto-box"];
+	$producto = trim($_POST["producto-box"]);
 if (isset($_POST["colegio-box"]))
-	$colegio = $_POST["colegio-box"];
+	$colegio = trim($_POST["colegio-box"]);
 if (isset($_POST["id_cred"]))
-	$id_cred = $_POST["id_cred"];
+	$id_cred = trim($_POST["id_cred"]);
 if (isset($_POST["cantidad-box"]))
-	$cantidad = $_POST["cantidad-box"];
+	$cantidad = trim($_POST["cantidad-box"]);
 
-if (isset($_POST["producto-box"]) && isset($_POST["colegio-box"]) && isset($_POST["id_cred"]) && isset($_POST["cantidad-box"])) {
-	if ($consulta = $cliente->consulta_credito_usuario($_SESSION["id"])) {
+if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
+	$ok = 0;
+	if ($consulta = $cliente->consulta_valor_producto($producto)) {
 		$row = $consulta->fetch_array(MYSQLI_ASSOC);
-		if ($row["cantidad"] > 0) {
-			if ($consulta = $cliente->consulta_colegio_producto_tipo($colegio, $producto, 1)) {
-				if ($consulta->num_rows < 1) {
-					$datos = array(
-						trim($_POST["producto-box"]),
-						trim($_POST["colegio-box"]),
-						trim($_POST["id_cred"])
-						);
-					if ($id_insert = $cliente->crear_venta($datos)) {
-						$cliente->cerrar_conn();
-						$cliente->actualiza_credito_usuario($cantidad - 1, $id_cred);
-						$cliente->cerrar_conn();
-						header("Location: ver_venta.php?vnt=" . $id_insert);
+		$valor = $row["valor"];
+		if ($cantidad >= $valor) {
+			if ($cantidad > 0) {
+				if ($consulta = $cliente->consulta_colegio_producto_tipo($colegio, $producto, 1)) {
+					if ($consulta->num_rows < 1) {
+						$consulta = $cliente->consulta_colegio_simple($colegio);
+						$row = $consulta->fetch_array(MYSQLI_ASSOC);
+						$n_cursos = $row["n_cursos"];
+						$datos = array($producto, $colegio, $id_cred);
+						if ($id_insert = $cliente->crear_venta($datos)) {
+							$cliente->cerrar_conn();
+							$consulta = $cliente->consulta_producto_simple($producto);
+							$row = $consulta->fetch_array(MYSQLI_ASSOC);
+							$duracion = $row["duracion"];
+							$nivel = $row["curso"];
+							$idioma = $row["idioma_id"];
+							for ($i = 1; $i <= $n_cursos; $i++) {
+								$datos = array($producto, $duracion, 1, $nivel, $i, $idioma, $colegio);
+								if ($id_licencia = $cliente->crear_licencia($datos)) {
+									$cliente->cerrar_conn();
+									$cliente->actualiza_n_solicitud_licencia(md5($id_licencia), $id_licencia);
+									$cliente->cerrar_conn();
+									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
+										$cliente->cerrar_conn();
+										?>
+						                <script type="text/javascript">
+						                    loadDESCARGA('http://descargamagica.cl/CLIENTES/Test/descargaok.php', '<?php echo md5($id_licencia); ?>', '<?php echo $idioma; ?>', '<?php echo $curso; ?>');
+						                    
+						                    function loadDESCARGA(php_file, solicitud, lenguaje, curso) {
+						                        alert("Estamos generando su descarga. Por favor espere y no cierre la ventana hasta que se le indique que el proceso ha finalizado. Gracias"); //O colcale un gif animado de preload
+						                        var datastring= "solicitud="+solicitud+"&lenguaje="+lenguaje+"&curso="+curso;
+						                        var urlfile = php_file + "?x=" + parseInt(Math.random() * 1000000);
+						                        var request =  get_XmlHttpx();
+						                        request.open("POST", urlfile , true);
+						                        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						                        request.setRequestHeader("Content-length", datastring.length);
+						                        request.send(datastring);
+						                        request.onreadystatechange = function() {
+						                            //alert(request.readyState);
+						                            if (request.readyState == 4) { //respuesta ok
+						                                //alert(request.responseText);
+						                            }
+						                        }
+						                    }
+
+						                    //Request multiplataforma
+						                    function get_XmlHttpx() {
+						                        var xmlHttp = null;
+						                        try{
+						                            // Opera 8.0+, Firefox, Safari
+						                            xmlHttp = new XMLHttpRequest();
+						                        } catch (e) {
+						                            // Internet Explorer Browsers
+						                            try{
+						                                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+						                            } catch (e) {
+						                                try{
+						                                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+						                                } catch (e) {
+						                                    // Something went wrong
+						                                    alert("AJAX no soportado");
+						                                    return false;
+						                                }
+						                            }
+						                        }
+						                        return xmlHttp;
+						                    }
+						                </script>
+						                <?php										
+										$ok = 1;
+									} else {
+										$ok = 0;
+									}
+								}
+							}
+							if ($ok) {
+								$cliente->actualiza_credito_usuario($cantidad - $valor, $id_cred);
+								$cliente->cerrar_conn();
+								header("Location: ver_venta.php?vnt=" . $id_insert);
+							}
+						}
 					}
 				}
 			}

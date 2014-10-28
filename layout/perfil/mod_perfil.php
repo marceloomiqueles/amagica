@@ -5,13 +5,12 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../inc
 
 $cliente = new Cliente;
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"])) {
+if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"])) {
 	$cambios = array(
 		trim($_POST["nombre-box"]), 
 		trim($_POST["apellido-box"]), 
-		trim($_POST["mail-box"]), 
 		trim($_POST["sexo-box"]), 
-		str_replace(" ", "", trim($_POST["fono-box"]))
+		str_replace(" ", "", trim("+56 " . $_POST["ni-box"] . " " . $_POST["fono-box"]))
 		);
 	if ($cliente->actualiza_perfil_id($cambios, $_SESSION["id"])) {
 		$_SESSION["nombre"] = trim($_POST["nombre-box"]) . " " . trim($_POST["apellido-box"]);
@@ -31,7 +30,8 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 			$sexo = "Masculino";
 		else
 			$sexo = "Femenino";
-		$fono = substr($row["telefono"], 0, 3) . " " . substr($row["telefono"], 3, 1) . " " . substr($row["telefono"], 4, 4) . " " . substr($row["telefono"], 8, 4);
+		$digito = substr($row["telefono"], 3, 1);
+		$fono = substr($row["telefono"], 4, 8);
 	}
 }
 ?>
@@ -53,19 +53,19 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
 							<div class='col-sm-10'>
-								<input type='text' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
+								<input type='text' name='nombre-box' maxlength='45' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='apellido-box' class='col-sm-2 control-label'>Apellido</label>
 							<div class='col-sm-10'>
-								<input type='text' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido; ?>'>
+								<input type='text' name='apellido-box' maxlength='45' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
 							<div class='col-sm-10'>	
-								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
+								<p class='form-control-static'><?php echo $mail; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -80,7 +80,16 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								<div class='input-group'>
+									<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='9' <?php if ($digito == 9) echo "selected" ?>>9</option>
+										  	<option value='2' <?php if ($digito == 2) echo "selected" ?>>2</option>
+										</select>
+									</span>
+									<input type='text' maxlength='8' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>

@@ -21,22 +21,22 @@ if (isset($_POST["mail-box"]))
 if (isset($_POST["sexo-box"]))
 	$sexo = $_POST["sexo-box"];
 if (isset($_POST["fono-box"]))
-	$fono = $_POST["fono-box"];
+	$fono = "+56" . $_POST["ni-box"] . $_POST["fono-box"];
 if (isset($_POST["colegio-box"]))
 	$colegio = $_POST["colegio-box"];
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["colegio-box"])) {
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo > 0 && strlen($fono) > 4 && $colegio > 0) {
 	$datos = array(
-		trim($_POST["nombre-box"]),
-		trim($_POST["apellido-box"]),
-		trim($_POST["mail-box"]),
+		strtoupper($nombre),
+		strtoupper(apellido),
+		strtoupper($correo),
 		md5("1234"),
-		trim($_POST["sexo-box"]),
+		$sexo,
 		str_replace(" ", "", trim($_POST["fono-box"])),
 		3,
 		1,
-		trim($_SESSION["id"]),
-		trim($colegio),
+		$_SESSION["id"],
+		$colegio,
 		0,
 		0
 		);
@@ -64,19 +64,19 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Nombre</label>
 							<div class='col-sm-10'>
-								<input type='text' name='nombre-box' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
+								<input type='text' name='nombre-box' maxlength='45' class='form-control' id='nombre-box' placeholder='Nombre' value='<?php echo $nombre; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='apellido-box' class='col-sm-2 control-label'>Apellido</label>
 							<div class='col-sm-10'>
-								<input type='text' name='apellido-box' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido ?>'>
+								<input type='text' name='apellido-box' maxlength='45' class='form-control' id='apellido-box' placeholder='Apellido' value='<?php echo $apellido ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
 							<div class='col-sm-10'>	
-								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $correo ?>'>
+								<input type='mail' name='mail-box' maxlength='45' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $correo ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -95,11 +95,11 @@ if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST
 	      							<div class="input-group-addon">+56</div>
 	      							<span class='input-group-addon'>
 										<select name='ni-box'>
-										  	<option value='1'>9</option>
+										  	<option value='9'>9</option>
 										  	<option value='2'>2</option>
 										</select>
 									</span>
-									<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
+									<input type='text' name='fono-box' maxlength='8' onkeypress='return justNumbers(event);' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo substr($fono, 4, 8) ?>'>
 								</div>
 							</div>
 						</div>
