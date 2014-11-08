@@ -39,6 +39,14 @@
 
 			function primera_llamada(solicitud) {
 				var res = encrypt();
+				$.ajax({
+				  	type: "POST",
+					url: "ajax.php",
+					data: { random: res, solicitud: solicitud },
+					success: function(data) {
+						$('#results').html(data);
+					}
+				});
 				$("#results").html(res + ' # ' + solicitud);
 			}
 		</script>

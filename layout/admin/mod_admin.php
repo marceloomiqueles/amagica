@@ -81,7 +81,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 						<div class='form-group'>
 							<label for='mail-box' class='col-sm-2 control-label'>Correo</label>
 							<div class='col-sm-10'>	
-								<input type='mail' name='mail-box' class='form-control' id='mail-box' placeholder='Correo' value='<?php echo $mail; ?>'>
+								<p class='form-control-static'><?php echo $mail; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

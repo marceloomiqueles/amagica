@@ -26,23 +26,14 @@ if (isset($_POST["colegio-box"]))
 	$colegio = $_POST["colegio-box"];
 
 if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo > 0 && strlen($fono) > 4 && $colegio > 0) {
-	$datos = array(
-		strtoupper($nombre),
-		strtoupper(apellido),
-		strtoupper($correo),
-		md5("1234"),
-		$sexo,
-		str_replace(" ", "", trim($_POST["fono-box"])),
-		3,
-		1,
-		$_SESSION["id"],
-		$colegio,
-		0,
-		0
-		);
-	if ($id_insert = $cliente->crear_usuario($datos)) {
-		$cliente->cerrar_conn();
-		header("Location: ver_admin.php?usr=" . $id_insert);
+	if ($consulta = $cliente->consulta_correo_unico($correo)) {
+		if ($consulta->num_rows < 1) {
+			$datos = array(strtoupper($nombre), strtoupper(apellido), strtoupper($correo), md5("1234"), $sexo, str_replace(" ", "", trim($_POST["fono-box"])), 3, 1, $_SESSION["id"], $colegio, 0, 0);
+			if ($id_insert = $cliente->crear_usuario($datos)) {
+				$cliente->cerrar_conn();
+				header("Location: ver_admin.php?usr=" . $id_insert);
+			}
+		}
 	}
 }
 ?>

@@ -15,40 +15,44 @@ $nivel = 0;
 $curso = 0;
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = trim($_POST["nombre-box"]);
 if (isset($_POST["apellido-box"]))
-	$apellido = $_POST["apellido-box"];
+	$apellido = trim($_POST["apellido-box"]);
 if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
+	$correo = trim($_POST["mail-box"]);
 if (isset($_POST["sexo-box"]))
-	$sexo = $_POST["sexo-box"];
+	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = $_POST["fono-box"];
+	$fono = trim($_POST["fono-box"]);
 if (isset($_POST["colegio-box"]))
-	$colegio = $_POST["colegio-box"];
+	$colegio = trim($_POST["colegio-box"]);
 if (isset($_POST["nivel-box"]))
-	$nivel = $_POST["nivel-box"];
+	$nivel = trim($_POST["nivel-box"]);
 if (isset($_POST["curso-box"]))
-	$curso = $_POST["curso-box"];
+	$curso = trim($_POST["curso-box"]);
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["colegio-box"]) && isset($_POST["nivel-box"]) && isset($_POST["curso-box"])) {
-	$datos = array(
-		trim($_POST["nombre-box"]),
-		trim($_POST["apellido-box"]),
-		trim($_POST["mail-box"]),
-		md5("1234"),
-		trim($_POST["sexo-box"]),
-		str_replace(" ", "", trim($_POST["fono-box"])),
-		4,
-		1,
-		trim($_SESSION["id"]),
-		trim($_POST["colegio-box"]),
-		trim($_POST["nivel-box"]),
-		trim($_POST["curso-box"])
-		);
-	if ($id_insert = $cliente->crear_usuario($datos)) {
-		$cliente->cerrar_conn();
-		header("Location: ver_profesor.php?usr=" . $id_insert);
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && isset($fono) > 7 && $colegio > 0 && $nivel > 0 && $curso > 0) {
+	if ($res = $cliente->consulta_correo_unico($correo)) {
+		if ($res->count_rows < 1) {
+			$datos = array(
+				trim($_POST["nombre-box"]),
+				trim($_POST["apellido-box"]),
+				trim($_POST["mail-box"]),
+				md5("1234"),
+				trim($_POST["sexo-box"]),
+				str_replace(" ", "", trim($_POST["fono-box"])),
+				4,
+				1,
+				trim($_SESSION["id"]),
+				trim($_POST["colegio-box"]),
+				trim($_POST["nivel-box"]),
+				trim($_POST["curso-box"])
+				);
+			if ($id_insert = $cliente->crear_usuario($datos)) {
+				$cliente->cerrar_conn();
+				header("Location: ver_profesor.php?usr=" . $id_insert);
+			}
+		}
 	}
 }
 ?>

@@ -30,26 +30,38 @@ $curso;
 								<tr>
 									<th>#</th>
 									<th>Descripción</th>
+									<th>Colegio</th>
 									<th>Nivel</th>
+									<th>Curso</th>
+									<th>Idioma</th>
 									<th class='text-center'>Acción</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-								if ($_SESSION["tipo"] == 3)
-									$res = $cliente->consulta_descargas_colegio_admin($_SESSION["id"]);
+								if ($_SESSION["tipo"] == 1)
+									$res = $cliente->consulta_descargas();
+								elseif ($_SESSION["tipo"] == 3)
+									$res = $cliente->consulta_descargas_colegio($_SESSION["id"]);
 								elseif ($_SESSION["tipo"] == 4)
 									$res = $cliente->consulta_descargas_colegio_profesor($_SESSION["id"]);
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
+									$curso = "A";
+									for($b = 0; $b < ($row["curso"] - 1); $b++) {
+										$curso++;
+									}
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row["descr"]; ?></td>
-									<td><?php echo $row["curso"]; ?></td>
+									<td><?php echo $row["producto"]; ?></td>
+									<td><?php echo $row["colegio"]; ?></td>
+									<td><?php echo $row["nivel"]; ?></td>
+									<td><?php echo $curso; ?></td>
+									<td><?php echo $row["idioma"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-mini btn-success' title='Descargar' data-confirm='Seguro que quieres eliminar este Usuario?' href='<?php echo $row["ruta"] ?>'>
+											<a class='btn btn-mini btn-success' title='Descargar' data-confirm='Seguro que quieres eliminar este Usuario?' href='<?php echo $row["link_d"] ?>'>
 												<i class='glyphicon glyphicon-download'></i>
 											</a>
 										</div>

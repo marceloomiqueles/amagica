@@ -47,43 +47,49 @@ if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
 									$cliente->cerrar_conn();
 									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
 										$cliente->cerrar_conn();
-										// Extract data from the post
-						                extract($_POST);
-						                // Set POST variables
-						                $url = 'http://descargamagica.cl/CLIENTES/Test/descargaok.php';
-						                $fields = array(
-						                    'solicitud'=>urlencode(md5($id_licencia)),
-						                    'lenguaje'=>urlencode($idioma),
-						                    'curso'=>urlencode($curso)
-						                );
-						                // url-ify the data for the POST
-						                foreach($fields as $key=>$value) {
-						                    $fields_string .= $key . '=' . $value . '&'; 
-						                }
-						                rtrim($fields_string,'&');
-						                // Open connection
-						                $ch = curl_init();
-						                // Set the url, number of POST vars, POST data
-						                curl_setopt($ch,CURLOPT_URL,$url); 
-						                curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-						                curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-						                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-						                curl_setopt($ch,CURLOPT_POST,count($fields));
-						                curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-						                // Execute post
-						                $result = curl_exec($ch);
-						                // Get info post
-						                $info = curl_getinfo($ch);
-						                // Close connection
-						                curl_close($ch);
-						                if (empty($result)) {
-						                    exit();
-						                }
-						                if (empty($info['http_code'])) {
-						                    exit();
-						                } else {
-						                    $curlok = $info['http_code'];
-						                }
+										?>
+						                <script type="text/javascript">
+						                    loadDESCARGA('http://descargamagica.cl/CLIENTES/Test/descargaok.php', '<?php echo md5($id_licencia); ?>', '<?php echo $idioma; ?>', '<?php echo $nivel; ?>');
+						                  	function loadDESCARGA(php_file, solicitud, lenguaje, curso) {
+						                        // alert("Estamos generando su descarga. Por favor espere y no cierre la ventana hasta que se le indique que el proceso ha finalizado. Gracias"); //O colcale un gif animado de preload
+						                        var datastring= "solic="+solicitud+"&lang="+lenguaje+"&curso="+curso;
+						                        var urlfile = php_file + "?x=" + parseInt(Math.random() * 1000000);
+						                        var request =  get_XmlHttpx();
+						                        request.open("POST", urlfile , true);
+						                        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						                        request.setRequestHeader("Content-length", datastring.length);
+						                        request.send(datastring);
+						                        request.onreadystatechange = function() {
+						                            //alert(request.readyState);
+						                            if (request.readyState == 4) { //respuesta ok
+						                                //alert(request.responseText);
+						                            }
+						                        }
+						                    }
+						                    //Request multiplataforma
+						                    function get_XmlHttpx() {
+						                        var xmlHttp = null;
+						                        try {
+						                            // Opera 8.0+, Firefox, Safari
+						                            xmlHttp = new XMLHttpRequest();
+						                        } catch (e) {
+						                            // Internet Explorer Browsers
+						                            try {
+						                                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+						                            } catch (e) {
+						                                try {
+						                                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+						                                } catch (e) {
+						                                    // Something went wrong
+						                                    alert("AJAX no soportado");
+						                                    return false;
+						                                }
+						                            }
+						                        }
+						                        return xmlHttp;
+						                    }
+						                </script>
+						                <?php										
 										$ok = 1;
 									} else {
 										$ok = 0;
@@ -91,9 +97,14 @@ if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
 								}
 							}
 							if ($ok) {
-								$cliente->actualiza_credito_usuario($cantidad - $valor, $id_cred);
-								$cliente->cerrar_conn();
-								header("Location: ver_venta.php?vnt=" . $id_insert);
+								if ($cliente->actualiza_credito_usuario($cantidad - $valor, $id_cred)) {
+									$cliente->cerrar_conn();
+									?>
+									<script type="text/javascript">
+										window.location="ver_venta.php?vnt=<?php echo $id_insert; ?>";
+									</script>
+									<?php
+								}
 							}
 						}
 					}

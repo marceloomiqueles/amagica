@@ -28,8 +28,6 @@ if (isset($_POST["random"]) && isset($_POST["solicitud"])) {
                 $cliente->actualiza_random_licencia($_POST["random"], $_POST["solicitud"]);
                 $cliente->actualiza_token_licencia(md5($n_solicitud . md5($hexakey)), $_POST["solicitud"]);
                 echo $n_solicitud . "#" . md5($n_solicitud . md5($hexakey)) . "#" . $fecha_creacion . "#" . $fecha_fin . "#" . $lang . "#" . $curso;
-                // Extract data from the post
-                extract($_POST);
                 // Set POST variables
                 $url = 'http://www.descargamagica.cl/acciones/modtoken.php';
                 $fields = array(
@@ -41,6 +39,7 @@ if (isset($_POST["random"]) && isset($_POST["solicitud"])) {
                     'idioma'=>urlencode($lang)
                 );
                 // url-ify the data for the POST
+                $fields_string = "";
                 foreach($fields as $key=>$value) {
                     $fields_string .= $key . '=' . $value . '&'; 
                 }

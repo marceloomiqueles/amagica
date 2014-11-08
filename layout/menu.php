@@ -228,8 +228,13 @@
 			<ul class='dropdown-menu' role='menu'>
 				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/evaluacion/'>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
 						Subir
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/crear_evaluacion.php'>
+						Crear
 					</a>
 				</li>
 				<?php 
@@ -237,17 +242,18 @@
 				if ($_SESSION["tipo"] <> 3) {
 				?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/evaluacion/'>Profesor
+					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
+						Profesor
 					</a>
 				</li>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/evaluacion/'>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
 						Alumnos
 					</a>
 				</li>
 				<?php } ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/evaluacion/'>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
 						Resultados
 					</a>
 				</li>
@@ -261,18 +267,18 @@
 			<ul class='dropdown-menu' role='menu'>
 				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/documento/crear_documento.php'>
+					<a href='<?php echo $dir_base ?>layout/documento/crear_documento.php'>
 						Crear
 					</a>
 				</li>
 				<?php } ?>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/documento/listar_documentos.php'>
+					<a href='<?php echo $dir_base ?>layout/documento/listar_documentos.php'>
 						Listar
 					</a>
 				</li>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/documento/listar_documentos_eliminados.php'>
+					<a href='<?php echo $dir_base ?>layout/documento/listar_documentos_eliminados.php'>
 						Eliminados
 					</a>
 				</li>
@@ -285,7 +291,7 @@
 			</a>
 			<ul class='dropdown-menu' role='menu'>
 				<li>
-					<a href='<?php echo $dir_base ?>/layout/descarga/listar_descargas.php'>
+					<a href='<?php echo $dir_base ?>layout/descarga/listar_descargas.php'>
 						Listar
 					</a>
 				</li>
