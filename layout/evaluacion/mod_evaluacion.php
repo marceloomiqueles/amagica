@@ -8,7 +8,9 @@ $cliente = new Cliente;
 $desc = "";
 $curso = 0;
 $idioma = 0;
-$tipo = 0;
+$tipo = "";
+$id = 0;
+$tipo_id = 0;
 
 if (isset($_POST["desc-box"]))
 	$desc = trim($_POST["desc-box"]);
@@ -17,17 +19,41 @@ if (isset($_POST["curso-box"]))
 if (isset($_POST["idioma-box"]))
 	$idioma = trim($_POST["idioma-box"]);
 if (isset($_POST["tipo-box"]))
-	$tipo = trim($_POST["tipo-box"]);
+	$tipo_id = trim($_POST["tipo-box"]);
+if (isset($_GET["eval"]))
+	$id = trim($_GET["eval"]);
+if (isset($_POST["id-box"]))
+	$id = trim($_POST["id-box"]);
 
-if (strlen($desc) > 0 && $curso > 0 && $idioma > 0 && $tipo > 0) {
-	if ($consulta = $cliente->consulta_evaluacion_curso_idioma($curso, $idioma, $tipo)) {
-		if ($consulta->num_rows < 1) {
-			$datos = array($desc, $curso, $idioma, $tipo, 1);
-			if ($id_insert = $cliente->crear_encabezado_evaluacion($datos))
-				header("Location: ver_evaluacion.php?eval=" . $id_insert);
-		}
+if (strlen($desc) > 0 && $id > 0) {
+	if ($cliente->actualiza_encabezado_evaluacion($desc, $id)) {
+		header("Location: ver_evaluacion.php?eval=" . $id);
+		die();
 	}
 }
+
+if (isset($_GET["eval"])) {
+	if ($respuesta = $cliente->consulta_evaluacion_por_id($id)) {
+		if ($respuesta->num_rows > 0) {
+			$row = $respuesta->fetch_array(MYSQLI_ASSOC);
+			$desc = $row["descr"];
+			$curso = $row["nivel"];
+			if ($row["idioma"] == 1)
+				$idioma = "Español";
+			else
+				$idioma = "Inglés";
+			$tipo_id = $row["idioma_id"];
+			if ($row["tipo"] == 1) {
+				$tipo = "Alumno";
+			} else {
+				$tipo = "Profesor";
+			}
+		}
+	}
+} else {
+	header("Location: listar_evaluaciones.php");	
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,54 +67,39 @@ if (strlen($desc) > 0 && $curso > 0 && $idioma > 0 && $tipo > 0) {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Nueva Evaluación
+						Modificar Evaluación
 					</h2>
-					<form class='form-horizontal' role='form' action='crear_evaluacion.php' method='post' enctype='multipart/form-data'>
+					<form class='form-horizontal' role='form' action='mod_evaluacion.php' method='post' enctype='multipart/form-data'>
 						<div class='form-group'>
 							<label for='desc-box' class='col-sm-2 control-label'>Descripción</label>
 							<div class='col-sm-10'>
 								<input type='text' name='desc-box' maxlength='45' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
+								<input type='hidden' name='id-box' value='<?php echo $id; ?>'>
+								<input type='hidden' name='tipo-box' value='<?php echo $tipo_id; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='curso-box' class='col-sm-2 control-label'>Nivel</label>
 							<div class='col-sm-10'>
-								<select name='curso-box' id='curso-box' class='form-control'>
-								  	<option value='1' <?php if ($curso == 1) echo "selected" ?>>1</option>
-								  	<option value='2' <?php if ($curso == 2) echo "selected" ?>>2</option>
-								  	<option value='3' <?php if ($curso == 3) echo "selected" ?>>3</option>
-								  	<option value='4' <?php if ($curso == 4) echo "selected" ?>>4</option>
-								</select>
+								<p class='form-control-static'><?php echo $curso;?></p>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='idioma-box' class='col-sm-2 control-label'>Idioma</label>
 							<div class='col-sm-10'>
-								<select name='idioma-box' id='idioma-box' class='form-control'>
-									<?php
-									$res = $cliente->listar_idiomas();
-									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
-									?>
-								  	<option value='<?php echo $row["id"] ?>' <?php if ($idioma == $row["id"]) echo "selected"; echo ">" . $row["descr"]; ?></option>
-									<?php
-									}
-									?>
-								</select>
+								<p class='form-control-static'><?php echo $idioma;?></p>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='tipo-box' class='col-sm-2 control-label'>Tipo</label>
 							<div class='col-sm-10'>
-								<select name='tipo-box' id='tipo-box' class='form-control'>
-									<option value='1'>Alumno</option>
-									<option value='2'>Profesor</option>
-								</select>
+								<p class='form-control-static'><?php echo $tipo;?></p>
 							</div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
-								<button type='submit' class='btn btn-default'>Crear</button>
-								<a class='btn btn-info' href='listar_evaluaciones.php'>Atrás</a>
+								<button type='submit' class='btn btn-default'>Guardar</button>
+								<a class='btn btn-info' href='ver_evaluacion.php?eval=<?php echo $id; ?>'>Atrás</a>
 							</div>
 						</div>
 					</form>

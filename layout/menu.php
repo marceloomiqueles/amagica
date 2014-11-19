@@ -220,7 +220,7 @@
 		<?php } ?>
 	</ul>
 	<ul class='nav nav-sidebar'>
-		<?php if ($_SESSION["tipo"] <> 2) { ?>
+		<?php if ($_SESSION["tipo"] <> 2 && $_SESSION["tipo"] <> 5) { ?>
 		<li>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Evaluación
@@ -237,26 +237,37 @@
 						Crear
 					</a>
 				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/listar_evaluaciones.php'>
+						Listar
+					</a>
+				</li>
 				<?php 
 				}
-				if ($_SESSION["tipo"] <> 3) {
+				if ($_SESSION["tipo"] == 4) {
 				?>
 				<li>
-					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_profesor.php'>
 						Profesor
 					</a>
 				</li>
 				<li>
-					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
-						Alumnos
+					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_alumno.php'>
+						Alumno
 					</a>
 				</li>
-				<?php } ?>
+				<?php 
+				}
+				if ($_SESSION["tipo"] <> 4) {
+				?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
 						Resultados
 					</a>
 				</li>
+				<?php
+				}
+				?>
 			</ul>
 		</li>
 		<?php } ?>
@@ -292,7 +303,7 @@
 			<ul class='dropdown-menu' role='menu'>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/descarga/listar_descargas.php'>
-						Listar
+						Descarga
 					</a>
 				</li>
 			</ul>

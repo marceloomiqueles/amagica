@@ -20,8 +20,6 @@ if (isset($_POST["nombre-box"]))
 	$nombre = $_POST["nombre-box"];
 if (isset($_POST["apellido-box"]))
 	$apellido = $_POST["apellido-box"];
-if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
 if (isset($_POST["sexo-box"]))
 	$sexo = $_POST["sexo-box"];
 if (isset($_POST["fono-box"]))
@@ -37,8 +35,8 @@ if (isset($_GET["usr"]))
 if (isset($_POST["id-box"]))
 	$id_box = $_POST["id-box"];
 
-if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["mail-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"]) && isset($_POST["colegio-box"]) && isset($_POST["nivel-box"]) && isset($_POST["curso-box"])) {
-	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["mail-box"]), trim($_POST["sexo-box"]), 4, str_replace(" ", "", trim($_POST["fono-box"])), trim($_POST["colegio-box"]), trim($_POST["nivel-box"]), trim($_POST["curso-box"]));
+if (isset($_POST["nombre-box"]) && isset($_POST["apellido-box"]) && isset($_POST["sexo-box"]) && isset($_POST["fono-box"]) && isset($_POST["id-box"]) && isset($_POST["colegio-box"]) && isset($_POST["nivel-box"]) && isset($_POST["curso-box"])) {
+	$cambios = array(trim($_POST["nombre-box"]), trim($_POST["apellido-box"]), trim($_POST["sexo-box"]), 4, str_replace(" ", "", trim($_POST["fono-box"])), trim($_POST["colegio-box"]), trim($_POST["nivel-box"]), trim($_POST["curso-box"]));
 	if ($cliente->actualiza_usuario_id($cambios, $id_box))
 		header("Location: ver_profesor.php?usr=" . $id_box);
 	else
