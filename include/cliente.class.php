@@ -498,9 +498,9 @@ class cliente {
 			return $this->con->consulta("SELECT ee.id, e.n_orden, e.pregunta FROM evaluacion e INNER JOIN evaluacion_enc ee ON ee.id = e.evaluacion_id ANd e.estado = 1 INNER JOIN usuario u ON u.nivel = ee.nivel WHERE ee.estado = 1 AND ee.tipo = 2 AND ee.idioma_id = 1 AND u.id = {$id} ORDER BY e.n_orden ASC;");
 	}
 
-	function cantidad_preguntas_evaluacion_por_usuario_id($id) {
+	function cantidad_preguntas_evaluacion_por_usuario_id($tipo, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ee.id, COUNT(ee.id) AS cantidad, c.id AS curso_id FROM evaluacion e INNER JOIN evaluacion_enc ee ON ee.id = e.evaluacion_id INNER JOIN usuario u ON u.nivel = ee.nivel INNER JOIN curso c ON c.colegio_id = u.colegio_id  WHERE ee.estado = 1 AND ee.tipo = 2 AND ee.idioma_id = 1 AND u.id = {$id} GROUP BY ee.id;");
+			return $this->con->consulta("SELECT ee.id, COUNT(ee.id) AS cantidad, c.id AS curso_id FROM evaluacion e INNER JOIN evaluacion_enc ee ON ee.id = e.evaluacion_id INNER JOIN usuario u ON u.nivel = ee.nivel INNER JOIN curso c ON c.colegio_id = u.colegio_id  WHERE ee.estado = 1 AND ee.tipo = {$tipo} AND ee.idioma_id = 1 AND u.id = {$id} GROUP BY ee.id;");
 	}
 
 	function consulta_evaluacion_usuario_id($id) {
@@ -521,6 +521,31 @@ class cliente {
 	function consulta_correo_usuario_id($id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT mail FROM usuario WHERE id = {$id};");
+	}
+
+	function consulta_si_correo_existe($correo) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id FROM usuario WHERE mail = '{$correo}';");
+	}
+
+	function consulta_evaluacion_activa_por_usuario_id($tipo, $id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT ece.id, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 AND ece.fecha + INTERVAL ece.tiempo DAY > NOW() WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
+	}
+
+	function consulta_evaluacion_por_usuario_id($tipo, $id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT ece.id, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
+	}
+
+	function consulta_encabezado_evaluacion_alumno($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.nivel, u.curso, c.nombre FROM usuario u INNER JOIN colegio c ON u.colegio_id = c.id WHERE u.id = {$id};");
+	}
+
+	function consulta_preguntas_por_evaluacion_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT * FROM evaluacion e INNER JOIN evaluacion_enc ee ON e.evaluacion_id = ee.id INNER JOIN licencia l ON l.nivel = ee.nivel INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.nivel = l.nivel AND u.curso = l.curso AND l.idioma = ee.idioma_id INNER JOIN colegio g ON g.id = u.colegio_id WHERE ee.id = 2 AND ee.estado = 1 AND e.estado = 1 AND ee.tipo = 1;");
 	}
 
 	// Fin SELECT

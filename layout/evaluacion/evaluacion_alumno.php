@@ -9,21 +9,33 @@ $id = 0;
 $curso_id = 0;
 $mail = "";
 $n_eval = 0;
-
-if ($consulta = $cliente->consulta_evaluaciones_realizadas_por_curso_por_tipo(1, $curso_id)) {
+// die();
+if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])) {
 	$n_eval = $consulta->num_rows;
+	$row = $consulta->fetch_array(MYSQLI_ASSOC);
+	$ahora = $row["ahora"];
+	$tiempo_final = $row["tiempo_final"];
+	// die();
 	if ($n_eval < 2) {
-		$row = $consulta->fetch_array(MYSQLI_ASSOC);
-		if ($row["ahora"] > $row["tiempo_final"]) {
-			$curso_id = 0;
+		// echo "{$ahora} <= {$tiempo_final}";die();
+		if ($ahora >= $tiempo_final) {
 			$evaluacion = 0;
-			$tipo = 0;
-			$evaluacion = $row["id"];
-			$curso_id = $row["curso_id"];
+			$curso_id = 0;
+			if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
+				// echo $_SESSION["id"];
+				if ($consulta->num_rows > 0) {
+					// die();
+					$row = $consulta->fetch_array(MYSQLI_ASSOC);
+					$evaluacion = $row["id"];
+					$curso_id = $row["curso_id"];
+				}
+			}
 			$cliente->cerrar_conn();
 			$datos = array(1, 7, $curso_id, $evaluacion, 1);
+			// print_r($datos);die();
 			if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 				header("Location: " . $dir_base);
+				// die();
 			}
 		}
 	}
@@ -32,6 +44,10 @@ if ($consulta = $cliente->consulta_evaluaciones_realizadas_por_curso_por_tipo(1,
 if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$mail = $row["mail"];
+}
+
+if ($n_eval == 0){
+	$n_eval = 1;
 }
 
 ?>
@@ -47,7 +63,7 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Evaluacion <?php echo $n_eval + 1; ?> - Alumno
+						Evaluacion <?php echo $n_eval; ?> - Alumno
 					</h2>
 					<form class='form-horizontal' role='form' action='evaluacion_profesor.php' method='post' enctype='multipart/form-data'>
 						<div class='form-group'>

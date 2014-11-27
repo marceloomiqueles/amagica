@@ -1,29 +1,38 @@
 <?php
 include_once("../../include/header-cache.php");
 require("../../include/cliente.class.php");
-// if(empty($_SESSION["id"]) || $_SESSION["id"] == "") {
-// 	header ("Location: ../../include/login_session.php");
-// }
+
+// echo $_SESSION["test_id"]; die();
+
+if(empty($_SESSION["test_id"]) || $_SESSION["test_id"] == "" || empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
+
 $cliente = new Cliente;
-// if (isset($_GET["eval"])) {
-// 	if ($consulta = $cliente->consulta_evaluacion_por_id($_GET["eval"])) {
-// 		if ($consulta->num_rows > 0) {
-// 			$row = $consulta->fetch_array(MYSQLI_ASSOC);
-// 			$descr = $row["descr"];
-// 			$curso = $row["nivel"];
-// 			$idioma = $row["idioma"];
-// 			if ($row["tipo"] == 1) {
-// 				$tipo = "Alumno";
-// 			} else {
-// 				$tipo = "Profesor";
-// 			}
-// 			$cliente->cerrar_conn();
-// 		}
-// 	}
-// }
-// else {
-// 	header("Location: listar_evaluaciones.php");
-// }
+
+$cursor = 1;
+if (isset($_GET["cursor"]))
+	$cursor = $_GET["cursor"]
+
+$consulta = $cliente->consulta_encabezado_evaluacion_alumno($_SESSION["id"]);
+$row = $consulta->fetch_array(MYSQLI_ASSOC);
+$nombre = $row["nombre"];
+$nivel = $row["nivel"];
+$curso = "A";
+
+for($i = 0; $i < ($row["curso"] - 1); $i++) {
+	$curso++;
+}
+
+$cliente->cerrar_conn();
+$consulta = $cliente->consulta_preguntas_por_evaluacion_id($_SESSION["id"]);
+$cant = $consulta->num_rows;
+
+$
+
+while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
+	
+}
+
+// echo $_SESSION["test_id"] . " - " . $_SESSION["id"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,12 +42,12 @@ $cliente = new Cliente;
 	<body>
 		<div class='container'>
 			<div class='starter-template'>
-				<h1>Evaluación {3}-{A} Alumnos Colegio {Tanto}</h1>
+				<h1>Evaluación Alumnos </b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
 				<p class='lead'>
 					<div class="progress">
 					  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-				 			{1}/{10}
-					  	</div>
+				 			{1}/<?php echo $cant?>
+						</div>
 					</div>
 					<br>
 					<br>

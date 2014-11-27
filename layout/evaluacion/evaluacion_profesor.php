@@ -25,7 +25,7 @@ if (isset($_POST["pregunta"])) {
 		$curso_id = 0;
 		$evaluacion = 0;
 		$tipo = 0;
-		if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id($_SESSION["id"])) {
+		if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(2, $_SESSION["id"])) {
 			if ($consulta->num_rows > 0) {
 				$row = $consulta->fetch_array(MYSQLI_ASSOC);
 				$evaluacion = $row["id"];
