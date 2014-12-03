@@ -29,8 +29,8 @@ if (isset($_POST["mail"]) && isset($_POST["pass"])) {
 							if ($n_eval <= 2) {
 								if ($row["ahora"] < $row["tiempo_final"]) {
 									$_SESSION["id"] = $id;
-									$_SESSION["test_id"] = $row["evaluacion_enc_id"];
- 									header("Location: {$dir_base}layout/evaluacion/evaluacion_alumno_pantalla.php");
+									$_SESSION["test_id"] = $row["id"];
+ 									header("Location: {$dir_base}layout/evaluacion/evaluacion_alumno_pantalla_landing.php");
 									die();
 									// Acá va la redireccion
 								}

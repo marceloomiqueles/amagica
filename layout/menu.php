@@ -1,7 +1,5 @@
 <div class='col-sm-3 col-md-2 sidebar'>
-	<?php if ($_SESSION["tipo"] < 4) { ?>
 	<ul class='nav nav-sidebar'>
-		<?php if ($_SESSION["tipo"] == 1) {?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Administrador
@@ -46,57 +44,6 @@
 				</li>
 			</ul>
 		</li>
-		<?php } if ($_SESSION["tipo"] < 3) { ?>
-		<li class='dropdown'>
-			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-				Admin. Colegio
-			</a>
-			<ul class='dropdown-menu' role='menu'>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/admin/crear_admin.php'>
-						Crear
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/admin/listar_admin.php'>
-						Listar
-					</a>
-				</li>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/admin/listar_admin_eliminados.php'>
-						Eliminado
-					</a>
-				</li>
-				<?php } ?>
-			</ul>
-		</li>
-		<?php } if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
-		<li class='dropdown'>
-			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-				Profesor
-			</a>
-			<ul class='dropdown-menu' role='menu'>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/profesor/crear_profesor.php'>
-						Crear
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/profesor/listar_profesores.php'>
-						Listar
-					</a>
-				</li>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/profesor/listar_profesores_eliminados.php'>
-						Eliminado
-					</a>
-				</li>
-				<?php } ?>
-			</ul>
-		</li>
-		<?php } if ($_SESSION["tipo"] == 1) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Capacitador
@@ -141,29 +88,8 @@
 				</li>
 			</ul>
 		</li>
-		<?php } ?>
 	</ul>
-	<?php } ?>
 	<ul class='nav nav-sidebar'>
-		<?php if ($_SESSION["tipo"] < 3) { ?>
-		<li class='dropdown'>
-			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-				Venta
-			</a>
-			<ul class='dropdown-menu' role='menu'>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/venta/crear_venta.php'>
-						Nueva
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/venta/listar_ventas.php'>
-						Listar
-					</a>
-				</li>
-			</ul>
-		</li>
-		<?php } if ($_SESSION["tipo"] < 3) {?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Colegio
@@ -181,13 +107,69 @@
 				</li>
 			</ul>
 		</li>
-		<?php
-			} 
-			if ($_SESSION["tipo"] == 1) { 
-		?>
-		<?php } 
-		if ($_SESSION["tipo"] <=2 ) {
-		?>
+		<li class='dropdown'>
+			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+				Responsable Colegio
+			</a>
+			<ul class='dropdown-menu' role='menu'>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/admin/crear_admin.php'>
+						Crear
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/admin/listar_admin.php'>
+						Listar
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/admin/listar_admin_eliminados.php'>
+						Eliminado
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class='dropdown'>
+			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+				Profesor
+			</a>
+			<ul class='dropdown-menu' role='menu'>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/profesor/crear_profesor.php'>
+						Crear
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/profesor/listar_profesores.php'>
+						Listar
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/profesor/listar_profesores_eliminados.php'>
+						Eliminado
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul class='nav nav-sidebar'>
+		<li class='dropdown'>
+			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+				Venta
+			</a>
+			<ul class='dropdown-menu' role='menu'>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/venta/crear_venta.php'>
+						Nueva
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/venta/listar_ventas.php'>
+						Listar
+					</a>
+				</li>
+			</ul>
+		</li>
 		<li>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Creditos
@@ -198,7 +180,6 @@
 						Comprar
 					</a>
 				</li>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/credito/manejar_credito.php'>
 						Solicitudes
@@ -214,19 +195,15 @@
 						Historial Full
 					</a>
 				</li>
-				<?php } ?>
 			</ul>
 		</li>
-		<?php } ?>
 	</ul>
 	<ul class='nav nav-sidebar'>
-		<?php if ($_SESSION["tipo"] <> 2 && $_SESSION["tipo"] <> 5) { ?>
 		<li>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Evaluación
 			</a>
 			<ul class='dropdown-menu' role='menu'>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
 						Subir
@@ -242,10 +219,6 @@
 						Listar
 					</a>
 				</li>
-				<?php 
-				}
-				if ($_SESSION["tipo"] == 4) {
-				?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_profesor.php'>
 						Profesor
@@ -256,33 +229,23 @@
 						Alumno
 					</a>
 				</li>
-				<?php 
-				}
-				if ($_SESSION["tipo"] <> 4) {
-				?>
 				<li>
-					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_resultado.php'>
 						Resultados
 					</a>
 				</li>
-				<?php
-				}
-				?>
 			</ul>
 		</li>
-		<?php } ?>
 		<li>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Documentos
 			</a>
 			<ul class='dropdown-menu' role='menu'>
-				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/documento/crear_documento.php'>
 						Crear
 					</a>
 				</li>
-				<?php } ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/documento/listar_documentos.php'>
 						Listar
@@ -295,7 +258,6 @@
 				</li>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] <> 2 && $_SESSION["tipo"] <> 5) { ?>
 		<li>
 			<a clas='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Software
@@ -308,6 +270,5 @@
 				</li>
 			</ul>
 		</li>
-		<?php } ?>
 	</ul>
 </div>

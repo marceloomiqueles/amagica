@@ -4,13 +4,9 @@ require("../../include/cliente.class.php");
 
 // echo $_SESSION["test_id"]; die();
 
-if(empty($_SESSION["test_id"]) || $_SESSION["test_id"] == "" || empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
+if(empty($_SESSION["test_id"]) || $_SESSION["test_id"] == "" || empty($_SESSION["id"]) || $_SESSION["id"] == "" || empty($_POST["lista"]) || $_POST["lista"] == "") header ("Location: ../../include/login_session.php");
 
 $cliente = new Cliente;
-
-$cursor = 1;
-if (isset($_GET["cursor"]))
-	$cursor = $_GET["cursor"]
 
 $consulta = $cliente->consulta_encabezado_evaluacion_alumno($_SESSION["id"]);
 $row = $consulta->fetch_array(MYSQLI_ASSOC);
@@ -23,14 +19,10 @@ for($i = 0; $i < ($row["curso"] - 1); $i++) {
 }
 
 $cliente->cerrar_conn();
-$consulta = $cliente->consulta_preguntas_por_evaluacion_id($_SESSION["id"]);
-$cant = $consulta->num_rows;
 
-$
-
-while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
+// while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
 	
-}
+// }
 
 // echo $_SESSION["test_id"] . " - " . $_SESSION["id"];
 ?>
@@ -38,32 +30,119 @@ while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
 <html>
 	<head>
     	<?php include_once("../head.php"); ?>
+    	<script type="text/javascript">
+			var total = 0;
+			var evalDatos;
+			var dataJson;
+			var ene = 1;
+			var percent = 0.0;
+			var evaluacion = <?php echo $_SESSION["test_id"]?>;
+
+    		$(document).ready(function(){
+    			document.onkeydown = function (e) {
+			        return false;
+				}
+
+    			$.ajax({
+			        type: "POST",
+			        url:"evaluacion_datos.php",
+			        data: {tipo: ene},
+			        async: true,
+			        success: function(datos){
+			            dataJson = eval(datos);
+			            setTotal($(dataJson).size());
+			            setEvalDatos(dataJson);
+
+		    			$('.progress-bar').css('width', ene*100/total + '%');
+		    			$('.progress-bar').text(ene + '/' + total);
+
+		    			$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+			        },
+			        error: function (obj, error, objError){
+			            //avisar que ocurrió un error
+			            alert("fallo");
+			        }
+				});
+
+    			$('a.si').click(function(){
+					$("h3").text(ene + " - " + total);
+    				if (total >= ene)
+						cambiaValor(1);
+					else
+    					salir();
+    			});
+
+    			$('a.no').click(function(){
+    				if (total > ene)
+						cambiaValor(0);
+    				else
+    					salir();
+    			});
+    		});
+
+			function cambiaValor(valor) {
+    			if (total >= ene) {
+					$.ajax({
+				        type: "POST",
+				        url:"evaluacion_guarda_datos.php",
+				        data: {respuesta: valor, preg: evalDatos[ene-1].id, eval: <?php echo $_SESSION["test_id"]?>, lista: <?php echo $_POST["lista"]?>},
+				        async: false,
+				        success: function(datos) {
+				        	$("h2").text(datos);
+				        },
+				        error: function(obj, error, objError) {
+				        	alert("falló");
+				        }
+					});
+					if (total == ene)
+						salir();
+				}
+				ene++;
+				if (ene-1 < total) {
+					$('.progress-bar').text(ene + '/' + total);
+					$('.progress-bar').css('width', ene*100/total + '%');
+	    			$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+	    		}
+			}
+
+			function setTotal(valor) {
+				total = valor;
+			}
+
+			function setEvalDatos(valor) {
+				evalDatos = valor;
+			}
+
+			function salir() {
+				window.location ='../../action/logout.php';
+			}
+		</script>
 	</head>
 	<body>
+		Evaluación Alumno <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?>
 		<div class='container'>
 			<div class='starter-template'>
-				<h1>Evaluación Alumnos </b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
+				<h1></h1>
+				<h2></h2>
+				<h3></h3>
+				<br>
+				<br>
 				<p class='lead'>
 					<div class="progress">
-					  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-				 			{1}/<?php echo $cant?>
-						</div>
+					  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 4.7%;"></div>
 					</div>
 					<br>
 					<br>
 					<br>
-					<br>
-					<br>
-					<br>
 					<div id='caritaFeliz' class='col-xs-24 col-sm-12'>
-						<a href="#">
-							<div class="col-xs-12 col-sm-6 placeholder">
-								<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250"><circle cx="125" cy="125" r='125' fill="#39DBAC"/><text text-anchor="middle" x="123" y="121" style="fill:#1E292C;font-weight:bold;font-size:100px;font-family:Arial,Helvetica,sans-serif;dominant-baseline:central">:)</text></svg>
-							</div>
-						</a>
 						<div class="col-xs-12 col-sm-6 placeholder">
-							<a href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250"><circle cx="125" cy="125" r='125' fill="#F00"/><text text-anchor="middle" x="123" y="121" style="fill:#1E292C;font-weight:bold;font-size:100px;font-family:Arial,Helvetica,sans-serif;dominant-baseline:central">:(</text></svg>
+							<a href="javascript: void(0)" class='si'>
+								<img src="../../img/cara-verde.png">
+							</a>
+						</div>
+						<div class="col-xs-12 col-sm-6 placeholder">
+							<a href="javascript: void(0)" class='no'>
+								<img src="../../img/cara-roja.png">		
 							</a>
 						</div>
 					</div>

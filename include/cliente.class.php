@@ -39,7 +39,7 @@ class cliente {
 
 	function crear_curso($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO curso(colegio_id, nivel) VALUES('{$campos[0]}', '{$campos[1]}');");
+			$this->con->sql("INSERT INTO curso(colegio_id, nivel, curso) VALUES('{$campos[0]}', '{$campos[1]}', '{$campos[2]}');");
 			return $this->con->id();
 	}
 
@@ -94,6 +94,12 @@ class cliente {
 	function crear_encabezado_evaluacion_prueba($campos) {
 		if($this->con->conectar() == true)
 			$this->con->sql("INSERT INTO evaluacion_curso_enc(tipo, fecha, tiempo, curso_id, evaluacion_enc_id, estado) VALUES('{$campos[0]}', now(), '{$campos[1]}', '{$campos[2]}', '{$campos[3]}', '{$campos[4]}');");
+			return $this->con->id();
+	}
+
+	function insertar_respuesta_alumno($campos) {
+		if($this->con->conectar() == true)
+			$this->con->sql("INSERT INTO evaluacion_curso(respuesta, fecha_evaluacion, evaluacion_curso_enc_id, evaluacion_id, n_alumno, estado) VALUES('{$campos[0]}', now(), '{$campos[1]}', '{$campos[2]}', '{$campos[3]}', '{$campos[4]}');");
 			return $this->con->id();
 	}
 
@@ -500,7 +506,8 @@ class cliente {
 
 	function cantidad_preguntas_evaluacion_por_usuario_id($tipo, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ee.id, COUNT(ee.id) AS cantidad, c.id AS curso_id FROM evaluacion e INNER JOIN evaluacion_enc ee ON ee.id = e.evaluacion_id INNER JOIN usuario u ON u.nivel = ee.nivel INNER JOIN curso c ON c.colegio_id = u.colegio_id  WHERE ee.estado = 1 AND ee.tipo = {$tipo} AND ee.idioma_id = 1 AND u.id = {$id} GROUP BY ee.id;");
+			return $this->con->consulta("SELECT ee.id, COUNT(ee.id) AS cantidad, c.id AS curso_id FROM evaluacion e INNER JOIN evaluacion_enc ee ON ee.id = e.evaluacion_id INNER JOIN usuario u ON u.nivel = ee.nivel INNER JOIN curso c ON c.colegio_id = u.colegio_id AND u.curso = c.curso AND c.nivel = u.nivel WHERE ee.estado = 1 AND ee.tipo = {$tipo} AND ee.idioma_id = 1 AND u.id = {$id} GROUP BY ee.id;");
+										 
 	}
 
 	function consulta_evaluacion_usuario_id($id) {
@@ -543,9 +550,9 @@ class cliente {
 			return $this->con->consulta("SELECT u.nivel, u.curso, c.nombre FROM usuario u INNER JOIN colegio c ON u.colegio_id = c.id WHERE u.id = {$id};");
 	}
 
-	function consulta_preguntas_por_evaluacion_id($id) {
+	function consulta_preguntas_por_evaluacion_id($tipo, $eval, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT * FROM evaluacion e INNER JOIN evaluacion_enc ee ON e.evaluacion_id = ee.id INNER JOIN licencia l ON l.nivel = ee.nivel INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.nivel = l.nivel AND u.curso = l.curso AND l.idioma = ee.idioma_id INNER JOIN colegio g ON g.id = u.colegio_id WHERE ee.id = 2 AND ee.estado = 1 AND e.estado = 1 AND ee.tipo = 1;");
+			return $this->con->consulta("SELECT e.id, e.n_orden, e.estado, e.pregunta, e.evaluacion_id, e.invertido FROM evaluacion e INNER JOIN evaluacion_enc ee ON e.evaluacion_id = ee.id INNER JOIN licencia l ON l.nivel = ee.nivel INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.nivel = l.nivel AND u.curso = l.curso AND l.idioma = ee.idioma_id INNER JOIN evaluacion_curso_enc ece on ece.evaluacion_enc_id = ee.id INNER JOIN colegio g ON g.id = u.colegio_id WHERE ece.id = {$eval} AND ee.estado = 1 AND e.estado = 1 AND ee.tipo = {$tipo} and u.id = {$id};");
 	}
 
 	// Fin SELECT
