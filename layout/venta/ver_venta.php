@@ -55,10 +55,8 @@ else {
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<?php if ($_SESSION["tipo"] == 1) { ?>
-								<a class="btn btn-default" href="anular_venta.php?clg=<?php echo $_GET["vnt"] ?>">Modificar</a>
-								<?php } ?>
 								<a class="btn btn-info" href="listar_ventas.php">Atrás</a>
+								<a class="btn btn-link" href="../admin/crear_admin.php">Asociar Responsable Colegio</a>
 							</div>
 						</div>
 					</form>

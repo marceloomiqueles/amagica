@@ -9,6 +9,11 @@ $cliente = new Cliente;
 <html>
 	<head>
     	<?php include_once("../head.php"); ?>
+    	<script type="text/javascript">
+    		$(document).ready(function() { 
+		        $("#json-table").tablesorter( {sortList: [[0,0]], headers: {5: {sorter: false}}} );
+			});
+    	</script>
 	</head>
 	<body>
 		<?php include_once("../top-menu.php"); ?>
@@ -20,7 +25,7 @@ $cliente = new Cliente;
 						Lista Administrador Colegio <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) {echo "(Clave cambiada exitosamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Usuario eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Usuario creado correctamente!)";} ?>
 					</h2>
 					<div class='table-responsive'>
-						<table class='table table-striped'>
+						<table id='json-table' class='tablesorter table table-striped'>
 							<thead>
 								<tr>
 									<th>#</th>

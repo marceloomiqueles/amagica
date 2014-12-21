@@ -94,6 +94,42 @@ else {
 								<p class="form-control-static"><?php echo $cursos; ?></p>
 							</div>
 						</div>
+						<?php
+						$cont = 0;
+						$consulta = $cliente->consulta_notas_colegio_activas_por_colegio($_GET["clg"]);
+						while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
+						?>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Nota <?php echo ++$cont; ?></label>
+							<div class='col-sm-10'>
+								<div class='row'>
+									<div class="col-md-10">
+										<p class='form-control-static'><?php echo $row["descr"]; ?></p>
+									</div>
+									<div class="col-md-2">
+										<div class='btn-group btn-group-xs'>
+											<a class='btn btn-mini btn-info' title='Editar' href='mod_nota.php?nt=<?php echo $row["id"] ?>&clg=<?php echo $_GET["clg"] ?>'>
+												<i class='glyphicon glyphicon-edit'></i>
+											</a>
+											<a class='btn btn-mini btn-danger' title='Eliminar' data-confirm='Seguro que quieres eliminar este Usuario?' href='elimina_nota.php?nt=<?php echo $row["id"] ?>&clg=<?php echo $_GET["clg"] ?>'>
+												<i class='glyphicon glyphicon-trash	'></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<?php
+						}
+						?>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Agregar Nota</label>
+							<div class='col-sm-10'>
+								<a class='btn btn-success' href='agregar_nota.php?clg=<?php echo $_GET["clg"] ?>'>
+									<span class='glyphicon glyphicon-plus'></span>
+								</a>
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<?php if ($_SESSION["tipo"] == 1) { ?>

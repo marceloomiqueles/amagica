@@ -3,14 +3,16 @@
 extract($_POST);
 
 // set POST variables
-$url = 'http://www.descargamagica.cl/acciones/modtoken.php';
+$url = 'http://www.fibradigital.cl/lolla-tab/recibe_datos.php';
 $fields = array(
-    'tipolicencia'=>urlencode($curso),
-    'licencia'=>urlencode($n_solicitud),
-    'token'=>urlencode(md5($n_solicitud . md5($hexakey))),
-    'fechainicio'=>urlencode($fecha_creacion),
-    'fechatermino'=>urlencode($fecha_fin),
-    'idioma'=>urlencode($lang)
+    'persona'=>urlencode($curso),
+    'tipo'=>urlencode($n_solicitud),
+    'nombre'=>urlencode(md5($n_solicitud . md5($hexakey))),
+    'apellido'=>urlencode($fecha_creacion),
+    'correo'=>urlencode($fecha_fin),
+    'sexo'=>urlencode($fecha_fin),
+    'edad'=>urlencode($lang),
+    'ciudad'=>urlencode($fecha_fin),
 );
 
 // url-ify the data for the POST

@@ -12,6 +12,7 @@ $curso = 0;
 $idioma = 0;
 $cantidad = 0;
 $valor = 0;
+$evaluacion = 0;
 
 if (isset($_POST["codigo-box"]))
 	$codigo = trim($_POST["codigo-box"]);
@@ -27,9 +28,14 @@ if (isset($_POST["cantidad-box"]))
 	$cantidad = trim($_POST["cantidad-box"]);
 if (isset($_POST["valor-box"]))
 	$valor = trim($_POST["valor-box"]);
+if (isset($_POST["coneval-box"]))
+	$valor = trim($_POST["coneval-box"]);
+if (isset($_POST["eval-box"]))
+	$evaluacion = $_POST["eval-box"];
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $cantidad > 0 && $valor > 0) {
-	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad);
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad, $evaluacion);
+	//print_r($datos);die();
 	if ($id_insert = $cliente->crear_producto($datos))
 		header("Location: ver_producto.php?prd=" . $id_insert);
 }
@@ -129,6 +135,16 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 									?>
 								</select>
 							</div>
+						</div>
+						<div class='form-group'>
+							<label for='desc-box' class='col-sm-2 control-label'>Con Evaluación</label>
+						    <div class='col-sm-10'>
+						      	<div class='checkbox'>
+						        	<label>
+						          		<input type='checkbox' name='eval-box' <?php if ($evaluacion) echo "checked"; ?> value='1'>&nbsp;
+						        	</label>
+						      	</div>
+						    </div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>

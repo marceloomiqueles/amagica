@@ -13,6 +13,7 @@ $idioma = 0;
 $id_box = "";
 $n_lic = 0;
 $valor = "";
+$evaluacion = 0;
 
 if (isset($_POST["codigo-box"]))
 	$codigo = trim($_POST["codigo-box"]);
@@ -32,9 +33,11 @@ if (isset($_GET["prd"]))
 	$id_box = trim($_GET["prd"]);
 if (isset($_POST["id-box"]))
 	$id_box = trim($_POST["id-box"]);
+if (isset($_POST["eval-box"]))
+	$evaluacion = $_POST["eval-box"];
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0 && $valor > 0) {
-	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor);
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion);
 	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box);
 }
@@ -49,6 +52,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$idioma = $row["idioma_id"];
 		$n_lic = $row["n_licencia"];
 		$valor = $row["valor"];
+		$evaluacion = $row["con_evaluacion"];
 	}
 ?>
 <!DOCTYPE html>
@@ -147,6 +151,16 @@ if ($consulta = $cliente->consulta_producto($id_box))
 									?>
 								</select>
 							</div>
+						</div>
+						<div class='form-group'>
+							<label for='desc-box' class='col-sm-2 control-label'>Con Evaluación</label>
+						    <div class='col-sm-10'>
+						      	<div class='checkbox'>
+						        	<label>
+						          		<input type='checkbox' name='eval-box' <?php if ($evaluacion) echo "checked"; ?> value='1'>&nbsp;
+						        	</label>
+						      	</div>
+						    </div>
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>

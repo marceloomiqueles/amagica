@@ -27,7 +27,7 @@ class cliente {
 
 	function crear_producto($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO producto(categoria_id, codigo, descr, curso, idioma_id, estado, valor, n_licencia) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', 2, '" . $campos[5] . "', '" . $campos[6] . "');");
+			$this->con->sql("INSERT INTO producto(categoria_id, codigo, descr, curso, idioma_id, estado, valor, n_licencia, con_evaluacion) VALUES('" . $campos[0] . "', '" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', 1, '" . $campos[5] . "', '" . $campos[6] . "', '" . $campos[7] . "');");
 			return $this->con->id();
 	}
 
@@ -103,6 +103,12 @@ class cliente {
 			return $this->con->id();
 	}
 
+	function crear_nota_colegio($campos) {
+		if($this->con->conectar() == true)
+			$this->con->sql("INSERT INTO nota_colegio(descr, estado, colegio_id, creado, editado) VALUES('{$campos[0]}', '{$campos[1]}', '{$campos[2]}', now(), now());");
+			return $this->con->id();
+	}
+
 	// Fin INSERT
 	// Inicio UPDATE
 
@@ -128,7 +134,7 @@ class cliente {
 
 	function actualiza_producto_id($campos, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "', n_licencia = '" . $campos[5] . "', valor = '" . $campos[6] . "' WHERE id = '" . $id . "';");
+			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "', n_licencia = '" . $campos[5] . "', valor = '" . $campos[6] . "', con_evaluacion = '" . $campos[7] . "' WHERE id = '" . $id . "';");
 	}
 
 	function actualiza_documento_id($campos, $id) {
@@ -221,9 +227,14 @@ class cliente {
 			return $this->con->sql("UPDATE evaluacion SET pregunta = '{$campos[0]}', invertido = '{$campos[1]}' WHERE id = '{$id}';");
 	}
 
-	function consulta_estado_evaluacion_alumno_por_curso($campos) {
+	function actualiza_nota_colegio($descr, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE evaluacion SET pregunta = '{$campos[0]}', invertido = '{$campos[1]}' WHERE id = '{$id}';");
+			return $this->con->sql("UPDATE nota_colegio SET descr = '{$descr}', editado = now() WHERE id = '{$id}';");
+	}
+
+	function cambia_estado_nota_colegio($estado, $id) {
+		if($this->con->conectar() == true)
+			return $this->con->sql("UPDATE nota_colegio SET estado = '{$estado}' WHERE id = '{$id}';");
 	}
 
 	// Fin UPDATE
@@ -301,7 +312,7 @@ class cliente {
 
 	function consulta_producto($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, p.categoria_id, c.nombre AS categoria, p.valor, p.n_licencia, p.idioma_id, i.descr AS idioma, p.estado, p.curso FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.id = '{$id}' AND p.estado != 0;");
+			return $this->con->consulta("SELECT p.id, p.codigo, p.con_evaluacion, p.descr, p.categoria_id, c.nombre AS categoria, p.valor, p.n_licencia, p.idioma_id, i.descr AS idioma, p.estado, p.curso FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.id = '{$id}' AND p.estado != 0;");
 	}
 
 	function consulta_producto_simple($id) {
@@ -553,6 +564,41 @@ class cliente {
 	function consulta_preguntas_por_evaluacion_id($tipo, $eval, $id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT e.id, e.n_orden, e.estado, e.pregunta, e.evaluacion_id, e.invertido FROM evaluacion e INNER JOIN evaluacion_enc ee ON e.evaluacion_id = ee.id INNER JOIN licencia l ON l.nivel = ee.nivel INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.nivel = l.nivel AND u.curso = l.curso AND l.idioma = ee.idioma_id INNER JOIN evaluacion_curso_enc ece on ece.evaluacion_enc_id = ee.id INNER JOIN colegio g ON g.id = u.colegio_id WHERE ece.id = {$eval} AND ee.estado = 1 AND e.estado = 1 AND ee.tipo = {$tipo} and u.id = {$id};");
+	}
+
+	function consulta_notas_colegio_activas_por_colegio($colegio) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT * FROM nota_colegio WHERE estado = 1 AND colegio_id = {$colegio};");
+	}
+
+	function consulta_nota_colegio_activa_por_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id, descr, estado, colegio_id, creado, editado FROM nota_colegio WHERE estado = 1 AND id = {$id};");
+	}
+
+	function consulta_notas_colegio_por_colegio($colegio) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id, descr, estado, colegio_id, creado, editado FROM nota_colegio WHERE colegio_id = {$colegio};");
+	}
+
+	function consulta_nota_colegio_por_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id, descr, estado, colegio_id, creado, editado FROM nota_colegio WHERE id = {$id};");
+	}
+
+	function consulta_evaluaciones() {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT ece.id, p.descr, c.nivel, c.curso, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE u.id = {$id} AND ece.estado = 1 AND u.estado = 1 ORDER BY l.id DESC LIMIT 1;");
+	}
+
+	function consulta_evaluaciones_colegio($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT ece.id, p.descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE u.id = {$id} AND ece.estado = 1 AND u.estado = 1 ORDER BY l.id DESC LIMIT 1;");
+	}
+
+	function consulta_evaluaciones_colegio_curso($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT ece.id, p.descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE u.id = {$id} AND ece.estado = 1 AND u.estado = 1 ORDER BY l.id DESC LIMIT 1;");
 	}
 
 	// Fin SELECT

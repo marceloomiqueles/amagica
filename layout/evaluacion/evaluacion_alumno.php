@@ -32,7 +32,7 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 			}
 			$cliente->cerrar_conn();
 			$datos = array(1, 7, $curso_id, $evaluacion, 1);
-			// print_r($datos);die();
+			//print_r($datos); die();
 			if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 				header("Location: " . $dir_base);
 				// die();

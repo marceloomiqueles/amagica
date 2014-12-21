@@ -21,6 +21,9 @@ if (isset($_POST["pass"]) && isset($_POST["pass2"])) {
 	<head>
     	<?php include_once("../layout/head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="../css/signin.css">
+		<script type="text/javascript">
+			alert("Usted tiene la clave generica.\nPor favor ingrese una clave nueva.");
+		</script>
 	</head>
 	<body>
 		<div class="container">

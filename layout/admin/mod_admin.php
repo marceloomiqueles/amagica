@@ -62,7 +62,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Modificar Administrador Colegio
+						Modificar Responsable Colegio
 					</h2>
 					<form class='form-horizontal' role='form' action='mod_admin.php' method='post'>
 						<div class='form-group'>

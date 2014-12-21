@@ -22,5 +22,6 @@ while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
 		'invertido' => $row["invertido"]);
 }
 
-echo '' . json_encode($arr) . '';
+header("Content-type: application/json");
+echo json_encode($arr);
 ?>

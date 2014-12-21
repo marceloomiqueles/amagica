@@ -11,6 +11,7 @@ $calle = "";
 $numero = 0;
 $fono = "";
 $nivel = 0;
+$estado = 0;
 
 if (isset($_POST["nombre-box"]))
 	$nombre = $_POST["nombre-box"];
@@ -25,6 +26,9 @@ if (isset($_POST["fono-box"]))
 if (isset($_POST["nivel-box"]))
 	$nivel = $_POST["nivel-box"];
 
+if ($_SESSION["tipo"] == 1)
+	$estado = 1;
+
 if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["calle-box"]) && isset($_POST["numero-box"]) && isset($_POST["fono-box"]) && isset($_POST["nivel-box"])) {
 	$datos = array(
 		trim($_POST["nombre-box"]),
@@ -33,7 +37,7 @@ if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["
 		trim($_POST["numero-box"]),
 		str_replace(" ", "", trim($_POST["fono-box"])),
 		trim($_POST["nivel-box"]),
-		"2",
+		$estado,
 		trim($_SESSION["id"])
 		);
 	if ($id_insert = $cliente->crear_colegio($datos)) {

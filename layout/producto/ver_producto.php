@@ -16,6 +16,10 @@ if (isset($_GET["prd"])) {
 			$idioma = $row["idioma"];
 			$cant_lic = $row["n_licencia"];
 			$valor = $row["valor"];
+			if ($row["con_evaluacion"]) 
+				$evaluacion = "Sí";
+			else
+				$evaluacion = "No";
 		}
 	}
 }
@@ -78,6 +82,12 @@ else {
 							<label class='col-sm-2 control-label'>Valor Producto</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'><?php echo $valor; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Con Evaluación</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $evaluacion; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

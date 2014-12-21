@@ -19,12 +19,6 @@ for($i = 0; $i < ($row["curso"] - 1); $i++) {
 }
 
 $cliente->cerrar_conn();
-
-// while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
-	
-// }
-
-// echo $_SESSION["test_id"] . " - " . $_SESSION["id"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,8 +49,10 @@ $cliente->cerrar_conn();
 
 		    			$('.progress-bar').css('width', ene*100/total + '%');
 		    			$('.progress-bar').text(ene + '/' + total);
-
-		    			$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+		    			if (evalDatos[ene-1].invertido == 1)
+		    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta + ' (Invertido)');	
+		    			else
+		    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
 			        },
 			        error: function (obj, error, objError){
 			            //avisar que ocurrió un error
@@ -65,7 +61,7 @@ $cliente->cerrar_conn();
 				});
 
     			$('a.si').click(function(){
-					$("h3").text(ene + " - " + total);
+					// $("h3").text(ene + " - " + total);
     				if (total >= ene)
 						cambiaValor(1);
 					else
@@ -101,7 +97,10 @@ $cliente->cerrar_conn();
 				if (ene-1 < total) {
 					$('.progress-bar').text(ene + '/' + total);
 					$('.progress-bar').css('width', ene*100/total + '%');
-	    			$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+	    			if (evalDatos[ene-1].invertido == 1)
+	    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta + ' (Invertido)');	
+	    			else
+	    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
 	    		}
 			}
 
@@ -119,34 +118,37 @@ $cliente->cerrar_conn();
 		</script>
 	</head>
 	<body>
-		Evaluación Alumno <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?>
+		Evaluación Alumno <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></b>
 		<div class='container'>
+			<h1></h1>
 			<div class='starter-template'>
-				<h1></h1>
-				<h2></h2>
-				<h3></h3>
-				<br>
-				<br>
-				<p class='lead'>
-					<div class="progress">
-					  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 4.7%;"></div>
+				<div id='caritaFeliz' class='col-xs-24 col-sm-12'>
+					<div class="col-xs-12 col-sm-6 placeholder">
+						<a href="javascript: void(0)" class='si'>
+							<img src="../../img/cara-verde.png">
+						</a>
 					</div>
-					<br>
-					<br>
-					<br>
-					<div id='caritaFeliz' class='col-xs-24 col-sm-12'>
-						<div class="col-xs-12 col-sm-6 placeholder">
-							<a href="javascript: void(0)" class='si'>
-								<img src="../../img/cara-verde.png">
-							</a>
-						</div>
-						<div class="col-xs-12 col-sm-6 placeholder">
-							<a href="javascript: void(0)" class='no'>
-								<img src="../../img/cara-roja.png">		
-							</a>
-						</div>
+					<div class="col-xs-12 col-sm-6 placeholder">
+						<a href="javascript: void(0)" class='no'>
+							<img src="../../img/cara-roja.png">		
+						</a>
 					</div>
-				</p>
+				</div>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h2></h2>
+			<h3></h3>
+			<div class="progress">
+			  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 4.7%;"></div>
 			</div>
 		</div>
 	</body>

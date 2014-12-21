@@ -49,7 +49,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Administrador Colegio Nuevo
+						Responsable Colegio Nuevo
 					</h2>
 					<form class='form-horizontal' role='form' action='crear_admin.php' method='post'>
 						<div class='form-group'>
@@ -73,7 +73,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo
 						<div class='form-group'>
 							<label for='sexo-box' class='col-sm-2 control-label'>Sexo</label>
 							<div class='col-sm-10'>
-								<select name='sexo-box' class='form-control'>
+								<select name='sexo-box' id='sexo-box' class='form-control'>
 								  	<option value='1' <?php if ($sexo == 1) echo "selected" ?>>Masculino</option>
 								  	<option value='2' <?php if ($sexo == 2) echo "selected" ?>>Femenino</option>
 								</select>
