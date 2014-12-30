@@ -6,6 +6,16 @@ include_once("include/header-cache.php");
 	<head>
     	<?php include_once("layout/head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="css/signin.css">
+		<?php if (isset($_GET["error"]) && $_GET["error"] == 1) { ?>
+		<script type="text/javascript">
+			alert("Pidale a su administrador que reinicie su clave.");
+		</script>
+		<?php } ?>
+		<?php if (isset($_GET["error"]) && $_GET["error"] == 2) { ?>
+		<script type="text/javascript">
+			alert("Correo Incorrecto!.");
+		</script>
+		<?php } ?>
 	</head>
 	<body>
 		<div class="container">

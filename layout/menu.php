@@ -67,28 +67,6 @@
 				</li>
 			</ul>
 		</li>
-		<li>
-			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-				Productos
-			</a>
-			<ul class='dropdown-menu' role='menu'>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/producto/crear_producto.php'>
-						Crear
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/producto/listar_productos.php'>
-						Listar
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/producto/listar_productos_eliminados.php'>
-						Eliminado
-					</a>
-				</li>
-			</ul>
-		</li>
 	</ul>
 	<?php } 
 	if ($_SESSION["tipo"] < 4) {
@@ -166,6 +144,30 @@
 	</ul>
 	<?php if ($_SESSION["tipo"] < 3) { ?>
 	<ul class='nav nav-sidebar list-group-item-warning'>
+		<?php if ($_SESSION["tipo"] == 1) { ?>
+		<li>
+			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+				Productos
+			</a>
+			<ul class='dropdown-menu' role='menu'>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/producto/crear_producto.php'>
+						Crear
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/producto/listar_productos.php'>
+						Listar
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/producto/listar_productos_eliminados.php'>
+						Eliminado
+					</a>
+				</li>
+			</ul>
+		</li>
+		<?php } ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Venta
@@ -183,7 +185,7 @@
 				</li>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] == 1) { ?>
+		<?php if ($_SESSION["tipo"] == 15) { ?>
 		<li>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Creditos
@@ -285,17 +287,25 @@
 				<?php } ?>
 			</ul>
 		</li>
-		<?php if ($_SESSION["tipo"] <> 3 && $_SESSION["tipo"] <> 5) { ?>
+		<?php if ($_SESSION["tipo"] <> 5) { ?>
 		<li>
 			<a clas='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Software
 			</a>
 			<ul class='dropdown-menu' role='menu'>
+				<?php if ($_SESSION["tipo"] <> 3) { ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/descarga/listar_descargas.php'>
 						Descarga
 					</a>
 				</li>
+				<?php } if ($_SESSION["tipo"] == 3) { ?>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/descarga/listar_compras.php'>
+						Comprado
+					</a>
+				</li>
+				<?php } ?>
 			</ul>
 		</li>
 		<?php } ?>

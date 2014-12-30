@@ -19,13 +19,14 @@ if (isset($_POST["id_cred"]))
 if (isset($_POST["cantidad-box"]))
 	$cantidad = trim($_POST["cantidad-box"]);
 
-if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
+// if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
+if ($producto > 0 && $colegio > 0) {
 	$ok = 0;
 	if ($consulta = $cliente->consulta_valor_producto($producto)) {
 		$row = $consulta->fetch_array(MYSQLI_ASSOC);
 		$valor = $row["valor"];
-		if ($cantidad >= $valor) {
-			if ($cantidad > 0) {
+		//if ($cantidad >= $valor) {
+			//if ($cantidad > 0) {
 				if ($consulta = $cliente->consulta_colegio_producto_tipo($colegio, $producto, 1)) {
 					if ($consulta->num_rows < 1) {
 						$consulta = $cliente->consulta_colegio_simple($colegio);
@@ -97,20 +98,20 @@ if ($producto > 0 && $colegio > 0 && $id_cred > 0 && $cantidad > 0) {
 								}
 							}
 							if ($ok) {
-								if ($cliente->actualiza_credito_usuario($cantidad - $valor, $id_cred)) {
-									$cliente->cerrar_conn();
+								//if ($cliente->actualiza_credito_usuario($cantidad - $valor, $id_cred)) {
+								//	$cliente->cerrar_conn();
 									?>
 									<script type="text/javascript">
 										window.location="ver_venta.php?vnt=<?php echo $id_insert; ?>";
 									</script>
 									<?php
-								}
+								//}
 							}
 						}
 					}
 				}
-			}
-		}
+			// }
+		// }
 	}
 }
 if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
@@ -118,7 +119,7 @@ if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 		$row = $consulta->fetch_array(MYSQLI_ASSOC);
 		$nombre = $row["nombre"] . " " . $row["apellido"];
 		$id_cred = $row["credito_id"];
-		$cantidad = $row["cantidad"];
+		echo $cantidad = $row["cantidad"];
 	}
 }
 ?>

@@ -16,10 +16,15 @@ if (isset($_GET["prd"])) {
 			$idioma = $row["idioma"];
 			$cant_lic = $row["n_licencia"];
 			$valor = $row["valor"];
+			$duracion = $row["duracion"];
 			if ($row["con_evaluacion"]) 
 				$evaluacion = "Sí";
 			else
 				$evaluacion = "No";
+			if ($row["con_doc"]) 
+				$documento = "Sí";
+			else
+				$documento = "No";
 		}
 	}
 }
@@ -85,9 +90,21 @@ else {
 							</div>
 						</div>
 						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Duración</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $duracion; ?> Meses</p>
+							</div>
+						</div>
+						<div class='form-group'>
 							<label class='col-sm-2 control-label'>Con Evaluación</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'><?php echo $evaluacion; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Con Documento</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $documento; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

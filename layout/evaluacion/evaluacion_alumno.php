@@ -9,6 +9,7 @@ $id = 0;
 $curso_id = 0;
 $mail = "";
 $n_eval = 0;
+$tipo_eval = 0;
 // die();
 if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])) {
 	$n_eval = $consulta->num_rows;
@@ -17,8 +18,13 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 	$tiempo_final = $row["tiempo_final"];
 	// die();
 	if ($n_eval < 2) {
-		// echo "{$ahora} <= {$tiempo_final}";die();
+		if ($n_eval == 0) {
+			$tipo_eval = 1;
+		} else {
+			$tipo_eval = 2;
+		}
 		if ($ahora >= $tiempo_final) {
+			$n_eval++;
 			$evaluacion = 0;
 			$curso_id = 0;
 			if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
@@ -31,7 +37,7 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 				}
 			}
 			$cliente->cerrar_conn();
-			$datos = array(1, 7, $curso_id, $evaluacion, 1);
+			$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval);
 			//print_r($datos); die();
 			if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 				header("Location: " . $dir_base);
@@ -44,10 +50,6 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$mail = $row["mail"];
-}
-
-if ($n_eval == 0){
-	$n_eval = 1;
 }
 
 ?>

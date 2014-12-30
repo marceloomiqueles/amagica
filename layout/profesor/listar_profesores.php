@@ -81,10 +81,16 @@ $cliente = new Cliente;
 											</a>
 											<?php
 												}
+											}
+											if ($_SESSION["tipo"] == 3 || $_SESSION["tipo"] == 1) {
 											?>
 											<a class='btn btn-mini btn-warning' title='Reiniciar Clave' href='reset_profesor.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-refresh'></i>
 											</a>
+											<?php
+												}
+												if ($_SESSION["tipo"] == 1) {
+											?>
 											<a class='btn btn-mini btn-danger' title='Eliminar' data-confirm='Seguro que quieres eliminar este Usuario?' href='elimina_profesor.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-trash	'></i>
 											</a>

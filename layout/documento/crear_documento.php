@@ -16,9 +16,9 @@ if (isset($_POST["cat-box"]))
 if (isset($_POST["prod-box"]))
 	$prod = trim($_POST["prod-box"]);
 
-if (strlen($desc) > 0 && $cat > 0 && $prod > 0 && isset($_FILES["file-box"])) {
+// if (strlen($desc) > 0 && $cat > 0 && $prod > 0 && isset($_FILES["file-box"])) {
 	$uploadfile = '../../Descargas/' . basename($_FILES['file-box']['name']);
-	$target_dir = $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
+	$target_dir = 'http://www.descargamagica.cl' . $dir_base . 'Descargas/' . basename($_FILES['file-box']['name']); 
 
 	if (move_uploaded_file($_FILES['file-box']['tmp_name'], $uploadfile)) {
 	    $datos = array(
@@ -30,7 +30,7 @@ if (strlen($desc) > 0 && $cat > 0 && $prod > 0 && isset($_FILES["file-box"])) {
 		if ($id_insert = $cliente->crear_documento($datos))
 			header("Location: ver_documento.php?dct=" . $id_insert);
 	}
-}
+// }
 ?>
 <!DOCTYPE html>
 <html>

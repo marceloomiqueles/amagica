@@ -34,7 +34,10 @@ $cliente = new Cliente;
 							</thead>
 							<tbody>
 								<?php
-								$res = $cliente->listar_documentos();
+								if ($_SESSION["tipo"] == 1) 
+									$res = $cliente->listar_documentos();	
+								else
+									$res = $cliente->listar_documentos_usuario($_SESSION["id"]);
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>
@@ -47,29 +50,8 @@ $cliente = new Cliente;
 									<td class='text-center'><?php echo $row["curso"]; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Detalle' href='ver_documento.php?dct=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-eye-open'></i>
-											</a>
-											<a class='btn btn-mini btn-info' title='Editar' href='mod_documento.php?dct=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-edit'></i>
-											</a>
-											<?php
-											if ($row["estado"] == 2) {
-											?>
-											<a class='btn btn-mini btn-success' title='Activar' href='deact_documento.php?dct=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-play'></i>
-											</a>
-											<?php
-											} elseif ($row["estado"] == 1) {
-											?>
-											<a class='btn btn-mini btn-danger' title='Desactivar' href='deact_documento.php?dct=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-stop'></i>
-											</a>
-											<?php
-											}
-											?>
-											<a class='btn btn-mini btn-warning' title='Eliminar' data-confirm='Seguro que quieres eliminar este producto?' href='elimina_documento.php?dct=<?php echo $row["id"] ?>'>
-												<i class='glyphicon glyphicon-trash	'></i>
+											<a class='btn btn-success' title='Detalle' href='<?php echo $row["ruta"] ?>' target='_blank'>
+												<i class='glyphicon glyphicon-download'></i>
 											</a>
 									</div>
 									</td>

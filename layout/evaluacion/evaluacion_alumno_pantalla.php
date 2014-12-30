@@ -81,7 +81,7 @@ $cliente->cerrar_conn();
 					$.ajax({
 				        type: "POST",
 				        url:"evaluacion_guarda_datos.php",
-				        data: {respuesta: valor, preg: evalDatos[ene-1].id, eval: <?php echo $_SESSION["test_id"]?>, lista: <?php echo $_POST["lista"]?>},
+				        data: {respuesta: valor, invertido: evalDatos[ene-1].invertido, preg: evalDatos[ene-1].id, eval: <?php echo $_SESSION["test_id"]?>, lista: <?php echo $_POST["lista"]?>},
 				        async: false,
 				        success: function(datos) {
 				        	$("h2").text(datos);

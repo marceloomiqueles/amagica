@@ -26,7 +26,7 @@ if (isset($_POST["fono-box"]))
 if (isset($_POST["nivel-box"]))
 	$nivel = $_POST["nivel-box"];
 
-if ($_SESSION["tipo"] == 1)
+// if ($_SESSION["tipo"] == 1)
 	$estado = 1;
 
 if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["calle-box"]) && isset($_POST["numero-box"]) && isset($_POST["fono-box"]) && isset($_POST["nivel-box"])) {

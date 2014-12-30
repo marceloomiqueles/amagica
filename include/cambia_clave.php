@@ -28,7 +28,7 @@ if (isset($_POST["pass"]) && isset($_POST["pass2"])) {
 	<body>
 		<div class="container">
 			<form class="form-signin" role="form" action="cambia_clave.php" method="post">
-				<h2 class="form-signin-heading">
+				<h2 class="form-signin-heading" style="color:red;">
 					Elija una clave nueva
 				</h2>
 				<input name="pass" class="form-control" type="password" autofocus="" required="" placeholder="Clave Nueva"></input>

@@ -38,19 +38,19 @@ if (isset($_POST["mail"]) && isset($_POST["pass"])) {
 						}
 					}
 					session_destroy();
-					header ("Location: ../login.php");
+					header ("Location: ../login.php?error=1");
 				}
 			} else {
 				session_destroy();
-				header ("Location: ../login.php");
+				header ("Location: ../login.php?error=1");
 			}
 		} else {
 			session_destroy();
-			header ("Location: ../login.php");
+			header ("Location: ../login.php?error=2");
 		}
 	} else {
 		session_destroy();
-		header ("Location: ../login.php");	
+		header ("Location: ../login.php?error=2");
 	}
 } else {
 	session_destroy();

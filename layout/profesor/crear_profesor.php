@@ -50,7 +50,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 				);
 			if ($id_insert = $cliente->crear_usuario($datos)) {
 				$cliente->cerrar_conn();
-				header("Location: ver_profesor.php?usr=" . $id_insert);
+				header("Location: ver_profesor.php?usr=" . $id_insert . "&nuevo=1");
 			}
 		}
 	}
