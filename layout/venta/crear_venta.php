@@ -49,45 +49,20 @@ if ($producto > 0 && $colegio > 0) {
 									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
 										$cliente->cerrar_conn();
 										?>
+										<script type='text/javascript' src='<?php echo $dir_base ?>js/jquery.min.js'></script>
 						                <script type="text/javascript">
 						                    loadDESCARGA('http://descargamagica.cl/CLIENTES/Test/descargaok.php', '<?php echo md5($id_licencia); ?>', '<?php echo $idioma; ?>', '<?php echo $nivel; ?>');
 						                  	function loadDESCARGA(php_file, solicitud, lenguaje, curso) {
 						                        // alert("Estamos generando su descarga. Por favor espere y no cierre la ventana hasta que se le indique que el proceso ha finalizado. Gracias"); //O colcale un gif animado de preload
 						                        var datastring= "solic="+solicitud+"&lang="+lenguaje+"&curso="+curso;
-						                        var urlfile = php_file + "?x=" + parseInt(Math.random() * 1000000);
-						                        var request =  get_XmlHttpx();
-						                        request.open("POST", urlfile , true);
-						                        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-						                        request.setRequestHeader("Content-length", datastring.length);
-						                        request.send(datastring);
-						                        request.onreadystatechange = function() {
-						                            //alert(request.readyState);
-						                            if (request.readyState == 4) { //respuesta ok
-						                                //alert(request.responseText);
-						                            }
-						                        }
-						                    }
-						                    //Request multiplataforma
-						                    function get_XmlHttpx() {
-						                        var xmlHttp = null;
-						                        try {
-						                            // Opera 8.0+, Firefox, Safari
-						                            xmlHttp = new XMLHttpRequest();
-						                        } catch (e) {
-						                            // Internet Explorer Browsers
-						                            try {
-						                                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-						                            } catch (e) {
-						                                try {
-						                                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-						                                } catch (e) {
-						                                    // Something went wrong
-						                                    alert("AJAX no soportado");
-						                                    return false;
-						                                }
-						                            }
-						                        }
-						                        return xmlHttp;
+						                        $.ajax({
+												  	type: "POST",
+													url: php_file,
+													data: { solic: solicitud, lang: lenguaje, curso: curso },
+													success: function(data) {
+														$('#results').html(data);
+													}
+												});
 						                    }
 						                </script>
 						                <?php										

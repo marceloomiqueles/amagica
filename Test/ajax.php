@@ -72,6 +72,8 @@ if (isset($_POST["random"]) && isset($_POST["solicitud"])) {
             } else {
                 echo "0";
             }
+        } else {
+            echo "0";
         }
     }
 } else {

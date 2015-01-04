@@ -242,12 +242,17 @@ class cliente {
 			return $this->con->sql("UPDATE licencia l INNER JOIN venta_licencia vl ON vl.licencia_id = l.id SET l.estado = {$estado} WHERE vl.venta_id = {$id};");
 	}
 
+	function cera_random_token_por_solicitud($solicitud) {
+		if($this->con->conectar() == true)
+			return $this->con->sql("UPDATE licencia SET random = '', token = '' WHERE n_solicitud = '{$solicitud}';");
+	}
+
 	// Fin UPDATE
 	// Inicio SELECT
 
 	function consulta_solicitud_token($solicitud) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT n_solicitud, random, DATE_FORMAT(fecha_creacion,'%Y-%m-%d') AS fecha_creacion, DATE_FORMAT(DATE_ADD(fecha_creacion, INTERVAL tiempo_duracion MONTH),'%Y-%m-%d') AS fecha_fin, idioma, nivel FROM licencia WHERE n_solicitud = '" . $solicitud . "';");
+			return $this->con->consulta("SELECT n_solicitud, random, DATE_FORMAT(fecha_creacion,'%Y-%m-%d') AS fecha_creacion, DATE_FORMAT(DATE_ADD(fecha_creacion, INTERVAL tiempo_duracion MONTH),'%Y-%m-%d') AS fecha_fin, idioma, nivel FROM licencia WHERE n_solicitud = '{$solicitud}' AND estado = 1;");
 	}
 
 	function consulta_correo_unico($correo) {
@@ -462,17 +467,17 @@ class cliente {
 
 	function consulta_descargas() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT l.id, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.estado = 1;");
+			return $this->con->consulta("SELECT l.id, l.n_solicitud, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.estado = 1;");
 	}
 
 	function consulta_descargas_colegio($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT l.id, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.estado = 1 AND u.id = {$id};");
+			return $this->con->consulta("SELECT l.id, l.n_solicitud, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.estado = 1 AND u.id = {$id};");
 	}
 
 	function consulta_descargas_colegio_curso($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT l.id, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND l.estado = 1 AND u.id = {$id};");
+			return $this->con->consulta("SELECT l.id, l.n_solicitud,c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND l.estado = 1 AND u.id = {$id};");
 	}
 
 	function consulta_credito_usuario($id) {

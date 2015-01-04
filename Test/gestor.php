@@ -2,17 +2,24 @@
 include_once("../include/header-cache.php");
 require("../include/cliente.class.php");
 
+if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../include/login_session.php");
+
 ini_set('memory_limit', '2048M');
 
 $okpost = 0;
-if (isset($_GET['archivo'])) {
+if (isset($_GET['archivo']) && isset($_GET["solic"])) {
     $archivo = $_GET['archivo'];
+    $solic = $_GET["solic"];
     $okpost = 1;	
 }
 
 include_once('basecfg.php');
 
 if ($okpost == 1) {
+    $cliente = new Cliente();
+
+    $cliente->cera_random_token_por_solicitud($solic);
+
     $filename = '../../../DESCARGASUSUARIO/' . $archivo;
     $filename = realpath($filename);
     $file_extension = strtolower(substr(strrchr($filename,"."), 1));
