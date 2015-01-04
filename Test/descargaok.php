@@ -2,8 +2,6 @@
 include_once("../include/header-cache.php");
 require("../include/cliente.class.php");
 
-if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
-
 ini_set('memory_limit', '2048M');
 
 $okpost = 0;
@@ -21,18 +19,18 @@ class Utils {
   	public static function listDirectory($dir) {
 	    $result = array();
 	    $root = scandir($dir);
-	    foreach($root as $value) {
-	      	if($value === '.' || $value === '..') {
+	    foreach ($root as $value) {
+	      	if ($value === '.' || $value === '..') {
 				continue;
 	      	}
-      		if(is_file("$dir$value")) {
+	      	if (is_file("$dir$value")) {
 	        	$result[] = "$dir$value";
 	        	continue;
 	      	}
-	      	if(is_dir("$dir$value")) {
+	      	if (is_dir("$dir$value")) {
 	        	$result[] = "$dir$value/";
 	      	}
-	      	foreach(self::listDirectory("$dir$value/") as $value) {
+	      	foreach (self::listDirectory("$dir$value/") as $value) {
 	        	$result[] = $value;
 	      	}
 	    }
@@ -42,7 +40,7 @@ class Utils {
 
 if ($okpost == 1) {
 	//MARCADO CON NUMERO DE LICENCIA
-	$clientetxt = "NUEVO_CLIENTE2014";
+	$clientetxt = $cliente;
 	$htmls = array();
 	//PRIMERO
 	for($i = 1; $i < 12; $i++){
@@ -191,11 +189,11 @@ DON;
 		$file_list = Utils::listDirectory($source_dir);
 		$zip = new ZipArchive();
 		if ($zip->open($zip_file, ZIPARCHIVE::CREATE) === true) {
-			foreach ($file_list as $file) {
-				if ($file !== $zip_file) {
-					$zip->addFile($file, substr($file, strlen($source_dir)));
-				}
-			}
+		  	foreach ($file_list as $file) {
+			    if ($file !== $zip_file) {
+			      	$zip->addFile($file, substr($file, strlen($source_dir)));
+			    }
+		  	}
 			$zip->close();
 		}
 		$linksdescarga .= ' <a href="http://www.descargamagica.cl/acciones/gestor.php?archivo=' . $zip_link . '" >Alfombra Magica Cuarto Basico</a> ';
@@ -213,8 +211,8 @@ DON;
 				if ($file !== $zip_file) {
 					$zip->addFile($file, substr($file, strlen($source_dir)));
 				}
-			}
-			$zip->close();
+		  	}
+		  	$zip->close();
 		}
 		$linksdescarga .= ' <a href="http://www.descargamagica.cl/acciones/gestor.php?archivo=' . $zip_link . '" >Alfombra Magica Primero Basico Multimedia</a> ';				   
 	}
