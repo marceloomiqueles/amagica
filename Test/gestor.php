@@ -1,16 +1,21 @@
 <?php
-session_start();
+include_once("../include/header-cache.php");
+require("../include/cliente.class.php");
+
 ini_set('memory_limit', '2048M');
+
 $okpost = 0;
 if (isset($_GET['archivo'])) {
     $archivo = $_GET['archivo'];
     $okpost = 1;	
 }
+
 include_once('basecfg.php');
-if($okpost == 1) {
-    $filename = '../../DESCARGASUSUARIO/' . $archivo;
+
+if ($okpost == 1) {
+    $filename = '../../../DESCARGASUSUARIO/' . $archivo;
     $filename = realpath($filename);
-    $file_extension = strtolower(substr(strrchr($filename,"."),1));
+    $file_extension = strtolower(substr(strrchr($filename,"."), 1));
     switch ($file_extension) {
         case "pdf": $ctype = "application/pdf"; break;
         case "exe": $ctype = "application/octet-stream"; break;
@@ -20,8 +25,7 @@ if($okpost == 1) {
         case "ppt": $ctype = "application/vnd.ms-powerpoint"; break;
         case "gif": $ctype = "image/gif"; break;
         case "png": $ctype = "image/png"; break;
-        case "jpe": case "jpeg":
-        case "jpg": $ctype = "image/jpg"; break;
+        case "jpe": case "jpeg": case "jpg": $ctype = "image/jpg"; break;
         default: $ctype = "application/force-download";
     }
     if (!file_exists($filename)) {
@@ -32,7 +36,7 @@ if($okpost == 1) {
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
     header("Content-Type: $ctype");
-    header("Content-Disposition: attachment; filename=\"".basename($filename)."\";");
+    header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\";");
     header("Content-Transfer-Encoding: binary");
     header("Content-Length: " . @filesize($filename));
     set_time_limit(0);
