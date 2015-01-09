@@ -147,7 +147,7 @@ $cliente->cerrar_conn();
 			<br>
 			<h2></h2>
 			<h3></h3>
-			<div class="progress">
+			<div class="progress" style='width:100%;'>
 			  	<div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 4.7%;"></div>
 			</div>
 		</div>

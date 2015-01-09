@@ -13,7 +13,7 @@ if (isset($_GET['archivo']) && isset($_GET["solic"])) {
     $okpost = 1;	
 }
 
-include_once('basecfg.php');
+// include_once('basecfg.php');
 
 if ($okpost == 1) {
     $cliente = new Cliente();

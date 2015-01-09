@@ -93,7 +93,7 @@ class cliente {
 
 	function crear_encabezado_evaluacion_prueba($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO evaluacion_curso_enc(tipo, fecha, tiempo, curso_id, evaluacion_enc_id, estado, eval_numero) VALUES('{$campos[0]}', now(), '{$campos[1]}', '{$campos[2]}', '{$campos[3]}', '{$campos[4]}', '{$campos[5]}');");
+			$this->con->sql("INSERT INTO evaluacion_curso_enc(tipo, fecha, tiempo, curso_id, evaluacion_enc_id, estado, eval_numero, licencia_id) VALUES('{$campos[0]}', now(), '{$campos[1]}', '{$campos[2]}', '{$campos[3]}', '{$campos[4]}', '{$campos[5]}', '{$campos[6]}');");
 			return $this->con->id();
 	}
 
@@ -603,17 +603,17 @@ class cliente {
 
 	function consulta_evaluaciones() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id DESC;");
+			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND ece.licencia_id = l.id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id DESC;");
 	}
 
 	function consulta_evaluaciones_colegio($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.curso = c.curso AND l.nivel = c.nivel INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id;");
+			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.curso = c.curso AND l.nivel = c.nivel AND ece.licencia_id = l.id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id;");
 	}
 
 	function consulta_evaluaciones_colegio_curso($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE u.id = {$id} AND ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id DESC;");
+			return $this->con->consulta("SELECT ece.id, concat(ee.descr, ' - ',ece.eval_numero) AS descr, c.nivel, c.curso, clg.nombre AS colegio, ece.fecha, ee.tipo, i.descr AS idioma FROM usuario u INNER JOIN colegio clg ON clg.id = u.colegio_id INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel AND c.curso = u.curso INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND ece.licencia_id = l.id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN evaluacion_enc ee ON ee.id = ece.evaluacion_enc_id INNER JOIN idioma i ON i.id = ee.idioma_id WHERE u.id = {$id} AND ece.estado = 1 AND u.estado = 1 AND l.estado = 1 ORDER BY l.id DESC;");
 	}
 
 	function consulta_alumnos_de_evaluacion($id) {
@@ -629,6 +629,11 @@ class cliente {
 	function consulta_software_comprado_profesor($id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT p.descr, v.fecha_venta, v.id FROM usuario u INNER JOIN venta v ON v.colegio_id = u.colegio_id INNER JOIN producto p ON p.id = v.producto_id WHERE u.id = {$id} AND v.estado = 1;");
+	}
+
+	function id_ultima_licencia_por_usuario_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT l.id FROM usuario u INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.curso = u.curso AND l.nivel = u.nivel WHERE u.id = {$id} AND u.estado = 1 AND l.estado = 1 ORDER BY l.fecha_creacion DESC LIMIT 1;");
 	}
 
 	// Fin SELECT

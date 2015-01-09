@@ -62,7 +62,7 @@ $curso;
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
 											<a class='btn btn-mini btn-success' title='Descargar' data-confirm='Seguro que quieres eliminar este Usuario?' href='<?php echo $row["link_d"] . "&solic=" . $row["n_solicitud"]; ?>'>
-												<i class='glyphicon glyphicon-download'></i>
+												Descargar
 											</a>
 										</div>
 									</td>

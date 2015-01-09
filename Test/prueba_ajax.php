@@ -10,12 +10,13 @@
 		<p id="results"></p>
 		<script>
 			function llamada() {
-				var sol = "2a38a4a9316c49e5a833517c45d31070";
-				var ran = "665s90I9jI775c759116s9HH31Ti80K3";
+				var sol = "1";
+				var ran = "9b8619251a19057cff70779273e95aa6";
+				var cur = '1';
 				$.ajax({
 				  	type: "POST",
-					url: "ajax.php",
-					data: { random: ran, solicitud: sol },
+					url: "http://descargamagica.cl/CLIENTES/Test/descargaok.php",
+					data: { solic: ran, lang: sol, curso:  cur},
 					success: function(data) {
 						$('#results').html(data);
 					}

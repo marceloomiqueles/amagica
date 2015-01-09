@@ -10,13 +10,11 @@ $curso_id = 0;
 $mail = "";
 $n_eval = 0;
 $tipo_eval = 0;
-// die();
 if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])) {
 	$n_eval = $consulta->num_rows;
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$ahora = $row["ahora"];
 	$tiempo_final = $row["tiempo_final"];
-	// die();
 	if ($n_eval < 2) {
 		if ($n_eval == 0) {
 			$tipo_eval = 1;
@@ -28,20 +26,19 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 			$evaluacion = 0;
 			$curso_id = 0;
 			if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
-				// echo $_SESSION["id"];
 				if ($consulta->num_rows > 0) {
-					// die();
 					$row = $consulta->fetch_array(MYSQLI_ASSOC);
 					$evaluacion = $row["id"];
 					$curso_id = $row["curso_id"];
 				}
 			}
 			$cliente->cerrar_conn();
-			$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval);
-			//print_r($datos); die();
+			$qry = $cliente->id_ultima_licencia_por_usuario_id($_SESSION["id"]);
+			$row = $qry->fetch_array(MYSQLI_ASSOC);
+			$id_lic = $row["id"];
+			$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval, $id_lic);
 			if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 				header("Location: " . $dir_base);
-				// die();
 			}
 		}
 	}
