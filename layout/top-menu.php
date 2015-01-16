@@ -14,7 +14,7 @@
 				if ($consulta = $cliente->consulta_usuario_id($_SESSION["id"])) {
 					if ($consulta->num_rows > 0) {
 						$row = $consulta->fetch_array(MYSQLI_ASSOC);
-						echo "Bienvenido " . $row["nombre"] . " " . $row["apellido"] ;
+						echo "Bienvenido " . $row["nombre"] . " " . $row["apellido"] . " - (" . $row["descripcion"] . ")";
 					} 
 				}
 				?>

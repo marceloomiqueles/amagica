@@ -88,6 +88,17 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 							</div>
 						</div>
 						<div class='form-group'>
+							<label for='desc-box' class='col-sm-2 control-label'>&nbsp;</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'>
+									Felicitaciones usted ha activado la evaluación para su curso, tiene duración de 7 días después del cual se desactivara para que pueda activar la evaluación final.
+									<br/>
+									<br/>
+									Entregue la información de arriba a sus alumnos para comenzar la evaluación.
+								</p>
+							</div>
+						</div>
+						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
 								<a class='btn btn-info' href='<?php echo $dir_base; ?>'>Atrás</a>
 							</div>

@@ -38,7 +38,7 @@ $cliente->cerrar_conn();
 					<form class='form-horizontal' role='form' action='evaluacion_alumno_pantalla.php' method='post'>
 						<div class='form-group'>
 							<label for='nombre-box' class='col-sm-2 control-label'>Número de Lista</label>
-							<div class='col-sm-10'>
+							<div class='col-sm-2'>
 								<input type='text' name='lista' onkeypress='return justNumbers(event);' maxlength='2' class='form-control' id='lista' placeholder='Número Lista'>
 							</div>
 						</div>

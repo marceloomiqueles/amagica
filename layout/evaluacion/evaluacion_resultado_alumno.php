@@ -28,7 +28,6 @@ $cliente = new Cliente;
 						<table id='json-table' class='tablesorter table table-striped'>
 							<thead>
 								<tr>
-									<th>#</th>
 									<th>Nº Lista</th>
 									<th>Identidad</th>
 									<th>Autoestima</th>
@@ -77,7 +76,6 @@ $cliente = new Cliente;
 									}
 								?>
 								<tr>
-									<td><?php echo $i; ?></td>
 									<td><?php echo $row["n_alumno"]; ?></td>
 									<td><?php if ($d1 <= 1) echo "Preocupante"; else echo "Adecuado"; ?></td>
 									<td><?php if ($d2 <= 1) echo "Preocupante"; else echo "Adecuado"; ?></td>

@@ -50,9 +50,9 @@ $cliente->cerrar_conn();
 		    			$('.progress-bar').css('width', ene*100/total + '%');
 		    			$('.progress-bar').text(ene + '/' + total);
 		    			if (evalDatos[ene-1].invertido == 1)
-		    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta + ' (Invertido)');	
+		    				$('h1').text(evalDatos[ene-1].pregunta + ' (Invertido)');	
 		    			else
-		    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+		    				$('h1').text(evalDatos[ene-1].pregunta);
 			        },
 			        error: function (obj, error, objError){
 			            //avisar que ocurrió un error
@@ -98,9 +98,9 @@ $cliente->cerrar_conn();
 					$('.progress-bar').text(ene + '/' + total);
 					$('.progress-bar').css('width', ene*100/total + '%');
 	    			if (evalDatos[ene-1].invertido == 1)
-	    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta + ' (Invertido)');	
+	    				$('h1').text(evalDatos[ene-1].pregunta + ' (Invertido)');	
 	    			else
-	    				$('h1').text('PREGUNTA: ' + evalDatos[ene-1].pregunta);
+	    				$('h1').text(evalDatos[ene-1].pregunta);
 	    		}
 			}
 
@@ -113,6 +113,7 @@ $cliente->cerrar_conn();
 			}
 
 			function salir() {
+				alert('Felicitaciones Terminaste la Evaluación');
 				window.location ='../../action/logout.php';
 			}
 		</script>
@@ -120,7 +121,7 @@ $cliente->cerrar_conn();
 	<body>
 		Evaluación Alumno <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></b>
 		<div class='container'>
-			<h1></h1>
+			<h3>PREGUNTA: </h3><h1 style='height: 78px;'></h1>
 			<div class='starter-template'>
 				<div id='caritaFeliz' class='col-xs-24 col-sm-12'>
 					<div class="col-xs-12 col-sm-6 placeholder">

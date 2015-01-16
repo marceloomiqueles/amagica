@@ -382,7 +382,7 @@ class cliente {
 
 	function lista_simple_colegios() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT id, nombre FROM colegio WHERE estado = 1;");
+			return $this->con->consulta("SELECT id, nombre FROM colegio WHERE estado = 1 ORDER BY nombre;");
 	}
 
 	function listar_colegios_id($id) {

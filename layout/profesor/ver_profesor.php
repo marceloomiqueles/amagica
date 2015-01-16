@@ -37,7 +37,7 @@ else {
 <html>
 	<head>
     	<?php 
-    	include_once("../head.php"); 
+    	include_once("../head.php");
     	if (isset($_GET["nuevo"]) && $_GET["nuevo"] == 1) { ?>
     	<script type="text/javascript">
     		alert("Anote la siguiente informacion: \n Usuario: <?php echo $mail; ?> \n Contraseña: 1234");

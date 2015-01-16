@@ -224,12 +224,7 @@
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Evaluación
 			</a>
-			<ul class='dropdown-menu' role='menu'><!--
-				<li>
-					<a href='<?php echo $dir_base ?>layout/evaluacion/'>
-						Subir
-					</a>
-				</li>-->
+			<ul class='dropdown-menu' role='menu'>
 				<?php if ($_SESSION["tipo"] == 1) { ?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/crear_evaluacion.php'>
@@ -242,16 +237,16 @@
 					</a>
 				</li>
 				<? } 
-				if ($_SESSION["tipo"] <> 3) {
+				if ($_SESSION["tipo"] <> 3 && $_SESSION["tipo"] <> 1) {
 				?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_profesor.php'>
-						Profesor
+						Evaluación Profesor
 					</a>
 				</li>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_alumno.php'>
-						Alumno
+						Iniciar Evaluación Alumno
 					</a>
 				</li>
 				<?php } ?>

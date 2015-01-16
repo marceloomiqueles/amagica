@@ -107,6 +107,16 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 						<div class='form-group'>
 							<label for='colegio-box' class='col-sm-2 control-label'>Colegio</label>
 							<div class='col-sm-10'>
+								<?php
+								if ($_SESSION["tipo"] == 3) {
+									$res = $cliente->consulta_colegio_id($_SESSION["colegio"]);
+									$row = $res->fetch_array(MYSQLI_ASSOC);
+								?>
+								<p class='form-control-static'><?php echo $row["nombre"]; ?></p>
+								<input type='hidden' name='colegio-box' value='<?php echo $row["id"] ?>'>
+								<?php
+								} else {
+								?>
 								<select name='colegio-box' onchange='cargaCurosPorColegio()' id='colegio-box' class='form-control'>
 									<?php
 									$res = $cliente->lista_simple_colegios();
@@ -118,6 +128,9 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 									$cliente->cerrar_conn();
 									?>
 								</select>
+								<?php
+								}
+								?>
 							</div>
 						</div>
 						<div class='form-group'>
