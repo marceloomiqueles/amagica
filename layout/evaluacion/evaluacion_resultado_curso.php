@@ -236,37 +236,37 @@ $cliente->cerrar_conn();
 								<tr>
 									<td>15</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Identidad</td>
-									<td><?php if ($CA_1 == 0 && $NC_1 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_1 / $NC_1) * 100); ?></td>
+									<td><?php if ($NC_1 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_1 / $NC_1) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>16</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión utoestima</td>
-									<td><?php if ($CA_2 == 0 && $NC_2 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_2 / $NC_2) * 100); ?></td>
+									<td><?php if ($NC_2 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_2 / $NC_2) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>17</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Valores</td>
-									<td><?php if ($CA_3 == 0 && $NC_3 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_3 / $NC_3) * 100); ?></td>
+									<td><?php if ($NC_3 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_3 / $NC_3) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>18</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Manejo de conflictos</td>
-									<td><?php if ($CA_4 == 0 && $NC_4 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_4 / $NC_4) * 100); ?></td>
+									<td><?php if ($NC_4 == 0) { echo "0.00%"; } else { echo sprintf('%0.2f%%', ($CA_4 / $NC_4) * 100); } ?></td>
 								</tr>
 								<tr>
 									<td>19</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Cooperación y pertenencia</td>
-									<td><?php if ($CA_5 == 0 && $NC_5 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_5 / $NC_5) * 100); ?></td>
+									<td><?php if ($NC_5 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_5 / $NC_5) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>20</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Jerarquías protectoras: Protección y cuidado</td>
-									<td><?php if ($CA_6 == 0 && $NC_6 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_6 / $NC_6) * 100); ?></td>
+									<td><?php if ($NC_6 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_6 / $NC_6) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>21</td>
 									<td>Porcentaje alumnos en el curso con nivel Preocupante en dimensión Jerarquías protectoras: Manejo de la convivencia</td>
-									<td><?php if ($CA_7 == 0 && $NC_7 == 0) echo "0"; else echo sprintf('%0.2f%%', ($CA_7 / $NC_7) * 100); ?></td>
+									<td><?php if ($NC_7 == 0) echo "0.00%"; else echo sprintf('%0.2f%%', ($CA_7 / $NC_7) * 100); ?></td>
 								</tr>
 								<tr>
 									<td>22</td>

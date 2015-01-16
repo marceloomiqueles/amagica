@@ -634,7 +634,7 @@ DON;
 		$linksdescarga .= ' <a href="http://www.descargamagica.cl/acciones/gestor.php?archivo=' . $zip_link .'" >Alfombra Magica Cuarto Basico  Multimedia Manejo de conflictos</a> ';
 	}
 	$cliente = new Cliente;
-	$link = "http://www.descargamagica.cl/CLIENTES/Test/gestor.php?archivo=" . $zip_link;
+	$link = "../../Test/gestor.php?archivo=" . $zip_link;
 	$cliente->actualiza_ruta_descarga($link, $solic);
 }
 ?>

@@ -89,7 +89,6 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
-								<button type='submit' class='btn btn-default'>Guardar</button>
 								<a class='btn btn-info' href='<?php echo $dir_base; ?>'>Atrás</a>
 							</div>
 						</div>

@@ -41,8 +41,9 @@ $cliente = new Cliente;
 								<?php
 								if ($_SESSION["tipo"] == 1) {
 									$res = $cliente->listar_usuarios_por_tipo(4);
-								} else {
-									$res = $cliente->listar_usuarios_por_tipo_creado_por(4, $_SESSION["id"]);
+								} 
+								if ($_SESSION["tipo"] == 3) {
+									$res = $cliente->listar_usuarios_por_tipo_creado_por(4, $_SESSION["id"]); 
 								}
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {

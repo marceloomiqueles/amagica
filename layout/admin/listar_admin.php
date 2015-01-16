@@ -39,8 +39,12 @@ $cliente = new Cliente;
 								<?php
 								if ($_SESSION["tipo"] == 1) {
 									$res = $cliente->listar_usuarios_por_tipo(3);
-								} else {
+								} 
+								if ($_SESSION["tipo"] == 2) {
 									$res = $cliente->listar_usuarios_por_tipo_creado_por(3, $_SESSION["id"]);
+								}
+								if ($_SESSION["tipo"] == 3) {
+									$res = $cliente->listar_usuarios_por_tipo_por_colegio(3, $_SESSION["colegio"]);
 								}
 								$i = 1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {

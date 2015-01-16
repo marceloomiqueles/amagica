@@ -32,7 +32,7 @@ if ($producto > 0 && $colegio > 0) {
 						$consulta = $cliente->consulta_colegio_simple($colegio);
 						$row = $consulta->fetch_array(MYSQLI_ASSOC);
 						$n_cursos = $row["n_cursos"];
-						die($n_cursos);
+						//die($n_cursos);
 						$datos = array($producto, $colegio, $id_cred);
 						if ($id_insert = $cliente->crear_venta($datos)) {
 							$cliente->cerrar_conn();
@@ -58,8 +58,6 @@ if ($producto > 0 && $colegio > 0) {
 						                	var cur = '<?php echo $nivel; ?>';
 						                    loadDESCARGA(url, solicit, langu, cur);
 						                  	function loadDESCARGA(php_file, solicitud, lenguaje, curs) {
-						                        // alert("Estamos generando su descarga. Por favor espere y no cierre la ventana hasta que se le indique que el proceso ha finalizado. Gracias"); //O colcale un gif animado de preload
-						                        // var datastring= "solic="+solicitud+"&lang="+lenguaje+"&curso="+curso;
 						                        $.ajax({
 												  	type: "POST",
 													url: php_file,
