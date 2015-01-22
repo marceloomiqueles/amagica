@@ -63,5 +63,15 @@ else {
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 1) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Venta Exitosa!");
+    			</script>
+    	<?php
+    		}
+    	?>
 	</body>
 </html>

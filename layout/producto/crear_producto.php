@@ -11,15 +11,15 @@ $cat = 0;
 $curso = 0;
 $idioma = 0;
 $cantidad = 0;
-$valor = 0;
+$valor = "";
 $evaluacion = 0;
 $documento = 0;
 $duracion = 0;
 
 if (isset($_POST["codigo-box"]))
-	$codigo = trim($_POST["codigo-box"]);
+	$codigo = strtoupper(trim($_POST["codigo-box"]));
 if (isset($_POST["desc-box"]))
-	$desc = trim($_POST["desc-box"]);
+	$desc = strtoupper(trim($_POST["desc-box"]));
 if (isset($_POST["cat-box"]))
 	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
@@ -39,9 +39,8 @@ if (isset($_POST["dura-box"]))
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $cantidad > 0 && $valor > 0) {
 	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad, $evaluacion, $documento, $duracion);
-	//print_r($datos);die();
 	if ($id_insert = $cliente->crear_producto($datos))
-		header("Location: ver_producto.php?prd=" . $id_insert);
+		header("Location: ver_producto.php?prd=" . $id_insert . "&exito=1");
 }
 ?>
 <!DOCTYPE html>
@@ -129,15 +128,7 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 						<div class='form-group'>
 							<label for='valor-box' class='col-sm-2 control-label'>Valor Producto</label>
 							<div class='col-sm-10'>
-								<select name='valor-box' id='valor-box' class='form-control'>
-									<?php
-									for ($i = 1; $i <= 4; $i++) {
-									?>
-								  	<option value='<?php echo $i ?>' <?php if ($valor == $i) echo "selected"; echo ">" . $i; ?></option>
-									<?php
-									}
-									?>
-								</select>
+								<input type='text' maxlength='6' onkeypress='return justNumbers(event);' name='valor-box' class='form-control' id='valor-box' placeholder='Valor' value='<?php echo $valor; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -145,7 +136,7 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 							<div class='col-sm-10'>
 								<select name='dura-box' id='dura-box' class='form-control'>
 									<?php
-									for ($i = 1; $i <= 12; $i++) {
+									for ($i = 1; $i <= 128; $i++) {
 									?>
 								  	<option value='<?php echo $i ?>' <?php if ($i == 12) echo "selected"; echo ">" . $i; ?></option>
 									<?php

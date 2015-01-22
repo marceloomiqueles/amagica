@@ -14,28 +14,33 @@ $fono = "";
 $id_box = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = trim($_POST["nombre-box"]);
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["apellido-box"]))
-	$apellido = trim($_POST["apellido-box"]);
+	$apellido = strtoupper(trim($_POST["apellido-box"]));
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = trim("+56 " . $_POST["ni-box"] . " " . $_POST["fono-box"]);
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 if (isset($_GET["usr"]))
 	$id_box = trim($_GET["usr"]);
 if (isset($_POST["id-box"]))
 	$id_box = trim($_POST["id-box"]);
 
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && $sexo > 0 && $fono > 0 && $id_box > 0) {
-	if ($consulta = $cliente->consulta_correo_unico($correo)) {
-		if ($consulta->num_rows < 1) {
-			$cambios = array($nombre, $apellido, $sexo, 1, str_replace(" ", "", $fono), 1, 0, 0);
-			if ($cliente->actualiza_usuario_id($cambios, $id_box))
-				header("Location: ver_usuario.php?usr=" . $id_box);
-			else
-				header("Location: mod_usuario.php?usr=" . $id_box);
-		}
-	}
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && $sexo > 0 && strlen($fono) == 12 && $id_box > 0) {
+	$cambios = array(
+		$nombre, 
+		$apellido, 
+		$sexo, 
+		1, 
+		$fono, 
+		1, 
+		0, 
+		0
+	);
+	if ($cliente->actualiza_usuario_id($cambios, $id_box))
+		header("Location: ver_usuario.php?usr=" . $id_box . "&exito=2");
+	else
+		header("Location: mod_usuario.php?usr=" . $id_box . "&exito=3");
 }
 
 if ($consulta = $cliente->consulta_usuario_id($id_box))
@@ -110,7 +115,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 										  	<option value='2' <?php if ($digito == 2) echo "selected" ?>>2</option>
 										</select>
 									</span>
-									<input type='text' maxlength='8' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+									<input type='text' maxlength='8' onkeypress='return justNumbers(event);' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
 								</div>
 							</div>
 						</div>
@@ -124,5 +129,16 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 3) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Datos Ingresados Erroneamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

@@ -17,37 +17,39 @@ $nivel = 0;
 $id_box = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["region-box"]))
-	$region = $_POST["region-box"];
+	$region = trim($_POST["region-box"]);
 if (isset($_POST["provincia-box"]))
-	$provincia = $_POST["provincia-box"];
+	$provincia = trim($_POST["provincia-box"]);
 if (isset($_POST["comuna-box"]))
-	$comuna = $_POST["comuna-box"];
+	$comuna = trim($_POST["comuna-box"]);
 if (isset($_POST["calle-box"]))
-	$calle = $_POST["calle-box"];
+	$calle = strtoupper(trim($_POST["calle-box"]));
 if (isset($_POST["numero-box"]))
-	$numero = $_POST["numero-box"];
+	$numero = trim($_POST["numero-box"]);
 if (isset($_POST["fono-box"]))
-	$fono_box = $_POST["fono-box"];
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 if (isset($_POST["nivel-box"]))
-	$nivel_box = $_POST["nivel-box"];
+	$nivel = trim($_POST["nivel-box"]);
 if (isset($_GET["clg"]))
-	$id_box = $_GET["clg"];
+	$id_box = trim($_GET["clg"]);
 if (isset($_POST["id-box"]))
-	$id_box = $_POST["id-box"];
+	$id_box = trim($_POST["id-box"]);
 
-if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["calle-box"]) && isset($_POST["numero-box"]) && isset($_POST["fono-box"]) && isset($_POST["nivel-box"]) && isset($_POST["id-box"])) {
+if (strlen($nombre) > 0 && strlen($comuna) > 0 && strlen($calle) > 0 && strlen($numero) > 0 && strlen($fono) == 12 && strlen($nivel) > 0 && $id_box > 0) {
 	$cambios = array(
-		trim($_POST["comuna-box"]), 
-		trim($_POST["nombre-box"]), 
-		trim($_POST["nivel-box"]), 
-		trim($_POST["calle-box"]), 
-		trim($_POST["numero-box"]), 
-		str_replace(" ", "", trim($_POST["fono-box"]))
+		$comuna, 
+		$nombre, 
+		$nivel, 
+		$calle, 
+		$numero, 
+		$fono
 		);
-	if ($cliente->actualiza_colegio_id($cambios, $_POST["id-box"]))
-		header("Location: ver_colegio.php?clg=" . $_POST["id-box"]);
+	if ($cliente->actualiza_colegio_id($cambios, $id_box))
+		header("Location: ver_colegio.php?clg=" . $id_box . "&exito=2");
+	else
+		header("Location: mod_colegio.php?usr=" . $id_box . "&exito=3");
 }
 
 if ($consulta = $cliente->consulta_colegio_id($id_box)) {
@@ -60,7 +62,8 @@ if ($consulta = $cliente->consulta_colegio_id($id_box)) {
 		$calle = $row["calle"];
 		$numero = $row["numero"];
 		$nivel = $row["n_cursos"];
-		$fono = substr($row["fono"], 0, 3) . " " . substr($row["fono"], 3, 1) . " " . substr($row["fono"], 4, 4) . " " . substr($row["fono"], 8, 4);
+		$digito = substr($row["fono"], 3, 1);
+		$fono = substr($row["fono"], 4, 8);
 	}
 }
 ?>
@@ -140,13 +143,22 @@ if ($consulta = $cliente->consulta_colegio_id($id_box)) {
 						<div class='form-group'>
 							<label for='numero-box' class='col-sm-2 control-label'>Número</label>
 							<div class='col-sm-10'>	
-								<input type='text' name='numero-box' class='form-control' id='numero-box' placeholder='Número' value='<?php echo $numero; ?>'>
+								<input type='text' name='numero-box' onkeypress='return justNumbers(event);' class='form-control' id='numero-box' placeholder='Número' value='<?php echo $numero; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								<div class='input-group'>
+									<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='9' <?php if ($digito == 9) echo "selected" ?>>9</option>
+										  	<option value='2' <?php if ($digito == 2) echo "selected" ?>>2</option>
+										</select>
+									</span>
+									<input type='text' maxlength='8' onkeypress='return justNumbers(event);' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -174,5 +186,16 @@ if ($consulta = $cliente->consulta_colegio_id($id_box)) {
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 3) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Datos Ingresados Erroneamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

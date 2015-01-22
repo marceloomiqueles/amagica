@@ -15,7 +15,7 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"])
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$ahora = $row["ahora"];
 	$tiempo_final = $row["tiempo_final"];
-	if ($n_eval < 1) {
+	if ($n_eval == 1) {
 		if ($n_eval == 0) {
 			$tipo_eval = 1;
 		} else {

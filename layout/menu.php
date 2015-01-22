@@ -118,7 +118,7 @@
 		<?php if ($_SESSION["tipo"] <> 2) { ?>
 		<li class='dropdown'>
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-				Profesor
+				Docente
 			</a>
 			<ul class='dropdown-menu' role='menu'>
 				<li>
@@ -190,27 +190,12 @@
 			<a class='dropdown-toggle' data-toggle='dropdown' href='#'>
 				Creditos
 			</a>
-			<ul class='dropdown-menu' role='menu'><!--
-				<li>
-					<a href='<?php echo $dir_base ?>layout/credito/comprar_credito.php'>
-						Comprar
-					</a>
-				</li>
-				<li>
-					<a href='<?php echo $dir_base ?>layout/credito/manejar_credito.php'>
-						Solicitudes
-					</a>
-				</li>-->
+			<ul class='dropdown-menu' role='menu'>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/credito/manejar_credito.php'>
 						Manejar
 					</a>
-				</li><!--
-				<li>
-					<a href='<?php echo $dir_base ?>layout/credito/historial_full_credito.php'>
-						Historial Full
-					</a>
-				</li>-->
+				</li>
 			</ul>
 		</li>
 		<?php } ?>
@@ -241,12 +226,22 @@
 				?>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_profesor.php'>
-						Evaluación Profesor
+						Evaluación Docente Inicial
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_profesor_final.php'>
+						Evaluación Docente Final
 					</a>
 				</li>
 				<li>
 					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_alumno.php'>
-						Iniciar Evaluación Alumno
+						Evaluación Estudiante Inicial
+					</a>
+				</li>
+				<li>
+					<a href='<?php echo $dir_base ?>layout/evaluacion/evaluacion_alumno_final.php'>
+						Evaluación Estudiante Final
 					</a>
 				</li>
 				<?php } ?>

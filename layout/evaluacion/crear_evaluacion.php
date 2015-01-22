@@ -80,8 +80,8 @@ if (strlen($desc) > 0 && $curso > 0 && $idioma > 0 && $tipo > 0) {
 							<label for='tipo-box' class='col-sm-2 control-label'>Tipo</label>
 							<div class='col-sm-10'>
 								<select name='tipo-box' id='tipo-box' class='form-control'>
-									<option value='1'>Alumno</option>
-									<option value='2'>Profesor</option>
+									<option value='1'>Estudiante</option>
+									<option value='2'>Docente</option>
 								</select>
 							</div>
 						</div>

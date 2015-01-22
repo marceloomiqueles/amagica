@@ -119,7 +119,7 @@ $cliente->cerrar_conn();
 		</script>
 	</head>
 	<body>
-		Evaluación Alumno <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></b>
+		Evaluación Estudiante <b><?php echo $_POST["lista"]?></b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></b>
 		<div class='container'>
 			<h3>PREGUNTA: </h3><h1 style='height: 78px;'></h1>
 			<div class='starter-template'>

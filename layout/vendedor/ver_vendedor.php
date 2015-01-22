@@ -87,5 +87,24 @@ else {
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 1) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Vendedor Creado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    		if ($_GET["exito"] == 2) {
+    	?>
+
+    			<script type="text/javascript">
+    				alert("Vendedor Actualizado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

@@ -29,7 +29,7 @@ else {
 <!DOCTYPE html>
 <html>
 	<head>
-    	<?php include_once("../head.php"); ?>
+    	<?php include_once("../head.php");?>
 	</head>
 	<body>
 		<?php include_once("../top-menu.php"); ?>
@@ -95,5 +95,24 @@ else {
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 1) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Administrador Creado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    		if ($_GET["exito"] == 2) {
+    	?>
+
+    			<script type="text/javascript">
+    				alert("Administrador Actualizado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

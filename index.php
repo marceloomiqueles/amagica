@@ -4,6 +4,16 @@ require("include/cliente.class.php");
 if(empty($_SESSION["id"]) || $_SESSION["id"] == "")	header ("Location: include/login_session.php");
 
 $cliente = new Cliente;
+
+if ($_SESSION["tipo"] == 1)
+	header("Location: layout/producto/crear_producto.php");
+if ($_SESSION["tipo"] == 2)
+	header("Location: layout/venta/crear_venta.php");
+if ($_SESSION["tipo"] == 3 || $_SESSION["tipo"] == 4)
+	header("Location: layout/evaluacion/evaluacion_resultado.php");
+if ($_SESSION["tipo"] == 5)
+	header("Location: layout/documento/listar_documentos.php");
+
 ?>
 <!DOCTYPE html>
 <html>

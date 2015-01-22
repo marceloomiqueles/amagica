@@ -80,7 +80,7 @@ if ($producto > 0 && $colegio > 0) {
 								//	$cliente->cerrar_conn();
 									?>
 									<script type="text/javascript">
-										window.location="ver_venta.php?vnt=<?php echo $id_insert; ?>";
+										window.location="ver_venta.php?vnt=<?php echo $id_insert; ?>&exito=1";
 									</script>
 									<?php
 								//}

@@ -18,9 +18,9 @@ $documento = 0;
 $duracion = 0;
 
 if (isset($_POST["codigo-box"]))
-	$codigo = trim($_POST["codigo-box"]);
+	$codigo = strtoupper(trim($_POST["codigo-box"]));
 if (isset($_POST["desc-box"]))
-	$desc = trim($_POST["desc-box"]);
+	$desc = strtoupper(trim($_POST["desc-box"]));
 if (isset($_POST["cat-box"]))
 	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
@@ -46,7 +46,9 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion, $documento, $duracion);
 	//print_r($datos);die();
 	if ($cliente->actualiza_producto_id($datos, $id_box))
-		header("Location: ver_producto.php?prd=" . $id_box);
+		header("Location: ver_producto.php?prd=" . $id_box . "&exito=2");
+	else
+		header("Location: mod_producto.php?prd=" . $id_box . "&exito=3");
 }
 
 if ($consulta = $cliente->consulta_producto($id_box))
@@ -150,15 +152,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 						<div class='form-group'>
 							<label for='valor-box' class='col-sm-2 control-label'>Valor Producto</label>
 							<div class='col-sm-10'>
-								<select name='valor-box' id='valor-box' class='form-control'>
-									<?php
-									for ($i = 1; $i <= 4; $i++) {
-									?>
-								  	<option value='<?php echo $i ?>' <?php if ($valor == $i) echo "selected"; echo ">" . $i; ?></option>
-									<?php
-									}
-									?>
-								</select>
+								<input type='text' maxlength='6' onkeypress='return justNumbers(event);' name='valor-box' class='form-control' id='valor-box' placeholder='Valor' value='<?php echo $valor; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>
@@ -166,7 +160,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 							<div class='col-sm-10'>
 								<select name='dura-box' id='dura-box' class='form-control'>
 									<?php
-									for ($i = 1; $i <= 12; $i++) {
+									for ($i = 1; $i <= 128; $i++) {
 									?>
 								  	<option value='<?php echo $i ?>' <?php if ($i == $duracion) echo "selected"; echo ">" . $i; ?></option>
 									<?php
@@ -205,5 +199,16 @@ if ($consulta = $cliente->consulta_producto($id_box))
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 3) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Datos Ingresados Erroneamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

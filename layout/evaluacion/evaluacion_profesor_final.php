@@ -32,7 +32,7 @@ if (isset($_POST["pregunta"])) {
 		}
 		$cliente->cerrar_conn();
 		if ($consulta = $cliente->consulta_evaluaciones_realizadas_por_curso_por_tipo(2, $curso_id)) {
-			if($consulta->num_rows < 1) {
+			if($consulta->num_rows == 1) {
 				$datos = array(2, 7, $curso_id, $evaluacion);
 				if ($id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 					for ($i=0; $i < count($_POST["pregunta"]); $i++) {

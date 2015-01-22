@@ -45,9 +45,9 @@ if (isset($_GET["eval"])) {
 				$idioma = "Inglés";
 			$tipo_id = $row["idioma_id"];
 			if ($row["tipo"] == 1) {
-				$tipo = "Alumno";
+				$tipo = "Estudiante";
 			} else {
-				$tipo = "Profesor";
+				$tipo = "Docente";
 			}
 		}
 	}

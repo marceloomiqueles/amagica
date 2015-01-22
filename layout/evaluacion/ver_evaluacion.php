@@ -13,9 +13,9 @@ if (isset($_GET["eval"])) {
 			$curso = $row["nivel"];
 			$idioma = $row["idioma"];
 			if ($row["tipo"] == 1) {
-				$tipo = "Alumno";
+				$tipo = "Estudiante";
 			} else {
-				$tipo = "Profesor";
+				$tipo = "Docente";
 			}
 			$cliente->cerrar_conn();
 		}

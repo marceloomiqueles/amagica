@@ -38,10 +38,7 @@ $cliente = new Cliente;
 							</thead>
 							<tbody>
 								<?php
-								// if ($_SESSION["tipo"] == 1)
-									$res = $cliente->listar_colegios();
-								// else
-								// 	$res = $cliente->listar_colegios_id($_SESSION["id"]);
+								$res = $cliente->listar_colegios();
 								$i=1;
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 								?>

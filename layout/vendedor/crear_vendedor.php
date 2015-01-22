@@ -12,11 +12,11 @@ $sexo = 1;
 $fono = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = trim($_POST["nombre-box"]);
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["apellido-box"]))
-	$apellido = trim($_POST["apellido-box"]);
+	$apellido = strtoupper(trim($_POST["apellido-box"]));
 if (isset($_POST["mail-box"]))
-	$correo = trim($_POST["mail-box"]);
+	$correo = strtoupper(trim($_POST["mail-box"]));
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
@@ -31,7 +31,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 				$cliente->cerrar_conn();
 				$cliente->crear_credito($id_insert);
 				$cliente->cerrar_conn();
-				header("Location: ver_vendedor.php?usr=" . $id_insert);
+				header("Location: ver_vendedor.php?usr=" . $id_insert . "&exito=1");
 			}
 		}
 	}

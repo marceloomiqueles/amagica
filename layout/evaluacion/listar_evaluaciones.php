@@ -43,9 +43,9 @@ $cliente = new Cliente;
 								$tipo = "";
 								while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 									if ($row["tipo"] == 1)
-										$tipo = "Alumno";
+										$tipo = "Estudiante";
 									else
-										$tipo = "Profesor";
+										$tipo = "Docente";
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>

@@ -14,31 +14,30 @@ $nivel = 0;
 $estado = 0;
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["comuna-box"]))
-	$comuna = $_POST["comuna-box"];
+	$comuna = strtoupper(trim($_POST["comuna-box"]));
 if (isset($_POST["calle-box"]))
-	$calle = $_POST["calle-box"];
+	$calle = strtoupper(trim($_POST["calle-box"]));
 if (isset($_POST["numero-box"]))
-	$numero = $_POST["numero-box"];
+	$numero = trim($_POST["numero-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = $_POST["fono-box"];
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 if (isset($_POST["nivel-box"]))
-	$nivel = $_POST["nivel-box"];
+	$nivel = trim($_POST["nivel-box"]);
 
-// if ($_SESSION["tipo"] == 1)
-	$estado = 1;
+$estado = 1;
 
-if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["calle-box"]) && isset($_POST["numero-box"]) && isset($_POST["fono-box"]) && isset($_POST["nivel-box"])) {
+if (strlen($nombre) > 0 && strlen($comuna) > 0 && strlen($calle) > 0 && strlen($numero) > 0 && strlen($fono) > 0 && strlen($nivel) > 0) {
 	$datos = array(
-		trim($_POST["nombre-box"]),
-		trim($_POST["comuna-box"]),
-		trim($_POST["calle-box"]),
-		trim($_POST["numero-box"]),
-		str_replace(" ", "", trim($_POST["fono-box"])),
-		trim($_POST["nivel-box"]),
+		$nombre,
+		$comuna,
+		$calle,
+		$numero,
+		$fono,
+		$nivel,
 		$estado,
-		trim($_SESSION["id"])
+		$_SESSION["id"]
 		);
 	if ($id_insert = $cliente->crear_colegio($datos)) {
 		$cliente->cerrar_conn();
@@ -49,7 +48,7 @@ if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["
 				$cliente->cerrar_conn();
 			}
 		}
-		header("Location: ver_colegio.php?clg=" . $id_insert);
+		header("Location: ver_colegio.php?clg=" . $id_insert . "&exito=1");
 	}
 }
 ?>
@@ -134,7 +133,16 @@ if (isset($_POST["nombre-box"]) && isset($_POST["comuna-box"]) && isset($_POST["
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+								<div class="input-group">
+	      							<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='9'>9</option>
+										  	<option value='2'>2</option>
+										</select>
+									</span>
+									<input type='text' name='fono-box' maxlength='8' onkeypress='return justNumbers(event);' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo substr($fono, 4, 8) ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>

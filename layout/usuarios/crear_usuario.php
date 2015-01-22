@@ -12,23 +12,23 @@ $sexo = 1;
 $fono = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = trim($_POST["nombre-box"]);
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["apellido-box"]))
-	$apellido = trim($_POST["apellido-box"]);
+	$apellido = strtoupper(trim($_POST["apellido-box"]));
 if (isset($_POST["mail-box"]))
-	$correo = trim($_POST["mail-box"]);
+	$correo = strtoupper(trim($_POST["mail-box"]));
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = trim($_POST["fono-box"]);
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 
 if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && strlen($fono) == 8) {
 	if ($consulta = $cliente->consulta_correo_unico($correo)) {
 		if ($consulta->num_rows < 1) {
-			$datos = array($nombre,	$apellido, $correo, md5("1234"), $sexo, "+56" . $_POST["ni-box"] . $fono, 1, 2, $_SESSION["id"], 1, 0, 0, 0);
+			$datos = array($nombre,	$apellido, $correo, md5("1234"), $sexo, $fono, 1, 2, $_SESSION["id"], 1, 0, 0, 0);
 			if ($id_insert = $cliente->crear_usuario($datos)) {
 				$cliente->cerrar_conn();
-				header("Location: ver_usuario.php?usr=" . $id_insert);
+				header("Location: ver_usuario.php?usr=" . $id_insert . "&exito=1");
 			}
 		}
 	}

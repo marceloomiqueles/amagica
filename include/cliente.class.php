@@ -312,7 +312,7 @@ class cliente {
 
 	function listar_ventas() {
 		if ($this->con->conectar() == true)
-			return $this->con->consulta("SELECT v.id, v.fecha_venta, CONCAT(u.nombre, ' ', u.apellido) AS vendedor, p.descr AS producto, c.nombre AS colegio, v.estado FROM venta v INNER JOIN credito cr ON cr.id = v.credito_id INNER JOIN producto p ON p.id = v.producto_id INNER JOIN usuario u ON u.id = cr.usuario_id INNER JOIN colegio c ON c.id = v.colegio_id WHERE v.estado != 0 ORDER BY v.colegio_id AND v.fecha_venta;");
+			return $this->con->consulta("SELECT v.id, v.fecha_venta, CONCAT(u.nombre, ' ', u.apellido) AS vendedor, p.descr AS producto, c.nombre AS colegio, v.estado FROM venta v INNER JOIN credito cr ON cr.id = v.credito_id INNER JOIN producto p ON p.id = v.producto_id INNER JOIN usuario u ON u.id = cr.usuario_id INNER JOIN colegio c ON c.id = v.colegio_id WHERE v.estado != 0 ORDER BY v.colegio_id, v.fecha_venta;");
 	}
 
 	function listar_ventas_por_vendedor($id) {
@@ -342,17 +342,17 @@ class cliente {
 
 	function listar_usuarios_por_tipo($tipo) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} ORDER BY u.nivel, u.curso;");
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} ORDER BY u.nombre, u.apellido, u.nivel, u.curso;");
 	}
 
 	function listar_usuarios_por_tipo_por_colegio($tipo, $colegio) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} AND u.colegio_id = {$colegio} ORDER BY u.nivel, u.curso;");
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} AND u.colegio_id = {$colegio} ORDER BY u.nombre, u.apellido, u.nivel, u.curso;");
 	}
 
 	function listar_usuarios_por_tipo_creado_por($tipo, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} AND u.creado_por = {$id} ORDER BY u.nivel, u.curso;");
+			return $this->con->consulta("SELECT u.id, cl.nombre AS nombre_colegio, CONCAT(u.nombre, ' ' , u.apellido) AS nombre, tu.descripcion, u.estado, c.cantidad, u.nivel, u.curso FROM usuario u INNER JOIN tipo_usuario tu ON tu.id = u.tipo LEFT JOIN credito c ON c.usuario_id = u.id LEFT JOIN colegio cl ON cl.id = u.colegio_id WHERE u.estado != 0 AND u.tipo = {$tipo} AND u.creado_por = {$id} ORDER BY u.nombre, u.apellido, u.nivel, u.curso;");
 	}
 
 	function listar_usuarios_eliminados() {
@@ -377,7 +377,7 @@ class cliente {
 
 	function listar_colegios() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0;");
+			return $this->con->consulta("SELECT cl.id, cl.nombre, rg.id AS region_id, rg.nombre AS region, pr.id AS provincia_id, pr.nombre AS provincia, cm.id AS comuna_id, cm.nombre AS comuna, cl.n_cursos, cl.estado FROM colegio cl INNER JOIN comuna cm ON cl.comuna_id = cm.id INNER JOIN provincia pr ON pr.id = cm.provincia_id INNER JOIN region rg ON rg.id = pr.reg_id WHERE cl.estado != 0 ORDER BY cl.nombre, cm.nombre;");
 	}
 
 	function lista_simple_colegios() {
@@ -432,7 +432,7 @@ class cliente {
 
 	function listar_productos() {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, c.nombre AS categoria, i.descr AS idioma, p.estado, p.curso, p.n_licencia FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.estado != 0;");
+			return $this->con->consulta("SELECT p.id, p.codigo, p.descr, c.nombre AS categoria, i.descr AS idioma, p.estado, p.curso, p.n_licencia FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.estado != 0 ORDER BY p.categoria_id, p.curso, p.idioma_id;");
 	}
 
 	function listar_productos_eliminados() {

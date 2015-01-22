@@ -28,7 +28,7 @@ $cliente->cerrar_conn();
 	<body>
 		<div class='container'>
 			<div class='starter-template'>
-				<h1>Evaluación Alumnos </b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
+				<h1>Evaluación Estudiantes </b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
 				<br>
 				<br>
 				<p class='lead'>

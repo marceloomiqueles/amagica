@@ -51,7 +51,7 @@ else {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Detalle Profesor
+						Detalle Docente
 					</h2>
 					<form class='form-horizontal' role='form'>
 						<div class='form-group'>
@@ -114,5 +114,24 @@ else {
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 1) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Docente Creado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    		if ($_GET["exito"] == 2) {
+    	?>
+
+    			<script type="text/javascript">
+    				alert("Docente Actualizado Correctamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

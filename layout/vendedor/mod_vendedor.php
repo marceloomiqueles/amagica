@@ -14,11 +14,9 @@ $fono = "";
 $id_box = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = trim($_POST["nombre-box"]);
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["apellido-box"]))
-	$apellido = trim($_POST["apellido-box"]);
-if (isset($_POST["mail-box"]))
-	$correo = trim($_POST["mail-box"]);
+	$apellido = strtoupper(trim($_POST["apellido-box"]));
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
@@ -27,13 +25,13 @@ if (isset($_GET["usr"]))
 	$id_box = trim($_GET["usr"]);
 if (isset($_POST["id-box"]))
 	$id_box = trim($_POST["id-box"]);
-
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && strlen($fono) == 12 && $id_box > 0) {
-	$cambios = array($nombre, $apellido, $mail, $sexo, 2, $fono, 1, 0, 0);
+//die(strlen($correo));
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && $sexo > 0 && strlen($fono) == 12 && $id_box > 0) {
+	$cambios = array($nombre, $apellido, $sexo, 2, $fono, 1, 0, 0);
 	if ($cliente->actualiza_usuario_id($cambios, $id_box))
-		header("Location: ver_vendedor.php?usr=" . $id_box);
+		header("Location: ver_vendedor.php?usr=" . $id_box . "&exito=2");
 	else
-		header("Location: mod_vendedor.php?usr=" . $id_box);
+		header("Location: mod_vendedor.php?usr=" . $id_box . "&exito=3");
 }
 
 if ($consulta = $cliente->consulta_usuario_id($id_box))
@@ -108,7 +106,7 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 										  	<option value='2' <?php if ($digito == 2) echo "selected" ?>>2</option>
 										</select>
 									</span>
-									<input type='text' maxlength='8' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
+									<input type='text' maxlength='8' onkeypress='return justNumbers(event);' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono; ?>'>
 								</div>
 							</div>
 						</div>
@@ -122,5 +120,16 @@ if ($consulta = $cliente->consulta_usuario_id($id_box))
 				</div>
 			</div>
 		</div>
+		<?php
+    	if (isset($_GET["exito"])) {
+    		if ($_GET["exito"] == 3) {
+    	?>
+    			<script type="text/javascript">
+    				alert("Datos Ingresados Erroneamente!");
+    			</script>
+    	<?php
+    		}
+    	}
+    	?>
 	</body>
 </html>

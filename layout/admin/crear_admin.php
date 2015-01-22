@@ -13,25 +13,25 @@ $fono = "";
 $colegio = 0;
 
 if (isset($_POST["nombre-box"]))
-	$nombre = $_POST["nombre-box"];
+	$nombre = strtoupper(trim($_POST["nombre-box"]));
 if (isset($_POST["apellido-box"]))
-	$apellido = $_POST["apellido-box"];
+	$apellido = strtoupper(trim($_POST["apellido-box"]));
 if (isset($_POST["mail-box"]))
-	$correo = $_POST["mail-box"];
+	$correo = strtoupper(trim($_POST["mail-box"]));
 if (isset($_POST["sexo-box"]))
-	$sexo = $_POST["sexo-box"];
+	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = "+56" . $_POST["ni-box"] . $_POST["fono-box"];
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 if (isset($_POST["colegio-box"]))
-	$colegio = $_POST["colegio-box"];
+	$colegio = trim($_POST["colegio-box"]);
 
 if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo > 0 && strlen($fono) > 4 && $colegio > 0) {
 	if ($consulta = $cliente->consulta_correo_unico($correo)) {
 		if ($consulta->num_rows < 1) {
-			$datos = array(strtoupper($nombre), strtoupper($apellido), strtoupper($correo), md5("1234"), $sexo, str_replace(" ", "", trim($_POST["fono-box"])), 3, 1, $_SESSION["id"], $colegio, 0, 0);
+			$datos = array($nombre, $apellido, $correo, md5("1234"), $sexo, $fono, 3, 1, $_SESSION["id"], $colegio, 0, 0);
 			if ($id_insert = $cliente->crear_usuario($datos)) {
 				$cliente->cerrar_conn();
-				header("Location: ver_admin.php?usr=" . $id_insert);
+				header("Location: ver_admin.php?usr=" . $id_insert . "&exito=1");
 			}
 		}
 	}

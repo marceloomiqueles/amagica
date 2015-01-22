@@ -23,7 +23,7 @@ if (isset($_POST["mail-box"]))
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
-	$fono = trim($_POST["fono-box"]);
+	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 if (isset($_POST["colegio-box"]))
 	$colegio = trim($_POST["colegio-box"]);
 if (isset($_POST["nivel-box"]))
@@ -50,7 +50,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 				);
 			if ($id_insert = $cliente->crear_usuario($datos)) {
 				$cliente->cerrar_conn();
-				header("Location: ver_profesor.php?usr=" . $id_insert . "&nuevo=1");
+				header("Location: ver_profesor.php?usr=" . $id_insert . "&exito=1");
 			}
 		}
 	}
@@ -68,7 +68,7 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Profesor Nuevo
+						Docente Nuevo
 					</h2>
 					<form class='form-horizontal' role='form' action='crear_profesor.php' method='post'>
 						<div class='form-group'>
@@ -101,7 +101,16 @@ if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo
 						<div class='form-group'>
 							<label for='fono-box' class='col-sm-2 control-label'>Teléfono</label>
 							<div class='col-sm-10'>
-								<input type='text' name='fono-box' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo $fono ?>'>
+								<div class="input-group">
+	      							<div class="input-group-addon">+56</div>
+	      							<span class='input-group-addon'>
+										<select name='ni-box'>
+										  	<option value='9'>9</option>
+										  	<option value='2'>2</option>
+										</select>
+									</span>
+									<input type='text' name='fono-box' maxlength='8' onkeypress='return justNumbers(event);' class='form-control' id='fono-box' placeholder='Teléfono' value='<?php echo substr($fono, 4, 8) ?>'>
+								</div>
 							</div>
 						</div>
 						<div class='form-group'>
