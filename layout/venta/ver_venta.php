@@ -15,8 +15,7 @@ if (isset($_GET["vnt"])) {
 			$colegio = $row["colegio"];
 		}
 	}
-}
-else {
+} else {
 	header("Location: listar_colegios.php");
 }
 ?>
@@ -72,6 +71,7 @@ else {
     			</script>
     	<?php
     		}
+    	}
     	?>
 	</body>
 </html>

@@ -69,7 +69,7 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Evaluacion Incial - Estudiante
+						Evaluacion Final - Estudiante
 					</h2>
 					<form class='form-horizontal' role='form' action='evaluacion_profesor.php' method='post' enctype='multipart/form-data'>
 						<div class='form-group'>
@@ -98,10 +98,10 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 							<label for='desc-box' class='col-sm-2 control-label'>&nbsp;</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'>
-									Felicitaciones usted ha activado la evaluación para su curso, tiene duración de 7 días después del cual se desactivara para que pueda activar la evaluación final.
+									Felicitaciones usted ha activado la evaluación para su curso, tiene duración de 7 días después del cual se desactivará.
 									<br/>
 									<br/>
-									Entregue la información de arriba a sus estudiantes para comenzar la evaluación.
+									Entregue la dirección URL, usuario, contraseña a sus estudiantes para comenzar la evaluación.
 								</p>
 							</div>
 						</div>
