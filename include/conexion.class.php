@@ -7,8 +7,8 @@ class DBManager {
 	private $conn;
 	
 	//En el constructor de la clase establecemos los parámetros de conexión con la base de datos
-	// function __construct($dbuser = 'root', $dbpass = '', $dbname = 'amagica', $dbhost = 'localhost') {
-	function __construct($dbuser = 'descarga_cliente', $dbpass = 'q1w2e3r4t5', $dbname = 'descarga_clientes', $dbhost = 'localhost') {
+	function __construct($dbuser = 'root', $dbpass = '', $dbname = 'alfombra', $dbhost = 'localhost') {
+	// function __construct($dbuser = 'descarga_cliente', $dbpass = 'q1w2e3r4t5', $dbname = 'descarga_clientes', $dbhost = '201.238.211.140') {
 		$this->dbhost = $dbhost;
 		$this->dbuser = $dbuser;
 		$this->dbpass = $dbpass;

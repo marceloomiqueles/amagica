@@ -12,14 +12,15 @@ $curso = 0;
 $idioma = 0;
 $cantidad = 0;
 $valor = "";
-$evaluacion = 0;
-$documento = 0;
-$duracion = 0;
+$evaluacion = 1;
+$documento = 1;
+$duracion = 12;
+$web = 1;
 
 if (isset($_POST["codigo-box"]))
-	$codigo = strtoupper(trim($_POST["codigo-box"]));
+	$codigo = mb_strtoupper(trim($_POST["codigo-box"]), 'UTF-8');
 if (isset($_POST["desc-box"]))
-	$desc = strtoupper(trim($_POST["desc-box"]));
+	$desc = mb_strtoupper(trim($_POST["desc-box"]), 'UTF-8');
 if (isset($_POST["cat-box"]))
 	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
@@ -36,9 +37,11 @@ if (isset($_POST["doc-box"]))
 	$documento = $_POST["doc-box"];
 if (isset($_POST["dura-box"]))
 	$duracion = $_POST["dura-box"];
+if (isset($_POST["web-box"]))
+	$web = $_POST["web-box"];
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $cantidad > 0 && $valor > 0) {
-	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad, $evaluacion, $documento, $duracion);
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $valor, $cantidad, $evaluacion, $documento, $duracion, $web);
 	if ($id_insert = $cliente->crear_producto($datos))
 		header("Location: ver_producto.php?prd=" . $id_insert . "&exito=1");
 }
@@ -116,7 +119,7 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 							<div class='col-sm-10'>
 								<select name='cantidad-box' id='cantidad-box' class='form-control'>
 									<?php
-									for ($i = 1; $i <= 4; $i++) {
+									for ($i = 1; $i <= 10; $i++) {
 									?>
 								  	<option value='<?php echo $i ?>' <?php if ($cantidad == $i) echo "selected"; echo ">" . $i; ?></option>
 									<?php
@@ -138,7 +141,7 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 									<?php
 									for ($i = 1; $i <= 128; $i++) {
 									?>
-								  	<option value='<?php echo $i ?>' <?php if ($i == 12) echo "selected"; echo ">" . $i; ?></option>
+								  	<option value='<?php echo $i ?>' <?php if ($i == $duracion) echo "selected"; echo ">" . $i; ?></option>
 									<?php
 									}
 									?>
@@ -161,6 +164,16 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idiom
 						      	<div class='checkbox'>
 						        	<label>
 						          		<input type='checkbox' name='doc-box' <?php if ($documento) echo "checked"; ?> value='1'>&nbsp;
+						        	</label>
+						      	</div>
+						    </div>
+						</div>
+						<div class='form-group'>
+							<label for='web-box' class='col-sm-2 control-label'>Web</label>
+						    <div class='col-sm-10'>
+						      	<div class='checkbox'>
+						        	<label>
+						          		<input type='checkbox' name='web-box' <?php if ($web) echo "checked"; ?> value='1'>&nbsp;
 						        	</label>
 						      	</div>
 						    </div>

@@ -12,12 +12,12 @@ $provincia = 0;
 $comuna = 0;
 $calle = 0;
 $numero = "";
-$fono = "";
+$fono = "12345678";
 $nivel = 0;
 $id_box = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = strtoupper(trim($_POST["nombre-box"]));
+	$nombre = mb_strtoupper(trim($_POST["nombre-box"]), 'UTF-8');
 if (isset($_POST["region-box"]))
 	$region = trim($_POST["region-box"]);
 if (isset($_POST["provincia-box"]))
@@ -25,7 +25,7 @@ if (isset($_POST["provincia-box"]))
 if (isset($_POST["comuna-box"]))
 	$comuna = trim($_POST["comuna-box"]);
 if (isset($_POST["calle-box"]))
-	$calle = strtoupper(trim($_POST["calle-box"]));
+	$calle = mb_strtoupper(trim($_POST["calle-box"]), 'UTF-8');
 if (isset($_POST["numero-box"]))
 	$numero = trim($_POST["numero-box"]);
 if (isset($_POST["fono-box"]))

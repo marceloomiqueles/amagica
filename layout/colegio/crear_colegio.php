@@ -8,17 +8,17 @@ $cliente = new Cliente;
 $nombre = "";
 $comuna = 0;
 $calle = "";
-$numero = 0;
+$numero = "";
 $fono = "";
-$nivel = 0;
+$nivel = 3;
 $estado = 0;
 
 if (isset($_POST["nombre-box"]))
-	$nombre = strtoupper(trim($_POST["nombre-box"]));
+	$nombre = mb_strtoupper(trim($_POST["nombre-box"]), 'UTF-8');
 if (isset($_POST["comuna-box"]))
-	$comuna = strtoupper(trim($_POST["comuna-box"]));
+	$comuna = trim($_POST["comuna-box"]);
 if (isset($_POST["calle-box"]))
-	$calle = strtoupper(trim($_POST["calle-box"]));
+	$calle = mb_strtoupper(trim($_POST["calle-box"]), 'UTF-8');
 if (isset($_POST["numero-box"]))
 	$numero = trim($_POST["numero-box"]);
 if (isset($_POST["fono-box"]))
@@ -29,16 +29,7 @@ if (isset($_POST["nivel-box"]))
 $estado = 1;
 
 if (strlen($nombre) > 0 && strlen($comuna) > 0 && strlen($calle) > 0 && strlen($numero) > 0 && strlen($fono) > 0 && strlen($nivel) > 0) {
-	$datos = array(
-		$nombre,
-		$comuna,
-		$calle,
-		$numero,
-		$fono,
-		$nivel,
-		$estado,
-		$_SESSION["id"]
-		);
+	$datos = array($nombre, $comuna, $calle, $numero, $fono, $nivel, $estado, $_SESSION["id"]);
 	if ($id_insert = $cliente->crear_colegio($datos)) {
 		$cliente->cerrar_conn();
 		for ($i = 1; $i <= 4; $i++) {
@@ -127,7 +118,7 @@ if (strlen($nombre) > 0 && strlen($comuna) > 0 && strlen($calle) > 0 && strlen($
 						<div class='form-group'>
 							<label for='numero-box' class='col-sm-2 control-label'>Número</label>
 							<div class='col-sm-10'>
-								<input type='text' name='numero-box' class='form-control' id='numero-box' placeholder='Número' value='<?php echo $numero; ?>'>
+								<input type='text' name='numero-box' onkeypress='return justNumbers(event);' class='form-control' id='numero-box' placeholder='Número' value='<?php echo $numero; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>

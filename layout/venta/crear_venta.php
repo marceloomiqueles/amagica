@@ -5,10 +5,13 @@ if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../inc
 
 $cliente = new Cliente;
 
+setlocale(LC_CTYPE, 'es');
+
 $producto = "";
 $colegio = 0;
 $id_cred = "";
 $cantidad = 0;
+$web = 0;
 
 if (isset($_POST["producto-box"]))
 	$producto = trim($_POST["producto-box"]);
@@ -41,6 +44,7 @@ if ($producto > 0 && $colegio > 0) {
 							$duracion = $row["duracion"];
 							$nivel = $row["curso"];
 							$idioma = $row["idioma_id"];
+							$web = $row["web"];
 							for ($i = 1; $i <= $n_cursos; $i++) {
 								$datos = array($producto, $duracion, 1, $nivel, $i, $idioma, $colegio);
 								if ($id_licencia = $cliente->crear_licencia($datos)) {
@@ -49,26 +53,28 @@ if ($producto > 0 && $colegio > 0) {
 									$cliente->cerrar_conn();
 									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
 										$cliente->cerrar_conn();
-										?>
-										<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-						                <script type="text/javascript">
-						                	var url = '../../Test/descargaok.php';
-						                	var solicit = '<?php echo md5($id_licencia); ?>';
-						                	var langu = '<?php echo $idioma; ?>';
-						                	var cur = '<?php echo $nivel; ?>';
-						                    loadDESCARGA(url, solicit, langu, cur);
-						                  	function loadDESCARGA(php_file, solicitud, lenguaje, curs) {
-						                        $.ajax({
-												  	type: "POST",
-													url: php_file,
-													data: { solic: solicitud, lang: lenguaje, curso: curs },
-													success: function(data) {
-														$('#results').html(data);
-													}
-												});
-						                    }
-						                </script>
-						                <?php										
+										if ($web == 0) {
+											?>
+											<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+							                <script type="text/javascript">
+							                	var url = '../../Test/descargaok.php';
+							                	var solicit = '<?php echo md5($id_licencia); ?>';
+							                	var langu = '<?php echo $idioma; ?>';
+							                	var cur = '<?php echo $nivel; ?>';
+							                    //loadDESCARGA(url, solicit, langu, cur);
+							                  	function loadDESCARGA(php_file, solicitud, lenguaje, curs) {
+							                        $.ajax({
+													  	type: "POST",
+														url: php_file,
+														data: { solic: solicitud, lang: lenguaje, curso: curs },
+														success: function(data) {
+															$('#results').html(data);
+														}
+													});
+							                    }
+							                </script>
+							                <?php
+										}
 										$ok = 1;
 									} else {
 										$ok = 0;

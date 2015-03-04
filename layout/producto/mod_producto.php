@@ -16,11 +16,12 @@ $valor = "";
 $evaluacion = 0;
 $documento = 0;
 $duracion = 0;
+$web = 0;
 
 if (isset($_POST["codigo-box"]))
-	$codigo = strtoupper(trim($_POST["codigo-box"]));
+	$codigo = mb_strtoupper(trim($_POST["codigo-box"]), 'UTF-8');
 if (isset($_POST["desc-box"]))
-	$desc = strtoupper(trim($_POST["desc-box"]));
+	$desc = mb_strtoupper(trim($_POST["desc-box"]), 'UTF-8');
 if (isset($_POST["cat-box"]))
 	$cat = trim($_POST["cat-box"]);
 if (isset($_POST["curso-box"]))
@@ -41,9 +42,11 @@ if (isset($_POST["doc-box"]))
 	$documento = $_POST["doc-box"];
 if (isset($_POST["dura-box"]))
 	$duracion = $_POST["dura-box"];
+if (isset($_POST["web-box"]))
+	$web = $_POST["web-box"];
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0 && $valor > 0) {
-	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion, $documento, $duracion);
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion, $documento, $duracion, $web);
 	//print_r($datos);die();
 	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box . "&exito=2");
@@ -64,6 +67,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$evaluacion = $row["con_evaluacion"];
 		$documento = $row["con_doc"];
 		$duracion = $row["duracion"];
+		$web = $row["web"];
 	}
 ?>
 <!DOCTYPE html>
@@ -185,6 +189,16 @@ if ($consulta = $cliente->consulta_producto($id_box))
 						      	<div class='checkbox'>
 						        	<label>
 						          		<input type='checkbox' name='doc-box' <?php if ($documento) echo "checked"; ?> value='1'>&nbsp;
+						        	</label>
+						      	</div>
+						    </div>
+						</div>
+						<div class='form-group'>
+							<label for='web-box' class='col-sm-2 control-label'>Web</label>
+						    <div class='col-sm-10'>
+						      	<div class='checkbox'>
+						        	<label>
+						          		<input type='checkbox' name='web-box' <?php if ($web) echo "checked"; ?> value='1'>&nbsp;
 						        	</label>
 						      	</div>
 						    </div>

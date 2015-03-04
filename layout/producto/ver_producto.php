@@ -25,6 +25,10 @@ if (isset($_GET["prd"])) {
 				$documento = "Sí";
 			else
 				$documento = "No";
+			if ($row["web"]) 
+				$web = "Sí";
+			else
+				$web = "No";
 		}
 	}
 }
@@ -105,6 +109,12 @@ else {
 							<label class='col-sm-2 control-label'>Con Documento</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'><?php echo $documento; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Web</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $web; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

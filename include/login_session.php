@@ -16,6 +16,7 @@ if (isset($_POST["mail"]) && isset($_POST["pass"])) {
 					$_SESSION["tipo"] = $row["tipo"];
 					$_SESSION["colegio"] = $row["colegio_id"];
 					$_SESSION["curso"] = $row["curso"];
+					$_SESSION["nivel"] = $row["nivel"];
 					// echo $_POST["pass"]; // die();
 					if ($_POST["pass"] == "1234") {
 						echo "<script>window.location ='cambia_clave.php';</script>";

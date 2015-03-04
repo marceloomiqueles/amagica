@@ -21,7 +21,7 @@ $cliente = new Cliente;
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Resultado Evaluaciones <?php if(isset($_GET["exito"]) && $_GET["exito"] == 1) {echo "(Clave cambiada exitosamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Usuario eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Usuario creado correctamente!)";} ?>
+						Resultado Evaluaciones <?php echo $_SESSION["curso"]; if(isset($_GET["exito"]) && $_GET["exito"] == 1) {echo "(Clave cambiada exitosamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 2) {echo "(Estado cambiado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 3) {echo "(Usuario eliminado correctamente!)";} if(isset($_GET["exito"]) && $_GET["exito"] == 4) {echo "(Usuario creado correctamente!)";} ?>
 					</h2>
 					<div class='table-responsive'>
 						<table id='json-table' class='tablesorter table table-striped'>
@@ -41,6 +41,7 @@ $cliente = new Cliente;
 							<tbody>
 								<?php
 								$tipo = "";
+								$eval = "";
 								if ($_SESSION["tipo"] == 1) {
 									$res = $cliente->consulta_evaluaciones();
 								}
@@ -60,10 +61,15 @@ $cliente = new Cliente;
 										$tipo = "Estudiante";
 									else
 										$tipo = "Docente";
+
+									if ($row["eval_numero"] == 1)
+										$eval = "INICIAL";
+									else
+										$eval = "FINAL";
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row["descr"]; ?></td>
+									<td><?php echo "{$row["descr"]} {$eval}"; ?></td>
 									<td><?php echo $row["colegio"]; ?></td>
 									<td><?php echo $row["nivel"]; ?></td>
 									<td><?php echo $curso; ?></td>
@@ -72,7 +78,7 @@ $cliente = new Cliente;
 									<td><?php echo $tipo; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Resultados Alumnos' href='evaluacion_resultado_alumno.php?eval=<?php echo $row["id"] ?>'>
+											<a class='btn btn-success' title='Resultados Alumnos' href='evaluacion_resultado_curso_eje.php?eval=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-th-list'></i>
 											</a>
 											<a class='btn btn-mini btn-info' title='Resultado Curso' href='evaluacion_resultado_curso.php?eval=<?php echo $row["id"] ?>'>

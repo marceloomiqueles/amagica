@@ -54,13 +54,11 @@ if (isset($_POST["pregunta"])) {
 	}
 }
 
-if ($respuesta = $cliente->consulta_evaluacion_usuario_id($_SESSION["id"])) {
-	if ($respuesta->num_rows > 0) {
-		$row = $respuesta->fetch_array(MYSQLI_ASSOC);
-		if ($row["eval"] > 1) {
-			$cliente->cerrar_conn();
-			header("Location: " . $dir_base);
-		}
+if ($respuesta = $cliente->consulta_evaluacion_por_usuario_id(2, $_SESSION["id"], 1)) {
+	$n_eval = $respuesta->num_rows;
+	$cliente->cerrar_conn();
+	if ($n_eval > 0) {
+		header("Location: " . $dir_base);
 	}
 }
 ?>
@@ -76,7 +74,7 @@ if ($respuesta = $cliente->consulta_evaluacion_usuario_id($_SESSION["id"])) {
 				<?php include("../menu.php"); ?>
 				<div class='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
 					<h2 class='sub-header'>
-						Evaluacion Inicial Docente
+						Evaluacion Docente Final
 					</h2>
 					<form class='form-horizontal' role='form' action='evaluacion_profesor.php' method='post' enctype='multipart/form-data'>
 						<?php

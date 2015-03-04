@@ -13,11 +13,11 @@ $fono = "";
 $colegio = 0;
 
 if (isset($_POST["nombre-box"]))
-	$nombre = strtoupper(trim($_POST["nombre-box"]));
+	$nombre = mb_strtoupper(trim($_POST["nombre-box"]), 'UTF-8');
 if (isset($_POST["apellido-box"]))
-	$apellido = strtoupper(trim($_POST["apellido-box"]));
+	$apellido = mb_strtoupper(trim($_POST["apellido-box"]), 'UTF-8');
 if (isset($_POST["mail-box"]))
-	$correo = strtoupper(trim($_POST["mail-box"]));
+	$correo = mb_strtoupper(trim($_POST["mail-box"]), 'UTF-8');
 if (isset($_POST["sexo-box"]))
 	$sexo = trim($_POST["sexo-box"]);
 if (isset($_POST["fono-box"]))
