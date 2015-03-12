@@ -651,6 +651,11 @@ class cliente {
 			return $this->con->consulta("SELECT id, descr FROM tipo_producto WHERE estado = '{$estado}';");
 	}
 
+	function consulta_usuario_por_id($id) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT nombre, apellido, mail FROM usuario WHERE id = '{$id}';");
+	}
+
 	// Fin SELECT
 }
 ?>
