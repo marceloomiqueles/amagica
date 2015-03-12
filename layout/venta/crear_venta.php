@@ -1,6 +1,6 @@
 <?php
 include_once("../../include/header-cache.php");
-require("../../include/cliente.class.php");
+require("../include/cliente.class.php");
 if(empty($_SESSION["id"]) || $_SESSION["id"] == "") header ("Location: ../../include/login_session.php");
 
 $cliente = new Cliente;
@@ -11,6 +11,8 @@ $producto = "";
 $colegio = 0;
 $id_cred = "";
 $cantidad = 0;
+$tipo = 0;
+$nivel_f = 0;
 $web = 0;
 
 if (isset($_POST["producto-box"]))
@@ -44,16 +46,21 @@ if ($producto > 0 && $colegio > 0) {
 							$duracion = $row["duracion"];
 							$nivel = $row["curso"];
 							$idioma = $row["idioma_id"];
+							$tipo = $row["tipo"];
 							$web = $row["web"];
+							if ($tipo == 2)
+								$nivel_f = $nivel * 111;
+							elseif ($tipo > 2)
+								$nivel_f = $nivel . $tipo;
 							for ($i = 1; $i <= $n_cursos; $i++) {
-								$datos = array($producto, $duracion, 1, $nivel, $i, $idioma, $colegio);
+								$datos = array($producto, $duracion, 1, $nivel, $i, $idioma, $colegio, $tipo);
 								if ($id_licencia = $cliente->crear_licencia($datos)) {
 									$cliente->cerrar_conn();
 									$cliente->actualiza_n_solicitud_licencia(md5($id_licencia), $id_licencia);
 									$cliente->cerrar_conn();
 									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
 										$cliente->cerrar_conn();
-										if ($web == 0) {
+										if (!$web) {
 											?>
 											<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 							                <script type="text/javascript">

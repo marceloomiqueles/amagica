@@ -15,26 +15,54 @@ a {
 	position: relative;
 	margin: 0 auto;
 }
+
+.navbar-inverse {
+	background-color: #006666;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #FFF;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+	color: #000;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #FFF;
+}
+
+.navbar-inverse .navbar-brand:hover {
+	color: #000;
+}
+
 /* tables */
 table.tablesorter {
 }
+
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 }
+
 table.tablesorter thead tr .header {
 	background-image: url(bg.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
 }
+
 table.tablesorter tbody td {
 }
+
 table.tablesorter tbody tr.odd td {
 }
+
 table.tablesorter thead tr .headerSortUp {
 	background-image: url(asc.gif);
 }
+
 table.tablesorter thead tr .headerSortDown {
 	background-image: url(desc.gif);
 }
+
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 }

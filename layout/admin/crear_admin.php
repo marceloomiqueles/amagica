@@ -25,7 +25,7 @@ if (isset($_POST["fono-box"]))
 if (isset($_POST["colegio-box"]))
 	$colegio = trim($_POST["colegio-box"]);
 
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo > 0 && strlen($fono) > 4 && $colegio > 0) {
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && filter_var($correo, FILTER_VALIDATE_EMAIL) && $sexo > 0 && strlen($fono) > 4 && $colegio > 0) {
 	if ($consulta = $cliente->consulta_correo_unico($correo)) {
 		if ($consulta->num_rows < 1) {
 			$datos = array($nombre, $apellido, $correo, md5("1234"), $sexo, $fono, 3, 1, $_SESSION["id"], $colegio, 0, 0);

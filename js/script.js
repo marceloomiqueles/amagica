@@ -1,14 +1,3 @@
-$(document).ready(function(){
-
- //    $("#region-box").change(function(){
- //        cargaProvincia($("#region-box").val());
- //    });
-
-	// $("#provincia-box").change(function() {
-	// 	cargaComuna($("#provincia-box").val());
-	// });
-    
-});
 
 function cargaComuna() {
 	var comuna = $("#provincia-box").val();

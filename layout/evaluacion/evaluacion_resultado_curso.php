@@ -203,7 +203,7 @@ if ($eval_numero == 2) {
 
 	while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 		$resp_2 = $cliente->consulta_respuestas_alumnos_evaluacion($eval_id, $row["n_alumno"]);
-		$cant_2 = $resp->num_rows;
+		$cant_2 = $resp_2->num_rows;
 		$cont_2 = 1;
 		while ($rows = $resp_2->fetch_array(MYSQLI_ASSOC)) {
 			switch ($cont_2) {
@@ -300,6 +300,8 @@ while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 	$i++;
 }
 
+$CN_21 = $i - $CS_21;
+
 if ($CS_1 == 0) $PES_1 = 0; else $PES_1 = ($CS_1 / $i) * 100;
 if ($CS_2 == 0) $PES_2 = 0; else $PES_2 = ($CS_2 / $i) * 100;
 if ($CS_3 == 0) $PES_3 = 0; else $PES_3 = ($CS_3 / $i) * 100;
@@ -322,15 +324,15 @@ if ($CS_19 == 0) $PES_19 = 0; else $PES_19 = ($CS_19 / $i) * 100;
 if ($CS_20 == 0) $PES_20 = 0; else $PES_20 = ($CS_20 / $i) * 100;
 if ($CS_21 == 0) $PES_21 = 0; else $PES_21 = ($CS_21 / $i) * 100;
 
-if ($CN_1 == 0) $PEN_1 = 0; else $PEN_1 = ($CN_1 / $i) * 100;
-if ($CN_2 == 0) $PEN_2 = 0; else $PEN_2 = ($CN_2 / $i) * 100;
-if ($CN_3 == 0) $PEN_3 = 0; else $PEN_3 = ($CN_3 / $i) * 100;
-if ($CN_4 == 0) $PEN_4 = 0; else $PEN_4 = ($CN_4 / $i) * 100;
-if ($CN_5 == 0) $PEN_5 = 0; else $PEN_5 = ($CN_5 / $i) * 100;
-if ($CN_6 == 0) $PEN_6 = 0; else $PEN_6 = ($CN_6 / $i) * 100;
-if ($CN_7 == 0) $PEN_7 = 0; else $PEN_7 = ($CN_7 / $i) * 100;
-if ($CN_8 == 0) $PEN_8 = 0; else $PEN_8 = ($CN_8 / $i) * 100;
-if ($CN_9 == 0) $PEN_9 = 0; else $PEN_9 = ($CN_9 / $i) * 100;
+if ($CN_1  == 0) $PEN_1  = 0; else $PEN_1  = ($CN_1 / $i) * 100;
+if ($CN_2  == 0) $PEN_2  = 0; else $PEN_2  = ($CN_2 / $i) * 100;
+if ($CN_3  == 0) $PEN_3  = 0; else $PEN_3  = ($CN_3 / $i) * 100;
+if ($CN_4  == 0) $PEN_4  = 0; else $PEN_4  = ($CN_4 / $i) * 100;
+if ($CN_5  == 0) $PEN_5  = 0; else $PEN_5  = ($CN_5 / $i) * 100;
+if ($CN_6  == 0) $PEN_6  = 0; else $PEN_6  = ($CN_6 / $i) * 100;
+if ($CN_7  == 0) $PEN_7  = 0; else $PEN_7  = ($CN_7 / $i) * 100;
+if ($CN_8  == 0) $PEN_8  = 0; else $PEN_8  = ($CN_8 / $i) * 100;
+if ($CN_9  == 0) $PEN_9  = 0; else $PEN_9  = ($CN_9 / $i) * 100;
 if ($CN_10 == 0) $PEN_10 = 0; else $PEN_10 = ($CN_10 / $i) * 100;
 if ($CN_11 == 0) $PEN_11 = 0; else $PEN_11 = ($CN_11 / $i) * 100;
 if ($CN_12 == 0) $PEN_12 = 0; else $PEN_12 = ($CN_12 / $i) * 100;

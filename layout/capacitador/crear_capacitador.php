@@ -12,9 +12,9 @@ $sexo = 0;
 $fono = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = strtoupper(trim($_POST["nombre-box"]));
+	$nombre = mb_strtoupper(trim($_POST["nombre-box"]), 'UTF-8');
 if (isset($_POST["apellido-box"]))
-	$apellido = strtoupper(trim($_POST["apellido-box"]));
+	$apellido = mb_strtoupper(trim($_POST["apellido-box"]), 'UTF-8');
 if (isset($_POST["mail-box"]))
 	$correo = strtoupper(trim($_POST["mail-box"]));
 if (isset($_POST["sexo-box"]))
@@ -22,21 +22,8 @@ if (isset($_POST["sexo-box"]))
 if (isset($_POST["fono-box"]))
 	$fono = "+56" . $_POST["ni-box"] . $_POST["fono-box"];
 
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 0 && $sexo > 0 && strlen($fono) > 4) {
-	$datos = array(
-		$nombre,
-		$apellido,
-		$correo,
-		md5("1234"),
-		trim($sexo),
-		str_replace(" ", "", trim($fono)),
-		5,
-		1,
-		trim($_SESSION["id"]),
-		1,
-		0,
-		0
-		);
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && filter_var($correo, FILTER_VALIDATE_EMAIL) && $sexo > 0 && strlen($fono) > 4) {
+	$datos = array($nombre, $apellido, $correo, md5("1234"), $sexo, str_replace(" ", "", $fono), 5, 1, $_SESSION["id"], 1, 0, 0);
 	if ($id_insert = $cliente->crear_usuario($datos)) {
 		$cliente->cerrar_conn();
 		header("Location: ver_capacitador.php?usr=" . $id_insert . "&exito=1");

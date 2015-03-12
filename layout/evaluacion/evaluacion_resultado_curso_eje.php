@@ -42,6 +42,14 @@ $CA_5_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Cooperacion y Pertenencia (Preocupante
 $CA_6_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Proteccion y Cuidados (Preocupante)
 $CA_7_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de la Convivencia (Preocupante)
 
+$AD_1_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Identidad (Preocupante)
+$AD_2_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Autoestima (Preocupante)
+$AD_3_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Valores (Preocupante)
+$AD_4_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de Conflictos (Preocupante)
+$AD_5_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Cooperacion y Pertenencia (Preocupante)
+$AD_6_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Proteccion y Cuidados (Preocupante)
+$AD_7_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de la Convivencia (Preocupante)
+
 $CN_1_2 = 0; //  Respuesta No en Pregunta 1 (P1 = 0)
 $CN_2_2 = 0; //  Respuesta No en Pregunta 2 (P2 = 0)
 $CN_3_2 = 0; //  Respuesta No en Pregunta 3 (P3 = 0)
@@ -71,6 +79,14 @@ $PEA_4_2 = 0; // PORCENTAJE SI EJE Manejo de Conflictos
 $PEA_5_2 = 0; // PORCENTAJE SI EJE Cooperacion y Pertenencia
 $PEA_6_2 = 0; // PORCENTAJE SI EJE Proteccion y Cuidados
 $PEA_7_2 = 0; // PORCENTAJE SI EJE Manejo de la Convivencia
+
+$PAD_1_2 = 0; // PORCENTAJE SI EJE Identidad
+$PAD_2_2 = 0; // PORCENTAJE SI EJE Autoestima
+$PAD_3_2 = 0; // PORCENTAJE SI EJE Valores
+$PAD_4_2 = 0; // PORCENTAJE SI EJE Manejo de Conflictos
+$PAD_5_2 = 0; // PORCENTAJE SI EJE Cooperacion y Pertenencia
+$PAD_6_2 = 0; // PORCENTAJE SI EJE Proteccion y Cuidados
+$PAD_7_2 = 0; // PORCENTAJE SI EJE Manejo de la Convivencia
 
 $PEP_1_2 = 0; // PORCENTAJE NO EJE Identidad
 $PEP_2_2 = 0; // PORCENTAJE NO EJE Autoestima
@@ -147,13 +163,21 @@ if ($eval_numero == 2) {
 		if ($d6_2 <= 1) $NC_6_2++;
 		if ($d7_2 <= 1) $NC_7_2++;
 		
-		if ($d1_2 > 1) $CA_1_2++;
-		if ($d2_2 > 1) $CA_2_2++;
-		if ($d3_2 > 1) $CA_3_2++;
-		if ($d4_2 > 1) $CA_4_2++;
-		if ($d5_2 > 1) $CA_5_2++;
-		if ($d6_2 > 1) $CA_6_2++;
-		if ($d7_2 > 1) $CA_7_2++;
+		if ($d1_2 == 2) $AD_1_2++;
+		if ($d2_2 == 2) $AD_2_2++;
+		if ($d3_2 == 2) $AD_3_2++;
+		if ($d4_2 == 2) $AD_4_2++;
+		if ($d5_2 == 2) $AD_5_2++;
+		if ($d6_2 == 2) $AD_6_2++;
+		if ($d7_2 == 2) $AD_7_2++;
+		
+		if ($d1_2 > 2) $CA_1_2++;
+		if ($d2_2 > 2) $CA_2_2++;
+		if ($d3_2 > 2) $CA_3_2++;
+		if ($d4_2 > 2) $CA_4_2++;
+		if ($d5_2 > 2) $CA_5_2++;
+		if ($d6_2 > 2) $CA_6_2++;
+		if ($d7_2 > 2) $CA_7_2++;
 		$i_2++;
 	}
 }
@@ -182,6 +206,14 @@ $CA_4 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de Conflictos (Preocupante)
 $CA_5 = 0; // CANTIDAD ESTUDIANTES <= 1 Cooperacion y Pertenencia (Preocupante)
 $CA_6 = 0; // CANTIDAD ESTUDIANTES <= 1 Proteccion y Cuidados (Preocupante)
 $CA_7 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de la Convivencia (Preocupante)
+
+$AD_1 = 0; // CANTIDAD ESTUDIANTES <= 1 Identidad (Preocupante)
+$AD_2 = 0; // CANTIDAD ESTUDIANTES <= 1 Autoestima (Preocupante)
+$AD_3 = 0; // CANTIDAD ESTUDIANTES <= 1 Valores (Preocupante)
+$AD_4 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de Conflictos (Preocupante)
+$AD_5 = 0; // CANTIDAD ESTUDIANTES <= 1 Cooperacion y Pertenencia (Preocupante)
+$AD_6 = 0; // CANTIDAD ESTUDIANTES <= 1 Proteccion y Cuidados (Preocupante)
+$AD_7 = 0; // CANTIDAD ESTUDIANTES <= 1 Manejo de la Convivencia (Preocupante)
 
 $CN_1 = 0; //  Respuesta No en Pregunta 1 (P1 = 0)
 $CN_2 = 0; //  Respuesta No en Pregunta 2 (P2 = 0)
@@ -212,6 +244,14 @@ $PEA_4 = 0; // PORCENTAJE SI EJE Manejo de Conflictos
 $PEA_5 = 0; // PORCENTAJE SI EJE Cooperacion y Pertenencia
 $PEA_6 = 0; // PORCENTAJE SI EJE Proteccion y Cuidados
 $PEA_7 = 0; // PORCENTAJE SI EJE Manejo de la Convivencia
+
+$PAD_1 = 0; // PORCENTAJE SI EJE Identidad
+$PAD_2 = 0; // PORCENTAJE SI EJE Autoestima
+$PAD_3 = 0; // PORCENTAJE SI EJE Valores
+$PAD_4 = 0; // PORCENTAJE SI EJE Manejo de Conflictos
+$PAD_5 = 0; // PORCENTAJE SI EJE Cooperacion y Pertenencia
+$PAD_6 = 0; // PORCENTAJE SI EJE Proteccion y Cuidados
+$PAD_7 = 0; // PORCENTAJE SI EJE Manejo de la Convivencia
 
 $PEP_1 = 0; // PORCENTAJE NO EJE Identidad
 $PEP_2 = 0; // PORCENTAJE NO EJE Autoestima
@@ -252,15 +292,15 @@ while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 	$cont = 1;
 	while ($rows = $resp->fetch_array(MYSQLI_ASSOC)) {
 		switch ($cont) {
-			case 1: $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_1++; else $CS_1++; break;
-			case 2: $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_2++; else $CS_2++; break;
-			case 3: $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_3++; else $CS_3++; break;
-			case 4: $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_4++; else $CS_4++; break;
-			case 5: $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_5++; else $CS_5++; break;
-			case 6: $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_6++; else $CS_6++; break;
-			case 7: $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_7++; else $CS_7++; break;
-			case 8: $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_8++; else $CS_8++; break;
-			case 9: $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_9++; else $CS_9++; break;
+			case 1:  $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_1++; else  $CS_1++; break;
+			case 2:  $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_2++; else  $CS_2++; break;
+			case 3:  $d1 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_3++; else  $CS_3++; break;
+			case 4:  $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_4++; else  $CS_4++; break;
+			case 5:  $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_5++; else  $CS_5++; break;
+			case 6:  $d2 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_6++; else  $CS_6++; break;
+			case 7:  $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_7++; else  $CS_7++; break;
+			case 8:  $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_8++; else  $CS_8++; break;
+			case 9:  $d3 += $rows["respuesta"]; if ($rows["respuesta"] == 0)  $CN_9++; else  $CS_9++; break;
 			case 10: $d4 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_10++; else $CS_10++; break;
 			case 11: $d4 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_11++; else $CS_11++; break;
 			case 12: $d4 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_12++; else $CS_12++; break;
@@ -272,7 +312,7 @@ while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 			case 18: $d6 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_18++; else $CS_18++; break;
 			case 19: $d7 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_19++; else $CS_19++; break;
 			case 20: $d7 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_20++; else $CS_20++; break;
-			case 21: $d7 += $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_21++; else $CS_21++; break;
+			case 21: $d7 += $rows["respuesta"];echo $rows["respuesta"]; if ($rows["respuesta"] == 0) $CN_21++; else $CS_21++; break;
 		}
 		$cont++;
 	}
@@ -284,15 +324,25 @@ while($row = $res->fetch_array(MYSQLI_ASSOC)) {
 	if ($d6 <= 1) $NC_6++;
 	if ($d7 <= 1) $NC_7++;
 	
-	if ($d1 > 1) $CA_1++;
-	if ($d2 > 1) $CA_2++;
-	if ($d3 > 1) $CA_3++;
-	if ($d4 > 1) $CA_4++;
-	if ($d5 > 1) $CA_5++;
-	if ($d6 > 1) $CA_6++;
-	if ($d7 > 1) $CA_7++;
+	if ($d1 == 2) $AD_1++;
+	if ($d2 == 2) $AD_2++;
+	if ($d3 == 2) $AD_3++;
+	if ($d4 == 2) $AD_4++;
+	if ($d5 == 2) $AD_5++;
+	if ($d6 == 2) $AD_6++;
+	if ($d7 == 2) $AD_7++;
+	
+	if ($d1 > 2) $CA_1++;
+	if ($d2 > 2) $CA_2++;
+	if ($d3 > 2) $CA_3++;
+	if ($d4 > 2) $CA_4++;
+	if ($d5 > 2) $CA_5++;
+	if ($d6 > 2) $CA_6++;
+	if ($d7 > 2) $CA_7++;
 	$i++;
 }
+
+$CN_21 = $i - $CS_21;
 
 /*RESULTADO EVALUACION 2*/
 if ($NC_1 == 0) $PEP_1 = 0; else $PEP_1 = ($NC_1 / $i) * 100;
@@ -303,6 +353,14 @@ if ($NC_5 == 0) $PEP_5 = 0; else $PEP_5 = ($NC_5 / $i) * 100;
 if ($NC_6 == 0) $PEP_6 = 0; else $PEP_6 = ($NC_6 / $i) * 100;
 if ($NC_7 == 0) $PEP_7 = 0; else $PEP_7 = ($NC_7 / $i) * 100;
 
+if ($AD_1 == 0) $PAD_1 = 0; else $PAD_1 = ($AD_1 / $i) * 100;
+if ($AD_2 == 0) $PAD_2 = 0; else $PAD_2 = ($AD_2 / $i) * 100;
+if ($AD_3 == 0) $PAD_3 = 0; else $PAD_3 = ($AD_3 / $i) * 100;
+if ($AD_4 == 0) $PAD_4 = 0; else $PAD_4 = ($AD_4 / $i) * 100;
+if ($AD_5 == 0) $PAD_5 = 0; else $PAD_5 = ($AD_5 / $i) * 100;
+if ($AD_6 == 0) $PAD_6 = 0; else $PAD_6 = ($AD_6 / $i) * 100;
+if ($AD_7 == 0) $PAD_7 = 0; else $PAD_7 = ($AD_7 / $i) * 100;
+
 if ($CA_1 == 0) $PEA_1 = 0; else $PEA_1 = ($CA_1 / $i) * 100;
 if ($CA_2 == 0) $PEA_2 = 0; else $PEA_2 = ($CA_2 / $i) * 100;
 if ($CA_3 == 0) $PEA_3 = 0; else $PEA_3 = ($CA_3 / $i) * 100;
@@ -311,6 +369,8 @@ if ($CA_5 == 0) $PEA_5 = 0; else $PEA_5 = ($CA_5 / $i) * 100;
 if ($CA_6 == 0) $PEA_6 = 0; else $PEA_6 = ($CA_6 / $i) * 100;
 if ($CA_7 == 0) $PEA_7 = 0; else $PEA_7 = ($CA_7 / $i) * 100;
 /*FIN RESULTADO EVALUACION 2*/
+
+$cantidad = $CN_1 / $i;
 
 /*EVALUACION 1*/
 if ($NC_1_2 == 0) $PEP_1_2 = 0; else $PEP_1_2 = ($NC_1_2 / $i_2) * 100;
@@ -321,6 +381,14 @@ if ($NC_5_2 == 0) $PEP_5_2 = 0; else $PEP_5_2 = ($NC_5_2 / $i_2) * 100;
 if ($NC_6_2 == 0) $PEP_6_2 = 0; else $PEP_6_2 = ($NC_6_2 / $i_2) * 100;
 if ($NC_7_2 == 0) $PEP_7_2 = 0; else $PEP_7_2 = ($NC_7_2 / $i_2) * 100;
 
+if ($AD_1_2 == 0) $PAD_1_2 = 0; else $PAD_1_2 = ($AD_1_2 / $i_2) * 100;
+if ($AD_2_2 == 0) $PAD_2_2 = 0; else $PAD_2_2 = ($AD_2_2 / $i_2) * 100;
+if ($AD_3_2 == 0) $PAD_3_2 = 0; else $PAD_3_2 = ($AD_3_2 / $i_2) * 100;
+if ($AD_4_2 == 0) $PAD_4_2 = 0; else $PAD_4_2 = ($AD_4_2 / $i_2) * 100;
+if ($AD_5_2 == 0) $PAD_5_2 = 0; else $PAD_5_2 = ($AD_5_2 / $i_2) * 100;
+if ($AD_6_2 == 0) $PAD_6_2 = 0; else $PAD_6_2 = ($AD_6_2 / $i_2) * 100;
+if ($AD_7_2 == 0) $PAD_7_2 = 0; else $PAD_7_2 = ($AD_7_2 / $i_2) * 100;
+
 if ($CA_1_2 == 0) $PEA_1_2 = 0; else $PEA_1_2 = ($CA_1_2 / $i_2) * 100;
 if ($CA_2_2 == 0) $PEA_2_2 = 0; else $PEA_2_2 = ($CA_2_2 / $i_2) * 100;
 if ($CA_3_2 == 0) $PEA_3_2 = 0; else $PEA_3_2 = ($CA_3_2 / $i_2) * 100;
@@ -329,6 +397,39 @@ if ($CA_5_2 == 0) $PEA_5_2 = 0; else $PEA_5_2 = ($CA_5_2 / $i_2) * 100;
 if ($CA_6_2 == 0) $PEA_6_2 = 0; else $PEA_6_2 = ($CA_6_2 / $i_2) * 100;
 if ($CA_7_2 == 0) $PEA_7_2 = 0; else $PEA_7_2 = ($CA_7_2 / $i_2) * 100;
 /*FIN EVALUACION 1*/
+
+$PNA;
+
+if ($CN_1  / $i > 0.20) $PNA[1][0] =  "1"; else $PNA[1][0] = "";
+if ($CN_2  / $i > 0.20) $PNA[1][1] =  "2"; else $PNA[1][1] = "";
+if ($CN_3  / $i > 0.20) $PNA[1][2] =  "3"; else $PNA[1][2] = "";
+if ($CN_4  / $i > 0.20) $PNA[2][0] =  "4"; else $PNA[2][0] = "";
+if ($CN_5  / $i > 0.20) $PNA[2][1] =  "5"; else $PNA[2][1] = "";
+if ($CN_6  / $i > 0.20) $PNA[2][2] =  "6"; else $PNA[2][2] = "";
+if ($CN_7  / $i > 0.20) $PNA[3][0] =  "7"; else $PNA[3][0] = "";
+if ($CN_8  / $i > 0.20) $PNA[3][1] =  "8"; else $PNA[3][1] = "";
+if ($CN_9  / $i > 0.20) $PNA[3][2] =  "9"; else $PNA[3][2] = "";
+if ($CN_10 / $i > 0.20) $PNA[4][0] = "10"; else $PNA[4][0] = "";
+if ($CN_11 / $i > 0.20) $PNA[4][1] = "11"; else $PNA[4][1] = "";
+if ($CN_12 / $i > 0.20) $PNA[4][2] = "12"; else $PNA[4][2] = "";
+if ($CN_13 / $i > 0.20) $PNA[5][0] = "13"; else $PNA[5][0] = "";
+if ($CN_14 / $i > 0.20) $PNA[5][1] = "14"; else $PNA[5][1] = "";
+if ($CN_15 / $i > 0.20) $PNA[5][2] = "15"; else $PNA[5][2] = "";
+if ($CN_16 / $i > 0.20) $PNA[6][0] = "16"; else $PNA[6][0] = "";
+if ($CN_17 / $i > 0.20) $PNA[6][1] = "17"; else $PNA[6][1] = "";
+if ($CN_18 / $i > 0.20) $PNA[6][2] = "18"; else $PNA[6][2] = "";
+if ($CN_19 / $i > 0.20) $PNA[7][0] = "19"; else $PNA[7][0] = "";
+if ($CN_20 / $i > 0.20) $PNA[7][1] = "20"; else $PNA[7][1] = "";
+if ($CN_21 / $i > 0.20) $PNA[7][2] = "21"; else $PNA[7][2] = "";
+
+
+$RPNA[0] = implode(" ", $PNA[1]);
+$RPNA[1] = implode(" ", $PNA[2]);
+$RPNA[2] = implode(" ", $PNA[3]);
+$RPNA[3] = implode(" ", $PNA[4]);
+$RPNA[4] = implode(" ", $PNA[5]);
+$RPNA[5] = implode(" ", $PNA[6]);
+$RPNA[6] = implode(" ", $PNA[7]);
 
 $cliente->cerrar_conn();
 ?>
@@ -414,8 +515,9 @@ $cliente->cerrar_conn();
 									<th>Unidad</th>
 									<th>Eje</th>
 									<th>Preocupante</th>
+									<th>En Desarrollo</th>
 									<th>Adecuado</th>
-									<th>Afirmaciones en nivel "Preocupante"</th>
+									<th>Afirmaciones nivel "Preocupante"</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -435,6 +537,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_1 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_1, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_1})"; ?>
+										<?php if (($PAD_1_2 - $PAD_1) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_1_2 - $PAD_1) < 10 && ($PAD_1_2 - $PAD_1) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_1_2 - $PAD_1) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_1 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_1, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_1})"; ?>
 										<?php if (($PEA_1_2 - $PEA_1) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -445,7 +557,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_1 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_2; ?>
+										<?php print_r($RPNA[0]); ?>
 									</td>
 								</tr>
 								<tr>
@@ -463,6 +575,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_2 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_2, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_2})"; ?>
+										<?php if (($PAD_2_2 - $PAD_2) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_2_2 - $PAD_2) < 10 && ($PAD_2_2 - $PAD_2) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_2_2 - $PAD_1) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_2 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_2, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_2})"; ?>
 										<?php if (($PEA_2_2 - $PEA_2) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -473,7 +595,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_2 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_2; ?>
+										<?php echo $RPNA[1]; ?>
 									</td>
 								</tr>
 								<tr>
@@ -492,6 +614,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_3 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_3, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_3})"; ?>
+										<?php if (($PAD_3_2 - $PAD_3) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_3_2 - $PAD_3) < 10 && ($PAD_3_2 - $PAD_3) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_3_2 - $PAD_3) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_3 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_3, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_3})"; ?>
 										<?php if (($PEA_3_2 - $PEA_3) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -502,7 +634,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_3 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_3; ?>
+										<?php echo $RPNA[2]; ?>
 									</td>
 								</tr>
 								<tr>
@@ -520,6 +652,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_4 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_4, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_4})"; ?>
+										<?php if (($PAD_4_2 - $PAD_4) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_4_2 - $PAD_4) < 10 && ($PAD_4_2 - $PAD_4) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_4_2 - $PAD_4) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_4 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_4, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_4})"; ?>
 										<?php if (($PEA_4_2 - $PEA_4) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -530,7 +672,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_4 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_4; ?>
+										<?php echo $RPNA[3]; ?>
 									</td>
 								</tr>
 								<tr>
@@ -548,6 +690,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_5 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_5, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_5})"; ?>
+										<?php if (($PAD_5_2 - $PAD_5) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_5_2 - $PAD_5) < 10 && ($PAD_5_2 - $PAD_5) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_5_2 - $PAD_5) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_5 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_5, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_5})"; ?>
 										<?php if (($PEA_5_2 - $PEA_5) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -558,7 +710,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_5 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_5; ?>
+										<?php echo $RPNA[4]; ?>
 									</td>
 								</tr>
 								<tr>
@@ -576,6 +728,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_6 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_6, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_6})"; ?>
+										<?php if (($PAD_6_2 - $PAD_6) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_6_2 - $PAD_6) < 10 && ($PAD_6_2 - $PAD_6) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_6_2 - $PAD_6) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_6 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_6, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_6})"; ?>
 										<?php if (($PEA_6_2 - $PEA_6) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -586,7 +748,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_6 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_6; ?>
+										<?php echo $RPNA[5]; ?>
 									</td>
 								</tr>
 								<tr>
@@ -604,6 +766,16 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_7 > 20) echo "class='danger'"; ?>>
+										<?php echo round($PAD_7, 0, PHP_ROUND_HALF_DOWN) . "% ({$AD_7})"; ?>
+										<?php if (($PAD_7_2 - $PAD_7) >= 10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+										<?php } if (($PAD_7_2 - $PAD_7) < 10 && ($PAD_7_2 - $PAD_7) > -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+										<?php } if (($PAD_7_2 - $PAD_7) <= -10 && $eval_numero == 2) { ?>
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+										<?php } ?>
+									</td>
+									<td <?php if ($PEP_7 > 20) echo "class='danger'"; ?>>
 										<?php echo round($PEA_7, 0, PHP_ROUND_HALF_DOWN) . "% ({$CA_7})"; ?>
 										<?php if (($PEA_7_2 - $PEA_7) >= 10 && $eval_numero == 2) { ?>
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -614,7 +786,7 @@ $cliente->cerrar_conn();
 										<?php } ?>
 									</td>
 									<td <?php if ($PEP_7 > 20) echo "class='danger'"; ?> align='center'>
-										<?php echo $NC_7; ?>
+										<?php echo $RPNA[6]; ?>
 									</td>
 								</tr>
 							</tbody>

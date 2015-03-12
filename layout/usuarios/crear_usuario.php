@@ -12,9 +12,9 @@ $sexo = 1;
 $fono = "";
 
 if (isset($_POST["nombre-box"]))
-	$nombre = strtoupper(trim($_POST["nombre-box"]));
+	$nombre = mb_strtoupper(trim($_POST["nombre-box"]), 'UTF-8');
 if (isset($_POST["apellido-box"]))
-	$apellido = strtoupper(trim($_POST["apellido-box"]));
+	$apellido = mb_strtoupper(trim($_POST["apellido-box"]), 'UTF-8');
 if (isset($_POST["mail-box"]))
 	$correo = strtoupper(trim($_POST["mail-box"]));
 if (isset($_POST["sexo-box"]))
@@ -22,7 +22,7 @@ if (isset($_POST["sexo-box"]))
 if (isset($_POST["fono-box"]))
 	$fono = "+56" . trim($_POST["ni-box"]) . trim($_POST["fono-box"]);
 
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && strlen($fono) == 8) {
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && filter_var($correo, FILTER_VALIDATE_EMAIL) && $sexo > 0 && strlen($fono) == 8) {
 	if ($consulta = $cliente->consulta_correo_unico($correo)) {
 		if ($consulta->num_rows < 1) {
 			$datos = array($nombre,	$apellido, $correo, md5("1234"), $sexo, $fono, 1, 2, $_SESSION["id"], 1, 0, 0, 0);

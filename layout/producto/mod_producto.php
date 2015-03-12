@@ -16,6 +16,7 @@ $valor = "";
 $evaluacion = 0;
 $documento = 0;
 $duracion = 0;
+$tipo = "";
 $web = 0;
 
 if (isset($_POST["codigo-box"]))
@@ -42,11 +43,13 @@ if (isset($_POST["doc-box"]))
 	$documento = $_POST["doc-box"];
 if (isset($_POST["dura-box"]))
 	$duracion = $_POST["dura-box"];
+if (isset($_POST["tipo-box"]))
+	$tipo = $_POST["tipo-box"];
 if (isset($_POST["web-box"]))
 	$web = $_POST["web-box"];
 
 if (strlen($codigo) > 0 && strlen($desc) > 0 && $cat > 0 && $curso > 0 && $idioma > 0 && $n_lic > 0 && $valor > 0) {
-	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion, $documento, $duracion, $web);
+	$datos = array($cat, $codigo, $desc, $curso, $idioma, $n_lic, $valor, $evaluacion, $documento, $duracion, $tipo, $web);
 	//print_r($datos);die();
 	if ($cliente->actualiza_producto_id($datos, $id_box))
 		header("Location: ver_producto.php?prd=" . $id_box . "&exito=2");
@@ -67,6 +70,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 		$evaluacion = $row["con_evaluacion"];
 		$documento = $row["con_doc"];
 		$duracion = $row["duracion"];
+		$tipo = $row["tipo"];
 		$web = $row["web"];
 	}
 ?>
@@ -167,6 +171,21 @@ if ($consulta = $cliente->consulta_producto($id_box))
 									for ($i = 1; $i <= 128; $i++) {
 									?>
 								  	<option value='<?php echo $i ?>' <?php if ($i == $duracion) echo "selected"; echo ">" . $i; ?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label for='tipo-box' class='col-sm-2 control-label'>Tipo</label>
+							<div class='col-sm-10'>
+								<select name='tipo-box' id='tipo-box' class='form-control'>
+									<?php
+									$res = $cliente->listar_tipo_producto(1);
+									while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+									?>
+								  	<option value='<?php echo $row["id"] ?>' <?php if ($tipo == $row["id"]) echo "selected"; echo ">" . $row["descr"]; ?></option>
 									<?php
 									}
 									?>

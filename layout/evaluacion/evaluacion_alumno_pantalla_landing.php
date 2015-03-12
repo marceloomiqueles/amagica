@@ -18,6 +18,17 @@ for($i = 0; $i < ($row["curso"] - 1); $i++) {
 	$curso++;
 }
 
+$evaluacion = "";
+
+if (isset($_GET["n"]) && $_GET["n"] != "") {
+	if ($_GET["n"] == 1)
+		$evaluacion = "INICIAL";
+	else
+		$evaluacion = "FINAL";
+} else {
+	header("../../action/logout.php");
+}
+
 $cliente->cerrar_conn();
 ?>
 <!DOCTYPE html>
@@ -28,7 +39,7 @@ $cliente->cerrar_conn();
 	<body>
 		<div class='container'>
 			<div class='starter-template'>
-				<h1>Evaluación Estudiantes </b> Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
+				<h1>Evaluación <b><?php echo $evaluacion; ?></b> Estudiantes <br>Colegio <b><?php echo $nombre?> <?php echo $nivel?></b>-<b><?php echo $curso?></h1>
 				<br>
 				<br>
 				<p class='lead'>

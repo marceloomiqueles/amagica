@@ -64,7 +64,7 @@ $cliente = new Cliente;
 											<a class='btn btn-success' title='Detalle' href='ver_profesor.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-eye-open'></i>
 											</a>
-											<?php if ($_SESSION["tipo"] == 1) { ?>
+											<?php if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
 											<a class='btn btn-mini btn-info' title='Editar' href='mod_profesor.php?usr=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-edit'></i>
 											</a>

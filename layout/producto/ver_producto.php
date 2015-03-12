@@ -17,6 +17,7 @@ if (isset($_GET["prd"])) {
 			$cant_lic = $row["n_licencia"];
 			$valor = $row["valor"];
 			$duracion = $row["duracion"];
+			$tipo = $row["tipo_descr"];
 			if ($row["con_evaluacion"]) 
 				$evaluacion = "Sí";
 			else
@@ -97,6 +98,12 @@ else {
 							<label class='col-sm-2 control-label'>Duración</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'><?php echo $duracion; ?> Meses</p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label class='col-sm-2 control-label'>Tipo</label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $tipo; ?></p>
 							</div>
 						</div>
 						<div class='form-group'>

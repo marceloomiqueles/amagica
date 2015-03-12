@@ -104,7 +104,7 @@ else {
 						</div>
 						<div class='form-group'>
 							<div class='col-sm-offset-2 col-sm-10'>
-								<?php if ($_SESSION["tipo"] == 1) { ?>
+								<?php if ($_SESSION["tipo"] == 1 || $_SESSION["tipo"] == 3) { ?>
 								<a class='btn btn-default' href='mod_profesor.php?usr=<?php echo $_GET["usr"] ?>'>Modificar</a>
 								<?php } ?>
 								<a class="btn btn-info" href="listar_profesores.php">Atrás</a>

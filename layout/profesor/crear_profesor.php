@@ -31,23 +31,10 @@ if (isset($_POST["nivel-box"]))
 if (isset($_POST["curso-box"]))
 	$curso = trim($_POST["curso-box"]);
 
-if (strlen($nombre) > 0 && strlen($apellido) > 0 && strlen($correo) > 4 && $sexo > 0 && $fono > 7 && $colegio > 0 && $nivel > 0 && $curso > 0) {
+if (strlen($nombre) > 0 && strlen($apellido) > 0 && filter_var($correo, FILTER_VALIDATE_EMAIL) && $sexo > 0 && $fono > 7 && $colegio > 0 && $nivel > 0 && $curso > 0) {
 	if ($res = $cliente->consulta_correo_unico($correo)) {
 		if ($res->num_rows < 1) {
-			$datos = array(
-				trim($nombre),
-				trim($apellido),
-				trim($correo),
-				md5("1234"),
-				trim($sexo),
-				str_replace(" ", "", trim($fono)),
-				4,
-				1,
-				trim($_SESSION["id"]),
-				trim($colegio),
-				trim($nivel),
-				trim($curso)
-				);
+			$datos = array($nombre, $apellido, $correo, md5("1234"), $sexo, str_replace(" ", "", $fono), 4, 1, $_SESSION["id"], $colegio, $nivel, $curso);
 			if ($id_insert = $cliente->crear_usuario($datos)) {
 				$cliente->cerrar_conn();
 				header("Location: ver_profesor.php?usr=" . $id_insert . "&exito=1");

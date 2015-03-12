@@ -63,7 +63,7 @@ class cliente {
 
 	function crear_licencia($campos) {
 		if($this->con->conectar() == true)
-			$this->con->sql("INSERT INTO licencia(producto_id, fecha_creacion, tiempo_duracion, estado, nivel, curso, idioma, colegio_id) VALUES('" . $campos[0] . "', now(),'" . $campos[1] . "', '" . $campos[2] . "', '" . $campos[3] . "', '" . $campos[4] . "', '" . $campos[5] . "', '" . $campos[6] . "');");
+			$this->con->sql("INSERT INTO licencia(producto_id, fecha_creacion, tiempo_duracion, estado, nivel, curso, idioma, colegio_id, tipo) VALUES('{$campos[0]}', now(),'{$campos[1]}', '{$campos[2]}', '{$campos[3]}', '{$campos[4]}', '{$campos[5]}', '{$campos[6]}', '{$campos[7]}');");
 		return $this->con->id();
 	}
 
@@ -134,7 +134,7 @@ class cliente {
 
 	function actualiza_producto_id($campos, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "', n_licencia = '" . $campos[5] . "', valor = '" . $campos[6] . "', con_evaluacion = '" . $campos[7] . "', con_doc = '" . $campos[8] . "', duracion = '" . $campos[9] . "', web = '" . $campos[10] . "' WHERE id = {$id};");
+			return $this->con->sql("UPDATE producto SET categoria_id = '" . $campos[0] . "', codigo = '" . $campos[1] . "', descr = '" . $campos[2] . "', curso = '" . $campos[3] . "', idioma_id = '" . $campos[4] . "', n_licencia = '" . $campos[5] . "', valor = '" . $campos[6] . "', con_evaluacion = '" . $campos[7] . "', con_doc = '" . $campos[8] . "', duracion = '" . $campos[9] . "', tipo = '" . $campos[10] . "', web = '" . $campos[11] . "' WHERE id = {$id};");
 	}
 
 	function actualiza_documento_id($campos, $id) {
@@ -322,7 +322,7 @@ class cliente {
 
 	function consulta_producto($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT p.id, p.duracion, p.con_doc, p.codigo, p.con_evaluacion, p.descr, p.categoria_id, c.nombre AS categoria, p.valor, p.n_licencia, p.idioma_id, i.descr AS idioma, p.estado, p.curso, p.web FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE p.id = '{$id}' AND p.estado != 0;");
+			return $this->con->consulta("SELECT p.id, p.duracion, p.con_doc, p.codigo, p.con_evaluacion, p.descr, p.categoria_id, c.nombre AS categoria, p.valor, p.n_licencia, p.idioma_id, i.descr AS idioma, p.estado, p.curso, p.web, p.tipo, tp.descr AS tipo_descr FROM producto p INNER JOIN categoria c ON c.id = p.categoria_id INNER JOIN idioma i ON i.id = p.idioma_id LEFT JOIN tipo_producto tp on p.tipo = tp.id WHERE p.id = '{$id}' AND p.estado != 0;");
 	}
 
 	function consulta_producto_simple($id) {
@@ -568,7 +568,7 @@ class cliente {
 
 	function consulta_evaluacion_activa_por_usuario_id($tipo, $id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ece.id, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 AND ece.fecha + INTERVAL ece.tiempo DAY > NOW() WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
+			return $this->con->consulta("SELECT ece.id, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id, ece.eval_numero FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 AND ece.fecha + INTERVAL ece.tiempo DAY > NOW() WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
 	}
 
 	function consulta_evaluacion_por_usuario_id($tipo, $id, $nro) {
@@ -644,6 +644,11 @@ class cliente {
 	function id_ultima_licencia_por_usuario_id($id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT l.id FROM usuario u INNER JOIN licencia l ON l.colegio_id = u.colegio_id AND l.curso = u.curso AND l.nivel = u.nivel WHERE u.id = {$id} AND u.estado = 1 AND l.estado = 1 ORDER BY l.fecha_creacion DESC LIMIT 1;");
+	}
+
+	function listar_tipo_producto($estado) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT id, descr FROM tipo_producto WHERE estado = '{$estado}';");
 	}
 
 	// Fin SELECT

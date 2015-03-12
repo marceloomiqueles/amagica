@@ -49,10 +49,7 @@ $cliente->cerrar_conn();
 
 		    			$('.progress-bar').css('width', ene*100/total + '%');
 		    			$('.progress-bar').text(ene + '/' + total);
-		    			if (evalDatos[ene-1].invertido == 1)
-		    				$('h1').text(evalDatos[ene-1].pregunta + ' (Invertido)');	
-		    			else
-		    				$('h1').text(evalDatos[ene-1].pregunta);
+		    			$('h1').text(evalDatos[ene - 1].pregunta);
 			        },
 			        error: function (obj, error, objError){
 			            //avisar que ocurrió un error
@@ -97,10 +94,7 @@ $cliente->cerrar_conn();
 				if (ene-1 < total) {
 					$('.progress-bar').text(ene + '/' + total);
 					$('.progress-bar').css('width', ene*100/total + '%');
-	    			if (evalDatos[ene-1].invertido == 1)
-	    				$('h1').text(evalDatos[ene-1].pregunta + ' (Invertido)');	
-	    			else
-	    				$('h1').text(evalDatos[ene-1].pregunta);
+	    			$('h1').text(evalDatos[ene-1].pregunta);
 	    		}
 			}
 

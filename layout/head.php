@@ -8,3 +8,4 @@
 <script type='text/javascript' src='<?php echo $dir_base ?>js/bootstrap.min.js'></script>
 <script type='text/javascript' src='<?php echo $dir_base ?>js/script.js'></script>
 <script type='text/javascript' src='<?php echo $dir_base ?>js/jquery.tablesorter.min.js'></script>
+<link rel="shortcut icon" href="<?php echo $dir_base ?>img/shortcut.png" type="image/png">

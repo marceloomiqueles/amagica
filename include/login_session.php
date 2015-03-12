@@ -32,7 +32,7 @@ if (isset($_POST["mail"]) && isset($_POST["pass"])) {
 								if ($row["ahora"] < $row["tiempo_final"]) {
 									$_SESSION["id"] = $id;
 									$_SESSION["test_id"] = $row["id"];
- 									header("Location: {$dir_base}layout/evaluacion/evaluacion_alumno_pantalla_landing.php");
+ 									header("Location: {$dir_base}layout/evaluacion/evaluacion_alumno_pantalla_landing.php?n=" . $row["eval_numero"]);
 									die();
 									// Acá va la redireccion
 								}
