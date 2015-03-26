@@ -15,14 +15,16 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"],
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$ahora = $row["ahora"];
 	$tiempo_final = $row["tiempo_final"];
-	// echo $n_eval; die();
 	if ($n_eval < 1) {
 		$tipo_eval = 1;
+		// echo $ahora . " >= " . $tiempo_final; die();
 		if ($ahora >= $tiempo_final) {
+			// die();
 			$n_eval++;
 			$evaluacion = 0;
 			$curso_id = 0;
 			if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
+				// echo $_SESSION["id"]; die();
 				if ($consulta->num_rows > 0) {
 					$row = $consulta->fetch_array(MYSQLI_ASSOC);
 					$evaluacion = $row["id"];

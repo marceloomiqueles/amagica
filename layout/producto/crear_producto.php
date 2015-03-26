@@ -73,7 +73,7 @@ if (strlen($codigo) > 0 && strlen($desc) > 0 && strlen($tipo) > 0 && $cat > 0 &&
 						<div class='form-group'>
 							<label for='desc-box' class='col-sm-2 control-label'>Descripción</label>
 							<div class='col-sm-10'>
-								<input type='text' name='desc-box' maxlength='45' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
+								<input type='text' name='desc-box' maxlength='100' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
 							</div>
 						</div>
 						<div class='form-group'>

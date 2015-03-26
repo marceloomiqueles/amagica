@@ -88,7 +88,13 @@ if ($respuesta = $cliente->consulta_evaluacion_por_usuario_id(2, $_SESSION["id"]
 						while ($row = $consulta->fetch_array(MYSQLI_ASSOC)) {
 						?>
 						<div class='form-group'>
-							<label for='desc-box' class='col-sm-2 control-label'>Pregunta <?php echo $row["n_orden"] ?></label>
+							<label for='desc-box' class='col-sm-2 control-label'>Pregunta <?php echo $row["n_orden"] + 1; ?></label>
+							<div class='col-sm-10'>
+								<p class='form-control-static'><?php echo $row["pregunta"]; ?></p>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label for='desc-box' class='col-sm-2 control-label'>Respuesta <?php echo $row["n_orden"] + 1; ?></label>
 							<div class='col-sm-10'>
 								<input type='text' name='pregunta[]' maxlength='45' class='form-control' id='pregunta[]' placeholder='Respuesta'>
 							</div>

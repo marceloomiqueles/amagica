@@ -148,7 +148,7 @@ if ($consulta = $cliente->consulta_producto($id_box))
 							<div class='col-sm-10'>
 								<select name='cantidad-box' id='cantidad-box' class='form-control'>
 									<?php
-									for ($i = 1; $i <= 4; $i++) {
+									for ($i = 1; $i <= 10; $i++) {
 									?>
 								  	<option value='<?php echo $i ?>' <?php if ($n_lic == $i) echo "selected"; echo ">" . $i; ?></option>
 									<?php

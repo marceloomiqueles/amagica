@@ -257,7 +257,7 @@ class cliente {
 
 	function consulta_correo_unico($correo) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT id FROM usuario WHERE mail = '{$correo}';");
+			return $this->con->consulta("SELECT id FROM usuario WHERE mail = '{$correo}' AND estado = 1;");
 	}
 
 	function consulta_usuario_login($mail, $pass) {
@@ -477,12 +477,17 @@ class cliente {
 
 	function consulta_descargas_colegio($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT l.id, l.n_solicitud, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.estado = 1 AND u.id = {$id};");
+			return $this->con->consulta("SELECT l.id, l.n_solicitud, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.estado = 1 INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.estado = 1 AND u.id = {$id};");
+	}
+
+	function consulta_descargas_colegio_correo($mail) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT l.id, l.n_solicitud, c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.estado = 1 INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.estado = 1 AND u.mail = {$mail};");
 	}
 
 	function consulta_descargas_colegio_curso($id) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT l.id, l.n_solicitud,c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND l.estado = 1 AND u.id = {$id};");
+			return $this->con->consulta("SELECT l.id, l.n_solicitud,c.nombre as colegio, l.nivel, l.curso, l.link_d, p.descr AS producto, i.descr AS idioma FROM licencia l INNER JOIN colegio c on c.id = l.colegio_id INNER JOIN usuario u ON u.colegio_id = l.colegio_id AND u.estado = 1 INNER JOIN producto p ON p.id = l.producto_id INNER JOIN idioma i ON i.id = p.idioma_id WHERE l.colegio_id = u.colegio_id AND l.nivel = u.nivel AND l.curso = u.curso AND l.estado = 1 AND u.id = {$id};");
 	}
 
 	function consulta_credito_usuario($id) {
@@ -654,6 +659,11 @@ class cliente {
 	function consulta_usuario_por_id($id) {
 		if($this->con->conectar() == true)
 			return $this->con->consulta("SELECT nombre, apellido, mail FROM usuario WHERE id = '{$id}';");
+	}
+
+	function listar_cursos_colegio_por_correo($mail) {
+		if($this->con->conectar() == true)
+			return $this->con->consulta("SELECT u.mail, cl.nombre AS colegio, l.n_solicitud AS licencia, c.nivel, c.curso FROM usuario u INNER JOIN licencia l ON l.colegio_id = u.colegio_id INNER JOIN colegio cl ON l.colegio_id = cl.id INNER JOIN curso c ON l.colegio_id = c.colegio_id AND l.nivel = c.nivel AND l.curso = c.curso WHERE u.mail = '{$mail}' AND u.estado = 1;");
 	}
 
 	// Fin SELECT
