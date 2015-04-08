@@ -12,6 +12,8 @@ $n_eval = 0;
 $tipo_eval = 0;
 if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"], 1)) {
 	$n_eval = $consulta->num_rows;
+	// echo $_SESSION["id"];
+	// echo $n_eval; die();
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$ahora = $row["ahora"];
 	$tiempo_final = $row["tiempo_final"];
@@ -36,6 +38,8 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"],
 			$row = $qry->fetch_array(MYSQLI_ASSOC);
 			$id_lic = $row["id"];
 			$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval, $id_lic, $_SESSION["curso"]);
+			// echo $_SESSION["id"];
+			// print_r($datos); die();
 			if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
 				header("Location: " . $dir_base);
 			}

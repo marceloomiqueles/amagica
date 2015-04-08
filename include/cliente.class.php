@@ -578,7 +578,7 @@ class cliente {
 
 	function consulta_evaluacion_por_usuario_id($tipo, $id, $nro) {
 		if($this->con->conectar() == true)
-			return $this->con->consulta("SELECT ece.id, ece.eval_numero, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 AND ece.curso_nivel = u.curso AND ece.eval_numero = {$nro} WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
+			return $this->con->consulta("SELECT ece.id, ece.eval_numero, ece.tipo, ece.fecha + INTERVAL ece.tiempo DAY AS tiempo_final, NOW() AS ahora, ece.curso_id, ece.evaluacion_enc_id FROM usuario u INNER JOIN curso c ON c.colegio_id = u.colegio_id AND c.nivel = u.nivel INNER JOIN evaluacion_curso_enc ece ON ece.curso_id = c.id AND ece.estado = 1 AND ece.curso_nivel = u.curso AND ece.eval_numero = {$nro} INNER JOIN licencia l ON l.id = ece.licencia_id AND l.estado = 1 WHERE u.id = {$id} AND ece.tipo = {$tipo} ORDER BY tiempo_final DESC;");
 	}
 
 	function consulta_encabezado_evaluacion_alumno($id) {
