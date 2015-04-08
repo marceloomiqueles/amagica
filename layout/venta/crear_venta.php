@@ -59,28 +59,42 @@ if ($producto > 0 && $colegio > 0) {
 									$cliente->cerrar_conn();
 									if ($id_licencia_venta = $cliente->crear_venta_licencia($id_insert, $id_licencia)) {
 										$cliente->cerrar_conn();
-										if (!$web) {
-											?>
-											<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-							                <script type="text/javascript">
-							                	var url = '../../Test/descargaok.php';
-							                	var solicit = '<?php echo md5($id_licencia); ?>';
-							                	var langu = '<?php echo $idioma; ?>';
-							                	var cur = '<?php echo $nivel; ?>';
-							                    //loadDESCARGA(url, solicit, langu, cur);
-							                  	function loadDESCARGA(php_file, solicitud, lenguaje, curs) {
-							                        $.ajax({
-													  	type: "POST",
-														url: php_file,
-														data: { solic: solicitud, lang: lenguaje, curso: curs },
-														success: function(data) {
-															$('#results').html(data);
-														}
-													});
-							                    }
-							                </script>
-							                <?php
+
+										$zip_link = "";
+
+										if ($idioma == 1) {
+											//CURSOS FULL ESPAÑOL
+											if ($nivel == 1) {
+												$zip_link = '1robasico_ES.zip';
+											}
+											if ($nivel == 2) {
+												$zip_link = '2dobasico_ES.zip';
+											}
+											if ($nivel == 3) {
+												$zip_link = '3robasico_ES.zip';
+											}
+											if ($nivel == 4) {
+												$zip_link = '4tobasico_ES.zip';
+											}
+										} elseif ($idioma == 2) {
+											//CURSOS FULL INGLES
+											if ($nivel == 1) {
+												$zip_link = '1robasico_EN.zip';
+											}
+											if ($nivel == 2) {
+												$zip_link = '2dobasico_EN.zip';
+											}
+											if ($nivel == 3) {
+												$zip_link = '3robasico_EN.zip';
+											}
+											if ($nivel == 4) {
+												$zip_link = '4tobasico_EN.zip';
+											}
 										}
+
+										$cliente = new Cliente;
+										$link = "../../Test/gestor.php?archivo=CLIMA_MAGICO_" . $zip_link;
+										$cliente->actualiza_ruta_descarga($link, md5($id_licencia));
 										$ok = 1;
 									} else {
 										$ok = 0;
