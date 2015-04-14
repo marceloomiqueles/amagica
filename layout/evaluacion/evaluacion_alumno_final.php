@@ -15,46 +15,49 @@ if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"],
 	$row = $consulta->fetch_array(MYSQLI_ASSOC);
 	$ahora = $row["ahora"];
 	$tiempo_final = $row["tiempo_final"];
-	if ($n_eval >= 1) {
-		if ($ahora >= $tiempo_final) {
-		//die();
-			if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"], 2)) {
-				$n_eval = $consulta->num_rows;
-				$row = $consulta->fetch_array(MYSQLI_ASSOC);
-				$ahora = $row["ahora"];
-				$tiempo_final = $row["tiempo_final"];
-				if ($n_eval < 1) {
-					$tipo_eval = 2;
-					if ($ahora >= $tiempo_final) {
-						$n_eval++;
-						$evaluacion = 0;
-						$curso_id = 0;
-						if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
-							if ($consulta->num_rows > 0) {
-								$row = $consulta->fetch_array(MYSQLI_ASSOC);
-								$evaluacion = $row["id"];
-								$curso_id = $row["curso_id"];
-							}
-						}
-						$cliente->cerrar_conn();
-						$qry = $cliente->id_ultima_licencia_por_usuario_id($_SESSION["id"]);
-						$row = $qry->fetch_array(MYSQLI_ASSOC);
-						$id_lic = $row["id"];
-						$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval, $id_lic, $_SESSION["curso"]);
-						if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
-							header("Location: " . $dir_base);
-						}
+	// Tiene que existir una evaluacion inicial completada
+	if ($n_eval == 1 && $ahora > $tiempo_final) {
+		if ($consulta = $cliente->consulta_evaluacion_por_usuario_id(1, $_SESSION["id"], 2)) {
+			$n_eval = $consulta->num_rows;
+			$row = $consulta->fetch_array(MYSQLI_ASSOC);
+			$ahora = $row["ahora"];
+			$tiempo_final = $row["tiempo_final"];
+			if ($n_eval < 1) {
+				$tipo_eval = 2;
+				$n_eval++;
+				$evaluacion = 0;
+				$curso_id = 0;
+				if ($consulta = $cliente->cantidad_preguntas_evaluacion_por_usuario_id(1 ,$_SESSION["id"])) {
+					if ($consulta->num_rows > 0) {
+						$row = $consulta->fetch_array(MYSQLI_ASSOC);
+						$evaluacion = $row["id"];
+						$curso_id = $row["curso_id"];
 					}
 				}
+				$cliente->cerrar_conn();
+				$qry = $cliente->id_ultima_licencia_por_usuario_id($_SESSION["id"]);
+				$row = $qry->fetch_array(MYSQLI_ASSOC);
+				$id_lic = $row["id"];
+				$datos = array(1, 7, $curso_id, $evaluacion, 1, $tipo_eval, $id_lic, $_SESSION["curso"]);
+				if (!$id_insert = $cliente->crear_encabezado_evaluacion_prueba($datos)) {
+					header("Location: " . $dir_base);
+				}
+			} elseif ($n_eval == 1 && $ahora > $tiempo_final) {
+				?>
+				<script type="text/javascript">
+					alert("Evaluación Realizada");
+				 	window.location="evaluacion_resultado.php";
+				</script>
+				<?php
 			}
 		}
 	} else {
 		?>
 		<script type="text/javascript">
-			alert("Evaluación Realizada");
+			alert("Debe realizar la evaluación inicial primero");
+		 	window.location="evaluacion_resultado.php";
 		</script>
 		<?php
-		header("Location: " . $dir_base);
 	}
 }
 
@@ -83,7 +86,7 @@ if ($consulta = $cliente->consulta_correo_usuario_id($_SESSION["id"])) {
 							<label for='desc-box' class='col-sm-2 control-label'>Dirección</label>
 							<div class='col-sm-10'>
 								<p class='form-control-static'>
-									<a href='http://www.descargamagica.cl/CLIENTES/' target='_blank'>
+									<a href='../../action/logout.php'>
 										http://www.descargamagica.cl/CLIENTES/
 									</a>
 								</p>

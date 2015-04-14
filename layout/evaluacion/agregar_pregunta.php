@@ -48,7 +48,7 @@ if (!isset($_GET["eval"])) {
 						<div class='form-group'>
 							<label for='desc-box' class='col-sm-2 control-label'>Pregunta</label>
 							<div class='col-sm-10'>
-								<input type='text' name='desc-box' maxlength='45' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
+								<input type='text' name='desc-box' class='form-control' id='desc-box' placeholder='Descripción' value='<?php echo $desc; ?>'>
 								<input type='hidden' name='id-box' value='<?php echo $id; ?>'>
 							</div>
 						</div>

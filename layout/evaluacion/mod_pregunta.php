@@ -62,7 +62,7 @@ if (isset($_GET["prg"])) {
 						<div class='form-group'>
 							<label for='desc-box' class='col-sm-2 control-label'>Pregunta</label>
 							<div class='col-sm-10'>
-								<input type='text' name='preg-box' maxlength='45' class='form-control' id='preg-box' placeholder='Pregunta' value='<?php echo $pregunta; ?>'>
+								<input type='text' name='preg-box' class='form-control' id='preg-box' placeholder='Pregunta' value='<?php echo $pregunta; ?>'>
 								<input type='hidden' name='id-box' value='<?php echo $id; ?>'>
 								<input type='hidden' name='eval-box' value='<?php echo $eval; ?>'>
 							</div>
