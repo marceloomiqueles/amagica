@@ -78,10 +78,10 @@ $cliente = new Cliente;
 									<td><?php echo $tipo; ?></td>
 									<td class='text-center'>
 										<div class='btn-group btn-group-xs'>
-											<a class='btn btn-success' title='Resultados Alumnos' href='evaluacion_resultado_curso_eje.php?eval=<?php echo $row["id"] ?>'>
+											<a class='btn btn-success' title='Resultado por eje' href='evaluacion_resultado_curso_eje.php?eval=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-th-list'></i>
 											</a>
-											<a class='btn btn-mini btn-info' title='Resultado Curso' href='evaluacion_resultado_curso.php?eval=<?php echo $row["id"] ?>'>
+											<a class='btn btn-mini btn-info' title='Resultado por afirmación' href='evaluacion_resultado_curso.php?eval=<?php echo $row["id"] ?>'>
 												<i class='glyphicon glyphicon-list-alt'></i>
 											</a>
 										</div>
